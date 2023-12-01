@@ -1,0 +1,118 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row home-card">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card home-subcard">
+                  <img src="/assets/images/dashboardimg1.PNG" class="animated animatedFadeInUp fadeInUp">
+                  <a routerLink="/admin/patients">
+                    <div class="top-right">
+                      <div>
+                        <h5 class="float-end">New Patients</h5>
+                      </div>
+                      <div class="m-r-10 m-l-10">
+                        <h3 class="font-weight-bold float-end mb-0"> 129</h3>
+                      </div>
+                    </div>
+                  </a>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card home-subcard">
+                <img src="/assets/images/dashboardimg2.PNG" class="animated animatedFadeInUp fadeInUp">
+                <a routerLink="/admin/view-appointments">
+                  <div class="top-right">
+                    <div>
+                      <h5 class="float-end">Appointments</h5>
+                    </div>
+                    <div class="m-r-10 m-l-10">
+                      <h3 class="font-weight-bold float-end mb-0"> 650</h3>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="card home-subcard">
+                    <img src="/assets/images/dashboardimg3.PNG" class="animated animatedFadeInUp fadeInUp">
+                    <div class="top-right">
+                      <div>
+                        <h5 class="float-end">Operations</h5>
+                      </div>
+                      <div class="m-r-10 m-l-10">
+                        <h3 class="font-weight-bold float-end mb-0"> 50</h3>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="card home-subcard">
+                    <img src="/assets/images/dashboardimg4.PNG" class="animated animatedFadeInUp fadeInUp">
+                    <div class="top-right">
+                      <div>
+                        <h5 class="float-end">Earning</h5>
+                      </div>
+                      <div class="m-r-10 m-l-10">
+                        <h3 class="font-weight-bold float-end mb-0"> $10,125</h3>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header card-header-tabs card-header-warning">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <h5 style="color: white; font-size: 20px; margin-top: 10px;">{{props.BOOKED_APPOINTMENT_DETAILS.UPCOMING_APPOINTMENTS}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="tableBody" style="margin-top: 10px;">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_NAME}}</th>
+                          <th>{{props.BOOKED_APPOINTMENT_DETAILS.ASSIGNED_DOCTOR}}</th>
+                          <th>{{props.BOOKED_APPOINTMENT_DETAILS.DATE}}</th>
+                          <th>{{props.BOOKED_APPOINTMENT_DETAILS.TIME}}</th>
+                          <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="appointmentList">
+                        <ng-container *ngFor="let appointment of appointmentList; index as i">
+                          <tr>
+                            <td>{{appointment.name}}</td>
+                            <td>{{appointment.doctor}}</td>
+                            <td>{{appointment.date}}</td>
+                            <td>{{appointment.time}}</td>
+                            <td><div [className]="'badge ' + diseases_badge_colors[i % diseases_badge_colors.length]">{{appointment.diseases}}</div></td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-header card-header-tabs card-header-primary">
+                  <div class="nav-tabs-navigation">
+                      <div class="nav-tabs-wrapper">
+                          <h5 style="color: white; font-size: 20px; margin-top: 10px;">Number Of Patients</h5>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body text-center" style="margin-top: 8px;">
+                  <div style="min-height: 315px;">
+                    <canvas id="bookingChart" >{{ chart }}</canvas>
+                  </div>
+                  <small><strong>Total No. of Patients - {{todayDate}}</strong></small>
+              </div>
+            </div>
+          </div>
+        </div> 
+    </div>
+</div>

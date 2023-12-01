@@ -1,0 +1,53 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="content table-responsive table-full-width">
+                        <button type="button" class="btn btn-success btn-fill btn-sm pull-right" tooltip="Add" routerLink="/admin/book-appointment"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                        <table id="doctor-list-tbl" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-no-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_NAME}}</th>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.GENDER}}</th>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_EMAIL}}</th>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.DATETIME}}</th>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_PHONE}}</th>
+                                    <!-- <th>{{props.BOOKED_APPOINTMENT_DETAILS.ASSIGNED_DOCTOR}}</th> -->
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
+                                    <th>{{props.BOOKED_APPOINTMENT_DETAILS.STATUS}}</th>
+                                    <th>{{props.BTN_SEARCH.ACTION}}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="bookedAppointmentsLists">
+                                <ng-container *ngFor="let bookedappointment of bookedAppointmentsLists; index as i">
+                                    <tr *ngIf="bookedappointment.email">
+                                        <td>{{bookedappointment.name}}</td>
+                                        <td width="5%">
+                                            <span class="badge badge-solid-green" *ngIf="bookedappointment.gender == props.USER_DETAILS.GENDER_MALE">{{bookedappointment.gender}}</span>
+                                            <span class="badge badge-solid-purple" *ngIf="bookedappointment.gender == props.USER_DETAILS.GENDER_FEMALE">{{bookedappointment.gender}}</span>
+                                        </td>
+                                        <td>{{bookedappointment.email}}</td>
+                                        <td>{{bookedappointment.date}}, {{bookedappointment.time}}</td>
+                                        <td width="10%">{{bookedappointment.phone}}</td>
+                                        <!-- <td><a href="">{{bookedappointment.assigneddoc}}</a></td> -->
+                                        <td width="7%">{{bookedappointment.diseases}}</td>
+                                        <td width="7%">
+                                          <span class="badge badge-solid-blue" *ngIf="bookedappointment.status == props.USER_DETAILS.VISITED">{{bookedappointment.status}}</span>
+                                          <span class="badge badge-solid-red" *ngIf="bookedappointment.status == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.status}}</span>
+                                        </td>
+                                        <th width="5%">
+                                          <span>
+                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update"><i class="fa fa-pencil-square-o"></i></button>
+                                          </span>
+                                        </th>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

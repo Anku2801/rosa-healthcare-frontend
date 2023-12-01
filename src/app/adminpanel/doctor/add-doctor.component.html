@@ -1,0 +1,172 @@
+<div class="main-content" >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Doctor Profile</h4>
+              </div>
+              <div class="content">
+                  <form id="add-user" [formGroup]="addDoctorForm" autocomplete="off">
+                    <div class="row justify-content-center">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_FIRST_NAME}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_FIRST_NAME}}" formControlName="doctorFirstname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.doctorFirstname.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_LAST_NAME}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="doctorLastname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.doctorLastname.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label class="form-label fw-bold">{{props.USER_DETAILS.GENDER}} <span class="text-danger">*</span></label>
+                            <select class="form-control form-select" formControlName="doctorGender" [ngClass]="{ 'is-invalid': submitted && f.doctorGender.errors}">
+                              <option value="" disabled>Choose a Gender</option>
+                              <option value="{{props.USER_DETAILS.GENDER_MALE}}">{{props.USER_DETAILS.GENDER_MALE}}</option>
+                              <option value="{{props.USER_DETAILS.GENDER_FEMALE}}">{{props.USER_DETAILS.GENDER_FEMALE}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_MOBILE}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_MOBILE}}" formControlName="doctorMobile" maxlength="10" [ngClass]="{ 'is-invalid': submitted && f.doctorMobile.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_PASS}} <span class="text-danger">*</span></label>
+                              <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_PASS}}" formControlName="doctorPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.doctorPassword.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_REPASS}} <span class="text-danger">*</span></label>
+                              <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_REPASS}}" formControlName="doctorReenterPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.doctorReenterPassword.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_DESIGNATION}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_DESIGNATION}}" formControlName="doctorDesignation" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.doctorDesignation.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_SERVICE}} <span class="text-danger">*</span></label>
+                              <select class="form-control form-select form-control-sm" formControlName="doctorDepartment" [ngClass]="{ 'is-invalid': submitted && f.doctorDepartment.errors}">
+                                  <option value="" disabled>Choose a {{props.DOCTOR_DETAILS.DOCTOR_SERVICE}}</option>
+                                  <option *ngFor="let service of services" [value]="service.id">{{service.name}}</option>
+                              </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABILITITY_STATUS}} <span class="text-danger">*</span></label>
+                              <select class="form-control form-select" formControlName="doctorAvailablitityStatus" [ngClass]="{ 'is-invalid': submitted && f.doctorAvailablitityStatus.errors}">
+                                <option value="" disabled>Choose an Availability</option>
+                                <option value="{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}</option>
+                                <option value="{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}">{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}</option>
+                              </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABILITITY_TIME}} <span class="text-danger">*</span></label>
+                            <div class="time-pickers" style="display: inline-flex">
+                              <timepicker [showMeridian]="false" required formControlName="doctorAvailableStartTime"></timepicker>
+                              <span style="margin: auto; margin-left: 8px; margin-right: 8px;"> --and-- </span>
+                              <timepicker [showMeridian]="false" required formControlName="doctorAvailableEndTime"></timepicker>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_DESCRIPTION}} <span class="text-danger">*</span></label>
+                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="doctorProfileDescription" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_DESCRIPTION}}" maxlength="250" [ngClass]="{ 'is-invalid': submitted && f.doctorProfileDescription.errors}"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
+                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="doctorAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.doctorAddress.errors}"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_EMAIL}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_EMAIL}}" formControlName="doctorEmail" maxlength="50" [ngClass]="{ 'is-invalid': submitted && f.doctorEmail.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_BIRTH}} <span class="text-danger">*</span></label>
+                              <div id="datepicker">
+                                  <input type="text"
+                                      class="form-control form-control-sm"
+                                      placeholder="DD-MM-YYYY"
+                                      bsDatepicker
+                                      [bsConfig]="dateConfig"
+                                      formControlName="doctorBirthDate"
+                                      placement="top"
+                                      [ngClass]="{ 'is-invalid': submitted && f.doctorBirthDate.errors}">
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_EDUCATION}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_EDUCATION}}" formControlName="doctorEducation" maxlength="100" [ngClass]="{ 'is-invalid': submitted && f.doctorEducation.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_EXP}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_EXP}}" formControlName="doctorExpYears" maxlength="2" [ngClass]="{ 'is-invalid': submitted && f.doctorExpYears.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_UP_PHOTO}} <span class="text-danger">*</span></label>
+                              <input #imageInput type="file" accept="image/jpg, image/jpeg, image/x-png" class="form-control form-control-sm" accept="image/*" (change)="processFile($event)" formControlName="doctorPhoto">
+                              <div class="preview-section" *ngIf="isImageSelected">
+                                <img [src]="imagePreviewSrc" alt="preview-img" class="preview-img" />
+                              </div>
+                              <div style="background-color: #8080803b;" class="preview-section" *ngIf="!isImageSelected">
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_STATUS}} <span class="text-danger">*</span></label>
+                            <div>
+                                <input type="radio" class="form-check-input" formControlName="doctorStatus" value="{{props.DOCTOR_DETAILS.DOCTOR_ACTIVE}}" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.doctorStatus.errors}">
+                                <label class="form-label fw-bold">  {{props.DOCTOR_DETAILS.DOCTOR_ACTIVE}}</label>
+                                
+                                <input type="radio" class="form-check-input" formControlName="doctorStatus" value="{{props.DOCTOR_DETAILS.DOCTOR_INACTIVE}}" [ngClass]="{ 'is-invalid': submitted && f.doctorStatus.errors}">
+                                <label class="form-label fw-bold">  {{props.DOCTOR_DETAILS.DOCTOR_INACTIVE}}</label>                                    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row justify-content-end">
+                        <div class="form-group">
+                          <button type="button" class="btn btn-default pull-right btn-lg" routerLink="/admin/doctors" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
+                          <button type="submit" class="btn btn-primary btn-fill pull-right btn-lg" [disabled]="!this.addDoctorForm.valid" (click)="addDoctor()">{{props.DOCTOR_DETAILS.DOCTOR_ADD_BTN}}</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>

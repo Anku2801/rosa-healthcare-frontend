@@ -1,0 +1,55 @@
+.home-subcard {
+    border: none !important;
+    position: relative;
+}
+.home-subcard2 {
+    border: none !important;
+    position: relative;
+}
+.m-r-10 {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    margin: 15px 15px 15px 0;
+}
+
+.home-card h5 {
+    font: 400 11.62px/20px Roboto,sans-serif;
+    margin: 0 0 12px;
+    font-size: 1.25rem!important;
+    font-weight: 500!important;
+}
+
+.home-card h3 {
+    line-height: 28px;
+    font-family: Roboto,sans-serif;
+    letter-spacing: .009375em;
+    margin: 0 0 16px;
+}
+
+.card-img-absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
+.home-card .col-sm-3 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.home-card .fa {
+    display: inline !important;
+} 
+
+.home-card {
+    margin-top:-25px;
+}
+

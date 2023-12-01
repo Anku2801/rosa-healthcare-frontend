@@ -1,0 +1,78 @@
+<div class="main-content" >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Security Settings</h4>
+              </div>
+              <div class="content">
+                  <form id="add-user" [formGroup]="updatePasswordForm" autocomplete="off">
+                    <div class="row justify-content-center">
+                      <div class="row">                      
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_PASS}} <span class="text-danger">*</span></label>
+                              <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_PASS}}" formControlName="userPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.userPassword.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_REPASS}} <span class="text-danger">*</span></label>
+                              <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_REPASS}}" formControlName="userConfirmPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.userConfirmPassword.errors}">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row justify-content-end">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary btn-fill pull-right btn-lg" [disabled]="!this.updatePasswordForm.valid" (click)="changePassword()">{{props.BTN_SEARCH.SAVE}}</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Account Settings</h4>
+              </div>
+              <!-- <div class="content">
+                  <form id="add-settings" [formGroup]="updateAccountForm" autocomplete="off">
+                    <div class="row justify-content-center">
+                      <div class="row">                      
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_FIRST_NAME}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_FIRST_NAME}}" formControlName="userFirstname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userFirstname.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_LAST_NAME}} <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="userLastname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userLastname.errors}">
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
+                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors}"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row justify-content-end">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary btn-fill pull-right btn-lg" [disabled]="!this.updateAccountForm.valid" (click)="updateAccount()">{{props.BTN_SEARCH.SAVE_CHANGES}}</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+              </div> -->
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
