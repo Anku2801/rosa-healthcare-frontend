@@ -12,7 +12,7 @@ export class LoginService {
 
   // Login Method to Validate User
   validateLogin(data: any) {
-    return this.apiService.postData("token/", data);
+    return this.apiService.postData("RSLogin", data);
   }
 
   // // Logout the current user

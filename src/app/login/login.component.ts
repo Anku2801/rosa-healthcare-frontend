@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
           }
       }
     };
-    console.log(data);
     this.loginService.validateLogin(data).subscribe((response:any) => {
       console.log(response);
       // if (response && response.PMM2011OperationResponse
