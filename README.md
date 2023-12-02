@@ -1,14 +1,32 @@
-# RosaHealthcare
+## RosaHealthcare
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
 
-## Development server
+We are very excited to share this dashboard with you and we look forward to hearing your feedback!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Please see the appriate guide  to execute Rosa Healthcare application:
 
-## Code scaffolding
+## [Prerequisites setup to execute Infosy ETA Application]
+- Install NodeJs v16.16 from [NodeJs Official Page](https://nodejs.org/en).
+- Check in terminal Node v16.16 and NPM v8.11 setup.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## [Terminal Commands]
+1. Open Nodejs Terminal.
+2. Go to your file project.
+3. Run in terminal:  ```npm install```
+4. Run in terminal:  ```npm install -g @angular/cli@14```
+5. Then: ```npm install```
+6. And: ```ng build```
+7. And: ```ng serve```
+8. Navigate to `http://localhost:4200/`
+
+### What's included
+
+Within the application the following modules will find:
+1. Login Form
+2. Admin Managment
+3. Doctor Managment
+4. Patient Management
 
 ## Build
 
@@ -25,3 +43,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
+
