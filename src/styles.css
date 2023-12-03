@@ -1282,6 +1282,9 @@ a:hover {
   margin-bottom: 0;
   list-style: none;
 }
+.navbar-brand {
+  padding: 10px !important;
+}
 div#navbar-primary {
   box-shadow: 0px 2px 40px rgba(8, 70, 78, 0.10);
 }
@@ -1660,3 +1663,15 @@ table tr td .badge {
 .navbar {
   --bs-navbar-padding-y: 0rem !important;
 }
+.mat-button-toggle-button span {
+  font-size: 13px;
+}
+@media screen and (min-width: 1000px) and (max-width: 1251px) {
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    padding: 0 5px !important;
+  }
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 40px !important;
+  }
+}
+

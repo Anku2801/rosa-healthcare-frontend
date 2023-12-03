@@ -53,3 +53,29 @@
     box-shadow: 0 0 10px #b7c0ce33;
     -webkit-box-shadow: 0 0 10px 0 rgba(183,192,206,.2);
 }
+
+#bookingChart {
+    margin-top: 5px;
+    width:100% !important;
+    height:280px !important;
+    overflow:hidden;
+}
+.booking-chart div {
+    min-height: 305px !important;
+}
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+    .booking-chart div {
+        min-height: 370px !important;
+    }
+}
+@media screen and (min-width: 1000px) and (max-width: 1251px) {
+    .booking-chart div {
+        min-height: 400px !important;
+    }
+    #bookingChart {
+        margin-top: 5px;
+        width:100% !important;
+        height:350px !important;
+        overflow:hidden;
+    }
+}

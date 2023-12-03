@@ -59,12 +59,12 @@
             </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-xl-7 col-lg-6 col-md-7 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-header card-header-tabs card-header-warning">
                     <div class="nav-tabs-navigation">
                         <div class="nav-tabs-wrapper">
-                            <h5 style="color: white; font-size: 20px; margin-top: 10px;">{{props.BOOKED_APPOINTMENT_DETAILS.UPCOMING_APPOINTMENTS}}</h5>
+                            <h5 style="color: white; font-size: 18px; margin-top: 10px;">{{props.BOOKED_APPOINTMENT_DETAILS.UPCOMING_APPOINTMENTS}}</h5>
                         </div>
                     </div>
                 </div>
@@ -96,18 +96,18 @@
                 </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-xl-5 col-lg-6 col-md-5 col-sm-12 col-xs-12">
             <div class="card">
               <div class="card-header card-header-tabs card-header-primary">
                   <div class="nav-tabs-navigation">
                       <div class="nav-tabs-wrapper">
-                          <h5 style="color: white; font-size: 20px; margin-top: 10px;">Number Of Patients</h5>
+                          <h5 style="color: white; font-size: 18px; margin-top: 10px;">Number Of Patients</h5>
                       </div>
                   </div>
               </div>
-              <div class="card-body text-center" style="margin-top: 8px;">
-                  <div style="min-height: 315px;">
-                    <canvas id="bookingChart" >{{ chart }}</canvas>
+              <div class="card-body text-center booking-chart" style="margin-top: 8px;">
+                  <div>
+                    <canvas id="bookingChart">{{ chart }}</canvas>
                   </div>
                   <small><strong>Total No. of Patients - {{todayDate}}</strong></small>
               </div>

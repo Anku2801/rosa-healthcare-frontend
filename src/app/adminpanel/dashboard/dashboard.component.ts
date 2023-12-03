@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
             backgroundColor: barColors,
             borderColor: ['fuchsia', 'brown', 'blue', 'green', 'red', 'black', 'navy'],
             borderWidth: 2,
-            barThickness: 24,
+            barThickness: 18,
           },
         ],
       },
