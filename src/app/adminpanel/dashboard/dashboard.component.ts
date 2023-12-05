@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { NgxSpinnerService } from "ngx-spinner";
 import { constantsProps } from 'app/commonconfig/props/constants.props';
+import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 
 Chart.register(...registerables);
 
@@ -13,11 +15,10 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
 
   props = constantsProps;
-  currentUserName: String ;
-  currentUserEmail: String ; 
-  datePipe = new DatePipe("en-US");
-  todayDate = this.datePipe.transform(new Date(), 'MMMM, YYYY');
   chartdata: any;
+  currentUser: any;
+  currentUserName: String ;
+  currentUserEmail: String ;
   public chart: any;
   diseases_badge_colors = ["col-red", "col-green", "col-cyan", "col-orange", "col-purple"];
 
@@ -30,10 +31,15 @@ export class DashboardComponent implements OnInit {
     {id: 6, name: "Cara Stevens", doctor: "Dr.Amit Trivedi", date: "12/05/2016", time: "2.00 PM", diseases: "Infection"}
   ];
 
-  constructor() { }
+  constructor(public spinner: NgxSpinnerService, public notifyService: NotificationmsgService, private router: Router) { }
 
   ngOnInit(): void {
-    this.createChart();
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    } else {
+      this.createChart();
+    }
   }
 
   createChart() {
@@ -60,10 +66,7 @@ export class DashboardComponent implements OnInit {
         scales: {
           y: {
             ticks: {
-              stepSize: 30,
-              // callback: function(value, index) {
-              //   return '$' + value;
-              // }
+              stepSize: 30
             },
             min: 0,
             max: 120

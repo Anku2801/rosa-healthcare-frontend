@@ -31,6 +31,7 @@
               "node_modules/ngx-spinner/animations/square-jelly-box.css",
               "src/assets/sass/light-bootstrap-dashboard.scss",
               "src/assets/css/demo.css",
+              "src/assets/css/roboto.css",
               "src/assets/css/icofont.min.css",
               "src/styles.css"
             ],

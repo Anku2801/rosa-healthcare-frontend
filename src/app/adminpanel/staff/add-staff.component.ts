@@ -23,7 +23,8 @@ export class AddStaffComponent implements OnInit {
   isImageSelected: boolean = false;
   imgFile: any;
   currentTime= new Date();
-
+  currentUser: any;
+  
   services = [
     { id: 1, name: "Neurology" },
     { id: 2, name: "Orthopedics" },
@@ -41,25 +42,30 @@ export class AddStaffComponent implements OnInit {
               }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+
     this.addStaffForm = this.formBuilder.group({
-      doctorFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      doctorLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      doctorGender: ['', Validators.required],
-      doctorMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      doctorPassword: ['', Validators.required],
-      doctorReenterPassword: ['', Validators.required],
-      doctorDesignation: ['', ''],
-      doctorDepartment: ['', Validators.required],
-      doctorAvailablitityStatus: ['', Validators.required],
-      doctorAvailableStartTime: [this.currentTime, Validators.required],
-      doctorAvailableEndTime: ['', Validators.required],
-      userAddress: ['', ''],
-      doctorEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
-      doctorBirthDate: ['', Validators.required],
-      doctorEducation: ['', ''],
-      doctorExpYears: ['', ''],
-      doctorPhoto: ['', Validators.required],
-      doctorStatus: ['', Validators.required]      
+      userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userGender: ['', Validators.required],
+      userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
+      userPassword: ['', Validators.required],
+      userReenterPassword: ['', Validators.required],
+      userDesignation: ['', Validators.required],
+      userDepartment: ['', Validators.required],
+      userAvailablitityStatus: ['', Validators.required],
+      userAvailableStartTime: [this.currentTime, Validators.required],
+      userAvailableEndTime: ['', Validators.required],
+      userAddress: ['', Validators.required],
+      userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
+      userBirthDate: ['', Validators.required],
+      userEducation: ['', Validators.required],
+      userExpYears: ['', Validators.required],
+      userPhoto: ['', Validators.required],
+      userStatus: ['', Validators.required]      
     });
   }
 
@@ -89,32 +95,32 @@ export class AddStaffComponent implements OnInit {
     if (this.addStaffForm.invalid) {
         return;
     }
-    if (this.f.doctorPassword.value !== this.f.doctorReenterPassword.value) {
+    if (this.f.userPassword.value !== this.f.userReenterPassword.value) {
       this.notifyService.showError('Passwords do not match.');
     }
 
-    let userfirstname = this.f.doctorFirstname.value.charAt(0).toUpperCase() + this.f.doctorFirstname.value.slice(1).toLowerCase();
-    let userlastname = this.f.doctorLastname.value.charAt(0).toUpperCase() + this.f.doctorLastname.value.slice(1).toLowerCase();
+    let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
+    let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {
         RSSTAFFADDOP: {
             rs_ad_recin: {
                 rs_staff_first_name: userfirstname,
                 rs_staff_last_name: userlastname,
-                rs_staff_gender: this.f.doctorGender.value,
-                rs_staff_mobile: this.f.doctorMobile.value,
-                rs_staff_password: this.f.doctorPassword.value,
-                rs_staff_designation: this.f.doctorDesignation.value,
-                rs_staff_department: this.f.doctorDepartment.value,
+                rs_staff_gender: this.f.userGender.value,
+                rs_staff_mobile: this.f.userMobile.value,
+                rs_staff_password: this.f.userPassword.value,
+                rs_staff_designation: this.f.userDesignation.value,
+                rs_staff_department: this.f.userDepartment.value,
                 rs_staffr_address: this.f.userAddress.value,
-                rs_staff_email: this.f.doctorEmail.value,
-                rs_staff_available_status: this.f.doctorAvailablitityStatus.value,
-                rs_staff_available_start_time: this.datePipe.transform(this.f.doctorAvailableStartTime.value, 'HH::mm:ss'),
-                rs_staff_available_end_time: this.datePipe.transform(this.f.doctorAvailableEndTime.value, 'HH:mm:ss'),
-                rs_staff_birth_date: this.datePipe.transform(this.f.doctorBirthDate.value, 'YYYY-MM-dd'),
-                rs_staff_education: this.f.doctorEducation.value,
-                rs_staff_exp_years: this.f.doctorExpYears.value,
+                rs_staff_email: this.f.userEmail.value,
+                rs_staff_available_status: this.f.userAvailablitityStatus.value,
+                rs_staff_available_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm:ss'),
+                rs_staff_available_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH:mm:ss'),
+                rs_staff_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
+                rs_staff_education: this.f.userEducation.value,
+                rs_staff_exp_years: this.f.userExpYears.value,
                 rs_staff_image: this.imgFile,
-                rs_staff_status: this.f.doctorStatus.value
+                rs_staff_status: this.f.userStatus.value
             }
         }
     };

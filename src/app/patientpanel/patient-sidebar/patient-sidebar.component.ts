@@ -10,12 +10,11 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/patient/dashboard', title: 'Dashboard',  icon: 'fa fa-pie-chart', class: '' },
-    // { path: '/admin/view-appointments', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.VIEW_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-address-book-o', class: '' },
-    // { path: '/admin/book-appointment', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.BOOK_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-plus-square', class: '' },
-    // { path: '/admin/patients', title: constantsProps.USER_DETAILS.USER_LIST_PAGE_NAME,  icon:'fa fa-wheelchair', class: '' },
-    // { path: '/admin/add-new-patient', title: constantsProps.USER_DETAILS.USER_ADD_PAGE_NAME,  icon:'fa fa-user-plus', class: '' },
-    // { path: '/admin/doctors', title: constantsProps.DOCTOR_DETAILS.DOCTOR_LIST_PAGE_NAME,  icon:'fa fa-user-md', class: '' },
-    // { path: '/admin/add-new-doctor', title: constantsProps.DOCTOR_DETAILS.DOCTOR_ADD_PAGE_NAME,  icon:'fa fa-address-card-o', class: '' }
+    { path: '/patient/view-appointments', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.VIEW_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-address-book-o', class: '' },
+    { path: '/patient/prescriptions', title: constantsProps.USER_DETAILS.USER_PRESCRIPTIONS,  icon:'fa fa-sticky-note', class: '' },
+    { path: '/patient/chat', title: constantsProps.USER_DETAILS.USER_CHAT,  icon:'fa fa-commenting-o', class: '' },
+    { path: '/patient/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-cog', class: '' },
+    { path: '/patient/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
 ];
 
 @Component({

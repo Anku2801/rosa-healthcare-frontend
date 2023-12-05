@@ -13,6 +13,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { PatientLayoutRoutes } from './patient-layout.routing';
 
 import { DashboardComponent } from '../../patientpanel/dashboard/dashboard.component';
+import { ChatComponent } from '../../patientpanel/chat/chat.component';
+import { PrescriptionComponent } from '../../patientpanel/prescription/prescription.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import { DashboardComponent } from '../../patientpanel/dashboard/dashboard.compo
     TooltipModule.forRoot()
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    ChatComponent,
+    PrescriptionComponent
   ]
 })
 

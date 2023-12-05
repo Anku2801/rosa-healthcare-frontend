@@ -19,7 +19,8 @@ export class AddUserComponent implements OnInit {
   dateConfig: Partial<BsDatepickerConfig>;
   submitted: boolean = false;
   datePipe = new DatePipe("en-US");
-
+  currentUser: any;
+  
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private spinner: NgxSpinnerService,
@@ -29,6 +30,11 @@ export class AddUserComponent implements OnInit {
               }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+
     this.addUserForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -70,7 +76,7 @@ export class AddUserComponent implements OnInit {
                 rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
                 rs_user_age: this.f.userAge.value,
                 rs_user_email: this.f.userEmail.value,
-                rs_user_password: 'patient123',
+                rs_user_password: 'rosahealthcare',
                 rs_user_marital_status: this.f.userMaritalStatus.value,
                 rs_user_address: this.f.userAddress.value,
                 rs_user_blood_group: this.f.userBloodGroup.value,

@@ -25,6 +25,8 @@ export const constantsProps = {
   USER_DETAILS: {
     USER_LIST_PAGE_NAME: 'Patients',
     USER_ADD_PAGE_NAME: 'Add Patient',
+    USER_PRESCRIPTIONS: 'Prescriptions',
+    USER_CHAT: 'Chat',
     USER_PASS: 'Password',
     USER_NAME: 'Name',
     USER_FIRST_NAME: 'First Name',
@@ -125,13 +127,5 @@ export const constantsProps = {
     DATETIME: 'Date & Time',
     DISEASES: 'Injury/Condition',
     STATUS: 'Status'
-  },
-  // HOME: {
-  //   USERS: 'User',
-  //   DATASET: 'Dataset',
-  //   RECENT_ACTIVITIES: 'Recent Activities',
-  //   DATASET_STATISTICS: 'Dataset Statistics',
-  //   ADD_BTN:'Add',
-  //   LIST_BTN:'List'
-  // },
+  }
 }

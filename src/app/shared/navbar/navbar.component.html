@@ -1,34 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-default">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">{{getTitle()}}</a>
-      <button class="navbar-toggler" type="button" (click)="sidebarToggle()" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ms-auto navbar-right">
-          <li class="nav-item">
-            <a>
-                {{props.MENUS.LOGOUT}}
-            </a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link mx-2" href="#">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="#">Pricing</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Company
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Blog</a></li>
-              <li><a class="dropdown-item" href="#">About Us</a></li>
-              <li><a class="dropdown-item" href="#">Contact us</a></li>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">{{getTitle()}}</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a  class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- <i class="glyphicon glyphicon-arrow-right"></i> -->
+                        <p class="hidden-lg hidden-md">{{getTitle()}}</p>
+                    </a>
+                </li>
             </ul>
-          </li> -->
-        </ul>
-      </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a title="User Manual" target="_blank" style="color: #0d6efd; font-size: 18px;"><i class="pe-7s-help1"></i></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a (click)="logout()">
+                        {{props.MENUS.LOGOUT}}
+                    </a>
+                </li>
+                <li class="separator hidden-lg hidden-md"></li>
+            </ul>
+        </div>
     </div>
-    </nav>
+</nav>

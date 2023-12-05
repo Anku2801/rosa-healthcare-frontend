@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   loginForm: any;
   errorMsg: String = '';
-  // currentUser = { currentUserName: '', currentUserID: ''};
+  currentUser = { currentUserName: '', currentUserID: ''};
 
   constructor(private formBuilder: FormBuilder,
     private apiService: ApiService,
@@ -25,10 +25,14 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService) { }
 
   ngOnInit(): void {
+    localStorage.setItem('currentUser', null);
+    localStorage.removeItem('currentUser');
     this.loginForm = this.formBuilder.group({
       userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
       userPassword: ['', Validators.required]
     });
+
+    this.autoLogoutService.initInterval();
   }
 
   // For easy access to form fields
@@ -51,25 +55,28 @@ export class LoginComponent implements OnInit {
       }
     };
     this.loginService.validateLogin(data).subscribe((response:any) => {
-      console.log(response);
-      // if (response && response.PMM2011OperationResponse
-      //     && response.PMM2011OperationResponse.ws_log_recout 
-      //     && response.PMM2011OperationResponse.ws_log_recout.ws_out_status) {
-      //     let msg = response.PMM2011OperationResponse.ws_log_recout.ws_out_status;
-      //     if (msg.includes('welcome')) {
-      //         const array = msg.split('welcome ');
-      //         const result = array.pop(); 
-      //         // this.currentUser = {
-      //         //     currentUserID: this.f.empId.value,
-      //         //     currentUserName: result
-      //         // };
-      //         // localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-      //         this.router.navigate(['/admin/dashboard']);
-      //     } else {
-      //         this.errorMsg = msg;
-      //         return false;
-      //     }
-      // }
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        if (getResponseObj.responseData.role_name === 'Admin') {
+          this.currentUser = getResponseObj.responseData;
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.router.navigate(['/admin/dashboard']);
+        } else if (getResponseObj.responseData.role_name === 'Doctor') {
+          this.currentUser = getResponseObj.responseData;
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.router.navigate(['/doctor/dashboard']);
+        } else if (getResponseObj.responseData.role_name === 'Patient') {
+          this.currentUser = getResponseObj.responseData;
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.router.navigate(['/patient/dashboard']);
+        } else {
+          this.currentUser = null;
+          this.errorMsg = 'You don\'t have permission to access this server';
+        }       
+      } else {
+        this.currentUser = null;
+        this.errorMsg = getResponseObj.responseMessage;
+      }
     })
   }
 }

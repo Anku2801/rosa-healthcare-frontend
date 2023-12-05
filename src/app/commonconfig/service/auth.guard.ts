@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser == null) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }
     this.autoLogoutService.initInterval();
     return true;

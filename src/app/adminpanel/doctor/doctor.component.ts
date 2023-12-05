@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { DataTableOptions } from 'app/commonconfig/service/datatable.model';
 import { DataTableService } from 'app/commonconfig/service/datatable.service';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
@@ -21,13 +22,20 @@ export class DoctorComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
   doctorsList: any[]; 
+  currentUser: any;
 
   constructor(private doctorService: DoctorService,
     private spinner: NgxSpinnerService,
+    private router: Router,
     private dataTableService: DataTableService,
     private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    } 
+
     setTimeout(() => {
       this.getDoctorsList(this.resetFilter);
     }, 800)

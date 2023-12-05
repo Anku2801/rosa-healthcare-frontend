@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ROUTES } from '../../adminpanel/admin-sidebar/admin-sidebar.component';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { LoginService } from 'app/login/login.service';
 
@@ -16,7 +15,6 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
     props = constantsProps;
-    private listTitles: any[];
 
     constructor(location: Location,  
                 private element: ElementRef, 
@@ -27,9 +25,8 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit(){
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+      this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -48,6 +45,8 @@ export class NavbarComponent implements OnInit{
         body.classList.remove('nav-open');
     };
     sidebarToggle() {
+        // const toggleButton = this.toggleButton;
+        // const body = document.getElementsByTagName('body')[0];
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
         } else {
@@ -57,17 +56,26 @@ export class NavbarComponent implements OnInit{
 
     // Get Current Page Name
     getTitle() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if(titlee.charAt(0) === '#'){
-            titlee = titlee.slice( 1 );
+        var currentUrl = this.router.url;
+        if(currentUrl.charAt(0) === '/'){
+            currentUrl = currentUrl.slice( 1 );
+        } else {
+            currentUrl = 'Dashboard';
         }
-
-        for(var item = 0; item < this.listTitles.length; item++){
-            if(this.listTitles[item].path === titlee){
-                return this.listTitles[item].title;
-            }
+        if(currentUrl == "add-dc" || currentUrl == 'search-dc' || currentUrl == 'update-dc') {
+            var array = currentUrl.split('-');
+            let updateStr1 = array[0].charAt(0).toUpperCase() + array[0].slice(1);
+            let updateStr2 = array[1].toUpperCase();
+            currentUrl = updateStr1 + ' ' + updateStr2;
+        } else if(currentUrl == "dc-efficiency") {
+            var array = currentUrl.split('-');
+            let updateStr1 = array[0].toUpperCase();
+            let updateStr2 = array[1].charAt(0).toUpperCase() + array[1].slice(1);
+            currentUrl = updateStr1 + ' ' + updateStr2;
+        } else {
+            currentUrl = currentUrl.replace(/\b\w/g, first => first.toLocaleUpperCase());
         }
-        return 'Dashboard';
+        return currentUrl.replace(/-/g, " ");
     }
 
     // Logout current User

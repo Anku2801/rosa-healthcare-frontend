@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -20,14 +21,21 @@ export class ViewAppointmentComponent implements OnInit {
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
-  bookedAppointmentsLists: any[]; 
+  bookedAppointmentsLists: any[];
+  currentUser: any;
 
   constructor(private bookedAppointmentService: BookedAppointmentService,
     private spinner: NgxSpinnerService,
+    private router: Router,
     private dataTableService: DataTableService,
     private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+  
     setTimeout(() => {
       this.getBookedAppoinmentsList(this.resetFilter);
     }, 800)

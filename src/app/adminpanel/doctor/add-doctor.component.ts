@@ -23,7 +23,8 @@ export class AddDoctorComponent implements OnInit {
   isImageSelected: boolean = false;
   imgFile: any;
   currentTime= new Date();
-
+  currentUser: any;
+  
   services = [
     { id: 1, name: "Neurology" },
     { id: 2, name: "Orthopedics" },
@@ -41,6 +42,11 @@ export class AddDoctorComponent implements OnInit {
               }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    } 
+
     this.addDoctorForm = this.formBuilder.group({
       doctorFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       doctorLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -117,7 +123,8 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_education: this.f.doctorEducation.value,
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
                 rs_doctor_image: this.imgFile,
-                rs_doctor_status: this.f.doctorStatus.value
+                rs_doctor_status: this.f.doctorStatus.value,
+                rs_created_user_id: 1,
             }
         }
     };

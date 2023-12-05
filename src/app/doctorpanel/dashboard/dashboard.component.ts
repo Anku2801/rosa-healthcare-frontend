@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
-import { constantsProps } from 'app/commonconfig/props/constants.props';
+import { constantsProps } from '../../commonconfig/props/constants.props';
 
 Chart.register(...registerables);
 
@@ -14,9 +14,7 @@ export class DashboardComponent implements OnInit {
 
   props = constantsProps;
   currentUserName: String ;
-  currentUserEmail: String ; 
-  datePipe = new DatePipe("en-US");
-  todayDate = this.datePipe.transform(new Date(), 'MMMM, YYYY');
+  currentUserEmail: String ;
   chartdata: any;
   public chart: any;
   diseases_badge_colors = ["col-red", "col-green", "col-cyan", "col-orange", "col-purple"];

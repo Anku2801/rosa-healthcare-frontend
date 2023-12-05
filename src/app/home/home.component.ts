@@ -3,6 +3,7 @@ import { constantsProps } from '../commonconfig/props/constants.props';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { NotificationmsgService } from '../commonconfig/service/notificationmsg.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
@@ -20,9 +21,8 @@ export class HomeComponent implements OnInit {
   dateConfig: Partial<BsDatepickerConfig>;
   minDate = new Date();
   location: Location;
-  // bsValue = new Date();
 
-  constructor(private formBuilder: FormBuilder, private element: ElementRef, private notifyService: NotificationmsgService) { 
+  constructor(private router: Router, private formBuilder: FormBuilder, private element: ElementRef, private notifyService: NotificationmsgService) { 
     this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
   }
 
@@ -90,13 +90,18 @@ export class HomeComponent implements OnInit {
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
 
     window.addEventListener('scroll', this.scrollEvent, true);
+
     this.bookingForm = this.formBuilder.group({
-      serviceId: ['', Validators.required],
+      userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userGender: ['', Validators.required],
+      userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
+      userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
+      userBirthDate: ['', Validators.required],
       doctorId: ['', Validators.required],
-      userFullName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userPhoneno: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      appointmentDate: [new Date(), Validators.required],
-      appointmenTime: ['', Validators.required]
+      userAppointmentDate: ['', Validators.required],
+      userAppointmentTime: ['', Validators.required],
+      userInjury: ['', '']
     });
   }
 
@@ -131,23 +136,30 @@ export class HomeComponent implements OnInit {
         return;
     }
 
+    let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
+    let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {
-      bookingOperation: {
-        rh_add_recin: {
-          rh_service_id: this.f.serviceId.value,
-          rh_doctor_id: this.f.doctorId.value,
-          rh_user_fullname: this.f.userFullName.value,
-          rh_user_phoneno: this.f.userPhoneno.value,
-          rh_appointment_date: this.datePipe.transform(this.f.appointmentDate.value, 'YYYY-MM-dd'),
-          rh_appointment_time: this.f.appointmenTime.value
+        RSBOOKAPPADDOP: {
+            rs_ad_recin: {
+                rs_user_first_name: userfirstname,
+                rs_user_last_name: userlastname,
+                rs_user_gender: this.f.userGender.value,
+                rs_user_mobile: this.f.userMobile.value,
+                rs_user_address: '',
+                rs_user_email: this.f.userEmail.value,
+                rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
+                rs_doctor_id: this.f.doctorId.value,
+                rs_appointment_date: this.datePipe.transform(this.f.userAppointmentDate.value, 'YYYY-MM-dd'),
+                rs_appointment_time: this.f.userAppointmentTime.value,
+                rs_user_injury: this.f.userInjury.value
+            }
         }
-      }
     };
+    console.log('===data====');
+    console.log(data);
 
     this.notifyService.showSuccess('Hi, your appointment has been confirmed <br/>on ' + this.datePipe.transform(this.f.appointmentDate.value, 'dd-MM-YYYY') + '.');
     this.bookingForm.reset();
-    this.f.serviceId.setValue('');
-    this.f.doctorId.setValue('');
     // this.userService.addUser(data).subscribe((response:any) => {
     //   this.spinner.hide();
     //   console.log(response);

@@ -11,11 +11,10 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/doctor/dashboard', title: 'Dashboard',  icon: 'fa fa-pie-chart', class: '' },
     { path: '/doctor/view-appointments', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.VIEW_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-address-book-o', class: '' },
-    // { path: '/doctor/book-appointment', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.BOOK_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-plus-square', class: '' },
-    // { path: '/admin/patients', title: constantsProps.USER_DETAILS.USER_LIST_PAGE_NAME,  icon:'fa fa-wheelchair', class: '' },
-    // { path: '/admin/add-new-patient', title: constantsProps.USER_DETAILS.USER_ADD_PAGE_NAME,  icon:'fa fa-user-plus', class: '' },
-    // { path: '/admin/doctors', title: constantsProps.DOCTOR_DETAILS.DOCTOR_LIST_PAGE_NAME,  icon:'fa fa-user-md', class: '' },
-    // { path: '/admin/add-new-doctor', title: constantsProps.DOCTOR_DETAILS.DOCTOR_ADD_PAGE_NAME,  icon:'fa fa-address-card-o', class: '' }
+    { path: '/doctor/patients', title: constantsProps.USER_DETAILS.USER_LIST_PAGE_NAME,  icon:'fa fa-wheelchair', class: '' },
+    { path: '/doctor/doctors', title: constantsProps.DOCTOR_DETAILS.DOCTOR_LIST_PAGE_NAME,  icon:'fa fa-user-md', class: '' },
+    { path: '/doctor/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_LIST_PAGE_NAME,  icon:'fa fa-cog', class: '' },
+    { path: '/doctor/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
 ];
 
 @Component({

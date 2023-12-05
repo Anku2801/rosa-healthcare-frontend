@@ -21,6 +21,8 @@ export class BookAppointmentComponent implements OnInit {
   submitted: boolean = false;
   datePipe = new DatePipe("en-US");
   public selectedVal: string;
+  currentUser: any;
+
   doctorsList = [
     {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
     {id: 2, name: "Dr. Zachary Brown", service: "Cardiologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"},
@@ -39,7 +41,12 @@ export class BookAppointmentComponent implements OnInit {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
     
-    ngOnInit() {
+  ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+  
     this.addBookingAppoinmentForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -83,13 +90,11 @@ export class BookAppointmentComponent implements OnInit {
                 rs_user_mobile: this.f.userMobile.value,
                 rs_user_address: this.f.userAddress.value,
                 rs_user_email: this.f.userEmail.value,
-                rs_user_password: '',
                 rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
                 rs_doctor_id: this.f.doctorId.value,
                 rs_appointment_date: this.datePipe.transform(this.f.userAppointmentDate.value, 'YYYY-MM-dd'),
                 rs_appointment_time: this.f.userAppointmentTime.value,
-                rs_user_injury: this.f.userInjury.value,
-                rs_user_status: this.props.USER_DETAILS.USER_INACTIVE
+                rs_user_injury: this.f.userInjury.value
             }
         }
     };

@@ -16,9 +16,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/add-new-patient', title: constantsProps.USER_DETAILS.USER_ADD_PAGE_NAME,  icon:'fa fa-user-plus', class: '' },
     { path: '/admin/doctors', title: constantsProps.DOCTOR_DETAILS.DOCTOR_LIST_PAGE_NAME,  icon:'fa fa-user-md', class: '' },
     { path: '/admin/add-new-doctor', title: constantsProps.DOCTOR_DETAILS.DOCTOR_ADD_PAGE_NAME,  icon:'fa fa-address-card-o', class: '' },
-    { path: '/admin/all-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_LIST_PAGE_NAME,  icon:'fa fa-user-md', class: '' },
-    { path: '/admin/add-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_ADD_PAGE_NAME,  icon:'fa fa-address-card-o', class: '' },
-    { path: '/admin/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-address-card-o', class: '' }
+    { path: '/admin/all-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_LIST_PAGE_NAME,  icon:'fa fa-users', class: '' },
+    { path: '/admin/add-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_ADD_PAGE_NAME,  icon:'fa fa-plus-square-o', class: '' },
+    { path: '/admin/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-cog', class: '' },
+    { path: '/admin/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
 ];
 
 @Component({
