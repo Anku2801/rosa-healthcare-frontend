@@ -15,7 +15,7 @@ import { UserService } from './user.service';
 })
 export class AddUserComponent implements OnInit {
   props = constantsProps;
-  addUserForm: FormGroup;
+  addPatientForm: FormGroup;
   dateConfig: Partial<BsDatepickerConfig>;
   submitted: boolean = false;
   datePipe = new DatePipe("en-US");
@@ -25,7 +25,7 @@ export class AddUserComponent implements OnInit {
               private router: Router,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
-              private userService: UserService) {
+              private patientService: UserService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
 
@@ -35,7 +35,7 @@ export class AddUserComponent implements OnInit {
       this.router.navigate(['/home']);
     }
 
-    this.addUserForm = this.formBuilder.group({
+    this.addPatientForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userGender: ['', Validators.required],
@@ -54,14 +54,14 @@ export class AddUserComponent implements OnInit {
   }
 
   // For easy access to form fields
-  get f() { return this.addUserForm.controls; }
+  get f() { return this.addPatientForm.controls; }
 
   // For adding a new user
-  addUser() {
+  addPatient() {
     this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
-    if (this.addUserForm.invalid) {
+    if (this.addPatientForm.invalid) {
         return;
     }
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
@@ -83,27 +83,26 @@ export class AddUserComponent implements OnInit {
                 rs_user_blood_presure: this.f.userBloodPresure.value,
                 rs_user_sugger: this.f.userSugger.value,
                 rs_user_injury: this.f.userInjury.value,
-                rs_user_status: this.f.userStatus.value
+                rs_user_status: this.f.userStatus.value,
+
             }
         }
     };
   
     console.log('===data====');
     console.log(data);
-    // this.userService.addEmployee(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-    //     let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-    //     if (msg.includes('successfully')) {
-    //       this.notifyService.showSuccess(msg);
-    //       setTimeout(() => {
-    //         this.router.navigate(['/admin/search-employee']);
-    //       }, 1500)
-    //     } else {
-    //       this.notifyService.showError(msg);
-    //       this.submitted = false;
-    //     }
-    //   }
-    // })
+    this.patientService.addPatient(data).subscribe((response:any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log('====getResponseObj=====');
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.addPatientForm.reset();
+        this.router.navigate(['/admin/patients']);
+      } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    })
   }
 }

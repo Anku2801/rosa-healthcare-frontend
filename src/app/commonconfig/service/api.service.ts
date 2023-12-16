@@ -53,12 +53,7 @@ export class ApiService {
   }
 
   public postImageData(url = '', data = '') {
-    let httpImageOptions = new Headers();
-    httpImageOptions.append('Content-Type', 'multipart/form-data')
-    httpImageOptions.append('Accept', 'application/json');
-    
-    console.log('img');
-    return this.httpClient.post(API_URL + url, data, { headers: httpImageOptions })
+    return this.httpClient.post(API_URL + url, data)
     .pipe(catchError((error: HttpErrorResponse) => {
       const status = error.status;
       switch(status) {

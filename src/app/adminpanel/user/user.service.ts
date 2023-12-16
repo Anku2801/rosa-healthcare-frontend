@@ -11,12 +11,12 @@ export class UserService {
 
   // Get All Patients
   getAllPatientsList(data) {
-    return this.apiService.postData('pmm2012', data);
+    return this.apiService.postData('RSGetPatient', data);
   }
   
   // Add a New Employee
-  addEmployee(data) {
-    return this.apiService.postData('pmm2016', data);
+  addPatient(data) {
+    return this.apiService.postData('RSAddPatient', data);
   }
 
   // Update a existing Employee

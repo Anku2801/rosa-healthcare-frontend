@@ -13,7 +13,7 @@
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_EMAIL}}</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.DATETIME}}</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.PATIENT_PHONE}}</th>
-                                    <!-- <th>{{props.BOOKED_APPOINTMENT_DETAILS.ASSIGNED_DOCTOR}}</th> -->
+                                    <th>Doctor</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.STATUS}}</th>
                                     <th>{{props.BTN_SEARCH.ACTION}}</th>
@@ -30,7 +30,7 @@
                                         <td>{{bookedappointment.email}}</td>
                                         <td>{{bookedappointment.date}}, {{bookedappointment.time}}</td>
                                         <td width="10%">{{bookedappointment.phone}}</td>
-                                        <!-- <td><a href="">{{bookedappointment.assigneddoc}}</a></td> -->
+                                        <td><a href="">{{bookedappointment.assigneddoc}}</a></td>
                                         <td width="7%">{{bookedappointment.diseases}}</td>
                                         <td width="7%">
                                           <span class="badge badge-solid-blue" *ngIf="bookedappointment.status == props.USER_DETAILS.VISITED">{{bookedappointment.status}}</span>

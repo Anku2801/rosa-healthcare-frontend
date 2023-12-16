@@ -64,7 +64,6 @@ export class AddStaffComponent implements OnInit {
       userBirthDate: ['', Validators.required],
       userEducation: ['', Validators.required],
       userExpYears: ['', Validators.required],
-      userPhoto: ['', Validators.required],
       userStatus: ['', Validators.required]      
     });
   }
@@ -87,8 +86,8 @@ export class AddStaffComponent implements OnInit {
     }
   }
 
-  // For adding a new doctor
-  addDoctor() {
+  // For adding a new user
+  addUser() {
     this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
@@ -102,45 +101,46 @@ export class AddStaffComponent implements OnInit {
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {
-        RSSTAFFADDOP: {
+        RSADMINAPPADDOP: {
             rs_ad_recin: {
-                rs_staff_first_name: userfirstname,
-                rs_staff_last_name: userlastname,
-                rs_staff_gender: this.f.userGender.value,
-                rs_staff_mobile: this.f.userMobile.value,
-                rs_staff_password: this.f.userPassword.value,
-                rs_staff_designation: this.f.userDesignation.value,
-                rs_staff_department: this.f.userDepartment.value,
-                rs_staffr_address: this.f.userAddress.value,
-                rs_staff_email: this.f.userEmail.value,
-                rs_staff_available_status: this.f.userAvailablitityStatus.value,
-                rs_staff_available_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm:ss'),
-                rs_staff_available_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH:mm:ss'),
-                rs_staff_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
-                rs_staff_education: this.f.userEducation.value,
-                rs_staff_exp_years: this.f.userExpYears.value,
-                rs_staff_image: this.imgFile,
-                rs_staff_status: this.f.userStatus.value
+              rs_user_first_name: userfirstname,
+              rs_user_last_name: userlastname,
+              rs_user_gender: this.f.userGender.value,
+              rs_user_mobile: this.f.userMobile.value,
+              rs_user_password: this.f.userPassword.value,
+              rs_user_designation: this.f.userDesignation.value,
+              rs_user_department: this.f.userDepartment.value,
+              rs_user_address: this.f.userAddress.value,
+              rs_user_email: this.f.userEmail.value,
+              rs_user_available_status: this.f.userAvailablitityStatus.value,
+              rs_user_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm:ss'),
+              rs_user_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH:mm:ss'),
+              rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
+              rs_user_education: this.f.userEducation.value,
+              rs_user_exp_years: this.f.userExpYears.value,
+              rs_user_status: this.f.userStatus.value,
+              rs_created_user_id: this.currentUser.id
             }
         }
     };
   
     console.log('===data====');
     console.log(data);
-    // this.staffService.addEmployee(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-    //     let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-    //     if (msg.includes('successfully')) {
-    //       this.notifyService.showSuccess(msg);
-    //       setTimeout(() => {
-    //         this.router.navigate(['/admin/search-employee']);
-    //       }, 1500)
-    //     } else {
-    //       this.notifyService.showError(msg);
-    //       this.submitted = false;
-    //     }
-    //   }
-    // })
+    this.staffService.addUser(data).subscribe((response:any) => {
+      this.spinner.hide();
+      console.log(response);
+      // if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
+      //   let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
+      //   if (msg.includes('successfully')) {
+      //     this.notifyService.showSuccess(msg);
+      //     setTimeout(() => {
+      //       this.router.navigate(['/admin/search-employee']);
+      //     }, 1500)
+      //   } else {
+      //     this.notifyService.showError(msg);
+      //     this.submitted = false;
+      //   }
+      // }
+    })
   }
 }

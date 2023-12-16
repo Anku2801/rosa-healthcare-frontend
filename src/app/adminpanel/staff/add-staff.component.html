@@ -4,7 +4,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="header">
-                <h4 class="title">Doctor Profile</h4>
+                <h4 class="title">Staff Information</h4>
               </div>
               <div class="content">
                   <form id="add-user" [formGroup]="addStaffForm" autocomplete="off">
@@ -55,8 +55,11 @@
                               <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_DESIGNATION}} </label>
                               <select class="form-control form-select" formControlName="userDesignation" [ngClass]="{ 'is-invalid': submitted && f.userDesignation.errors}">
                                 <option value="" disabled>Choose an {{props.DOCTOR_DETAILS.DOCTOR_DESIGNATION}}</option>
-                                <option value="{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}</option>
-                                <option value="{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}">{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Nurse">Nurse</option>
+                                <option value="Lab Assistent">Lab Assistent</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="Receptionist">Receptionist</option>
                               </select>
                           </div>
                         </div>
@@ -130,17 +133,6 @@
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group">
-                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_UP_PHOTO}} <span class="text-danger">*</span></label>
-                              <input #imageInput type="file" accept="image/jpg, image/jpeg, image/x-png" class="form-control form-control-sm" accept="image/*" (change)="processFile($event)" formControlName="userPhoto">
-                              <div class="preview-section" *ngIf="isImageSelected">
-                                <img [src]="imagePreviewSrc" alt="preview-img" class="preview-img" />
-                              </div>
-                              <div style="background-color: #8080803b;" class="preview-section" *ngIf="!isImageSelected">
-                              </div>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
                             <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_STATUS}} <span class="text-danger">*</span></label>
                             <div>
                                 <input type="radio" class="form-check-input" formControlName="userStatus" value="{{props.DOCTOR_DETAILS.DOCTOR_ACTIVE}}" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors}">
@@ -155,8 +147,8 @@
                       
                       <div class="row justify-content-end">
                         <div class="form-group">
-                          <button type="button" class="btn btn-default pull-right btn-lg" routerLink="/admin/all-staff" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
-                          <button type="submit" class="btn btn-primary btn-fill pull-right btn-lg" [disabled]="!this.addStaffForm.valid" (click)="addDoctor()">{{props.DOCTOR_DETAILS.DOCTOR_ADD_BTN}}</button>
+                          <button type="button" class="btn btn-default pull-right" routerLink="/admin/all-staff" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
+                          <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.addStaffForm.valid" (click)="addUser()">{{props.DOCTOR_DETAILS.DOCTOR_ADD_BTN}}</button>
                         </div>
                       </div>
                       <div class="clearfix"></div>

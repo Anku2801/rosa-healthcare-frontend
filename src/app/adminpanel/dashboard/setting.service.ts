@@ -9,13 +9,12 @@ export class SettingService {
 
   constructor(private apiService: ApiService) { }
 
-  // Get Employee Details Based on the ID
-  getEmpDetails(data) {
+  changeUserData(data) {
     return this.apiService.postData('pmm2012', data);
   }
   
   // Add a New Employee
-  addEmployee(data) {
+  changePassword(data) {
     return this.apiService.postData('pmm2016', data);
   }
 

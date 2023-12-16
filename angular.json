@@ -47,7 +47,8 @@
               "node_modules/datatables.net-buttons/js/buttons.html5.js",
               "node_modules/datatables.net-buttons/js/buttons.print.js"
 
-            ]
+            ],
+            "baseHref": "/rosahealthcare"
           },
           "configurations": {
             "production": {
@@ -86,7 +87,8 @@
                 },
                 "fonts": true
               },
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/rosahealthcare"
             }
           }
         },

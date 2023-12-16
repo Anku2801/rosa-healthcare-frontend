@@ -9,18 +9,18 @@ export class BookedAppointmentService {
 
   constructor(private apiService: ApiService) { }
 
-  // Get Employee Details Based on the ID
-  getEmpDetails(data) {
-    return this.apiService.postData('pmm2012', data);
+  // Get all booking Details Based
+  getBookingDetails(data) {
+    return this.apiService.postData('RSGetBooking', data);
   }
   
-  // Add a New Employee
-  addEmployee(data) {
-    return this.apiService.postData('pmm2016', data);
+  // Add a New Booking
+  addBooking(data) {
+    return this.apiService.postData('RSBooking', data);
   }
 
   // Update a existing Employee
-  updateEmployee(data) {
-    return this.apiService.postData('pmm2019', data);
-  }
+  // updateEmployee(data) {
+  //   return this.apiService.postData('pmm2019', data);
+  // }
 }

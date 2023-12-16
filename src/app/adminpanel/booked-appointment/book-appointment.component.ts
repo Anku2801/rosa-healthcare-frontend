@@ -37,7 +37,7 @@ export class BookAppointmentComponent implements OnInit {
               private router: Router,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
-              private userService: BookedAppointmentService) {
+              private bookingService: BookedAppointmentService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
     
@@ -101,20 +101,9 @@ export class BookAppointmentComponent implements OnInit {
   
     console.log('===data====');
     console.log(data);
-    // this.userService.addEmployee(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-    //     let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-    //     if (msg.includes('successfully')) {
-    //       this.notifyService.showSuccess(msg);
-    //       setTimeout(() => {
-    //         this.router.navigate(['/admin/view-appointments']);
-    //       }, 1500)
-    //     } else {
-    //       this.notifyService.showError(msg);
-    //       this.submitted = false;
-    //     }
-    //   }
-    // })
+    this.bookingService.addBooking(data).subscribe((response:any) => {
+      this.spinner.hide();
+      console.log(response);
+    })
   }
 }

@@ -56,88 +56,24 @@ export class ViewAppointmentComponent implements OnInit {
   }
 
   getBookedAppoinmentsList(resetFilter) {
-    this.bookedAppointmentsLists = 
-    [
-      {
-        "id": 1,
-        "name": "Leanne Graham",
-        "email": "Sincere@april.biz",
-        "phone": "777368031",
-        "gender": "Male",
-        "assigneddoc": "Dr.Jacob Ryan",
-        "birthdate": "12/05/2016",
-        "date": "12/05/2016",
-        "time": "12.00 PM",
-        "diseases": "Jaundice",
-        "status": "Visited"
-      },
-      {
-        "id": 2,
-        "name": "Ervin Howell",
-        "email": "Shanna123333@melissa.tv",
-        "phone": "987368031",
-        "gender": "Male",
-        "assigneddoc": "Dr.Sharon Ryan",
-        "birthdate": "09/05/2016",
-        "date": "12/05/2016",
-        "time": "2.00 PM",
-        "diseases": "Jaundice",
-        "status": "Visited"
-      },
-      {
-        "id": 3,
-        "name": "Sharon Hinje",
-        "email": "sharon@melissa.tv",
-        "phone": "825368031",
-        "gender": "Female",
-        "assigneddoc": "Dr.Jacob Ryan",
-        "birthdate": "09/05/2016",
-        "date": "12/05/2016",
-        "time": "2.00 PM",
-        "diseases": "Jaundice",
-        "status": "Not-Visited"
-      },
-      {
-        "id": 4,
-        "name": "Jun Howell",
-        "email": "junetest@melissa.tv",
-        "phone": "677368031",
-        "gender": "Male",
-        "assigneddoc": "Dr.Jacob Ryan",
-        "birthdate": "09/05/2016",
-        "date": "12/05/2016",
-        "time": "2.00 PM",
-        "diseases": "Jaundice",
-        "status": "Visited"
-      },
-      {
-        "id": 5,
-        "name": "Rockey Jadhav",
-        "email": "rockey@melissa.tv",
-        "phone": "817368031",
-        "gender": "Female",
-        "assigneddoc": "Dr.Jacob Ryan",
-        "birthdate": "09/05/2016",
-        "date": "12/05/2016",
-        "time": "2.00 PM",
-        "diseases": "Jaundice",
-        "status": "Not-Visited"
+    this.spinner.show();
+    var data = {
+      GetBookingOperation: {
+        rs_add_recin: {
+        }
       }
-    ];
-    this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
-    // this.spinner.show();
-    // var data = { };
-    // this.bookedAppointmentService.getAllPatientsList(data).subscribe((response: any) => {
-    //   this.spinner.hide();
-    //   let getResponseObj = JSON.parse(JSON.stringify(response));
-    //   console.log(getResponseObj);
-    //   if (getResponseObj != null && getResponseObj.responseData != null) {
-    //     this.patientsList = getResponseObj.responseData;
-    //     this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
-    //   } else {
-    //     this.patientsList = null;
-    //     this.notifyService.showError(getResponseObj.responseMessage);
-    //   }
-    // });
+    };
+    this.bookedAppointmentService.getBookingDetails(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.bookedAppointmentsLists = getResponseObj.responseData;
+        this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      } else {
+        this.bookedAppointmentsLists = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 }

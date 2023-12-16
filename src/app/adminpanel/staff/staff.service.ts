@@ -9,14 +9,14 @@ export class StaffService {
 
   constructor(private apiService: ApiService) { }
 
-  // Get All Patients
-  getAllPatientsList(data) {
-    return this.apiService.postData('pmm2012', data);
+  // Get All Staff
+  getAllStaffList(data) {
+    return this.apiService.postData('RSGetAdmin', data);
   }
   
-  // Add a New Employee
-  addEmployee(data) {
-    return this.apiService.postData('pmm2016', data);
+  // Add a add User
+  addUser(data) {
+    return this.apiService.postData('RSAdminAdd', data);
   }
 
   // Update a existing Employee
