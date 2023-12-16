@@ -16,9 +16,9 @@ import { LogoutComponent } from '../../login/logout.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',            component: DashboardComponent},
     { path: 'patients',             component: UserComponent,           canActivate: [AuthGuard]},
-    { path: 'add-new-patient',      component: AddUserComponent,        canActivate: [AuthGuard]},
+    { path: 'add-patient',      component: AddUserComponent,        canActivate: [AuthGuard]},
     { path: 'doctors',              component: DoctorComponent,         canActivate: [AuthGuard]},
-    { path: 'add-new-doctor',       component: AddDoctorComponent,      canActivate: [AuthGuard]},
+    { path: 'add-doctor',       component: AddDoctorComponent,      canActivate: [AuthGuard]},
     { path: 'view-appointments',    component: ViewAppointmentComponent,canActivate: [AuthGuard]},
     { path: 'book-appointment',     component: BookAppointmentComponent,canActivate: [AuthGuard]},
     { path: 'add-staff',            component: AddStaffComponent,       canActivate: [AuthGuard]},

@@ -57,23 +57,14 @@ export class NavbarComponent implements OnInit{
     // Get Current Page Name
     getTitle() {
         var currentUrl = this.router.url;
-        if(currentUrl.charAt(0) === '/'){
-            currentUrl = currentUrl.slice( 1 );
+        var array = currentUrl.split('/');
+        let updateStr2 = array[2].charAt(0).toUpperCase() + array[2].slice(1);
+        var newUrlData = updateStr2.split('-');
+        if (newUrlData && newUrlData.length > 1) {
+            let secondWord = newUrlData[1].charAt(0).toUpperCase() + newUrlData[1].slice(1);
+            currentUrl = newUrlData[0] + ' ' + secondWord;
         } else {
-            currentUrl = 'Dashboard';
-        }
-        if(currentUrl == "add-dc" || currentUrl == 'search-dc' || currentUrl == 'update-dc') {
-            var array = currentUrl.split('-');
-            let updateStr1 = array[0].charAt(0).toUpperCase() + array[0].slice(1);
-            let updateStr2 = array[1].toUpperCase();
-            currentUrl = updateStr1 + ' ' + updateStr2;
-        } else if(currentUrl == "dc-efficiency") {
-            var array = currentUrl.split('-');
-            let updateStr1 = array[0].toUpperCase();
-            let updateStr2 = array[1].charAt(0).toUpperCase() + array[1].slice(1);
-            currentUrl = updateStr1 + ' ' + updateStr2;
-        } else {
-            currentUrl = currentUrl.replace(/\b\w/g, first => first.toLocaleUpperCase());
+            currentUrl = updateStr2;
         }
         return currentUrl.replace(/-/g, " ");
     }
