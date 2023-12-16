@@ -1530,13 +1530,11 @@ select.ng-invalid.ng-touched {
   min-width: 0;
   word-wrap: break-word;
 }
-.table-responsive {
-  font-size: 13px !important;
-}
 .table tbody tr td, .table tbody tr th {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   vertical-align: middle;
+  font-size: 13px !important;
 }
 .badge {
   padding: 5px 8px;
@@ -1678,5 +1676,16 @@ table tr td .badge {
   .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 40px !important;
   }
+}
+
+.table-img img {
+  border-radius: 5px;
+  height: 33px;
+  width: 33px;
+  background: #fff;
+  position: inherit;
+}
+img, svg {
+  vertical-align: middle;
 }
 

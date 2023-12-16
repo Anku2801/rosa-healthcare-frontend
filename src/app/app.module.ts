@@ -2,6 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from "angular-datatables";
@@ -35,6 +36,7 @@ import { PatientLayoutComponent } from './layouts/patient-layout/patient-layout.
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
     TooltipModule.forRoot(),
+    DatePipe,
     RouterModule,
     CarouselModule,
     HttpClientModule,

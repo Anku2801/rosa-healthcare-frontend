@@ -76,6 +76,7 @@ export class AddDoctorComponent implements OnInit {
   processFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       this.imgFile = event.target.files[0];
+      console.log(this.imgFile);
       var reader: FileReader = new FileReader();
       reader.onload = (readerEvt: any) => {
         this.imagePreviewSrc = readerEvt.target.result;
@@ -122,29 +123,49 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_birth_date: this.datePipe.transform(this.f.doctorBirthDate.value, 'YYYY-MM-dd'),
                 rs_doctor_education: this.f.doctorEducation.value,
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
-                rs_doctor_image: this.imgFile,
+                rs_doctor_image: this.imgFile.name,
                 rs_doctor_status: this.f.doctorStatus.value,
-                rs_created_user_id: 1,
+                rs_created_user_id: 1
             }
         }
     };
   
     console.log('===data====');
     console.log(data);
-    // this.doctorService.addEmployee(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-    //     let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-    //     if (msg.includes('successfully')) {
-    //       this.notifyService.showSuccess(msg);
-    //       setTimeout(() => {
-    //         this.router.navigate(['/admin/search-employee']);
-    //       }, 1500)
-    //     } else {
-    //       this.notifyService.showError(msg);
-    //       this.submitted = false;
-    //     }
-    //   }
-    // })
+    
+
+    var Imagedata = {
+      file: this.imgFile
+    };    
+
+    console.log('===Imagedata====');
+    console.log(Imagedata);
+
+    this.doctorService.addDoctorsImage(Imagedata).subscribe((response: any) => {
+      console.log('====add response=====');
+      console.log(response);
+      // if (response) {
+      //   this.doctorService.addDoctors(data).subscribe((DocResponse: any) => {
+      //     this.spinner.hide();
+      //     console.log('====DocResponse=====');
+      //     console.log(DocResponse);
+      //     let getResponseObj = JSON.parse(JSON.stringify(DocResponse));
+      //     console.log('====getResponseObj=====');
+      //     console.log(getResponseObj);
+      //     // console.log(getResponseObj);
+      //     // if (getResponseObj != null && getResponseObj.responseData != null) {
+      //     //    this.doctorsList = getResponseObj.responseData;
+      //     //    console.log('====response=====');
+      //     //    console.log(this.doctorsList);
+      //     //    this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      //     // } else {
+      //     //    this.doctorsList = null;
+      //     //    this.notifyService.showError(getResponseObj.responseMessage);
+      //     // }
+      //   });
+      // } else {
+      //   console.log("Error in the Creating Doctor.");
+      // }
+    });
   }
 }

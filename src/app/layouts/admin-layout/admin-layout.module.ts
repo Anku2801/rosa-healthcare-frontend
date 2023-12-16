@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from "@angular/material/button-toggle"; 
 import { DataTablesModule } from "angular-datatables";
@@ -31,6 +32,7 @@ import { SettingComponent } from '../../adminpanel/dashboard/setting.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatButtonToggleModule,
+    DatePipe,
     DataTablesModule,
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),

@@ -51,4 +51,33 @@ export class ApiService {
       return of([]);
     }));
   }
+
+  public postImageData(url = '', data = '') {
+    let httpImageOptions = new Headers();
+    httpImageOptions.append('Content-Type', 'multipart/form-data')
+    httpImageOptions.append('Accept', 'application/json');
+    
+    console.log('img');
+    return this.httpClient.post(API_URL + url, data, { headers: httpImageOptions })
+    .pipe(catchError((error: HttpErrorResponse) => {
+      const status = error.status;
+      switch(status) {
+        case 0: 
+              this.notifyService.showError(this.props.SERVER_CONNECTION_ERROR);
+              break;
+        case 404:
+              this.notifyService.showError(this.props.NOT_FOUND);
+              break;
+        case 403:
+              this.notifyService.showError(this.props.ACCESS_DENIED);
+              break;;
+        case 500:
+              this.notifyService.showError(this.props.SERVER_CONNECTION_ERROR)
+              break;
+        default:
+              this.notifyService.showError(this.props.UNKNOWN_ERROR);
+      }
+      return of([]);
+    }));
+  }
 }

@@ -9,14 +9,19 @@ export class DoctorService {
 
   constructor(private apiService: ApiService) { }
 
-  // Get Employee Details Based on the ID
-  getEmpDetails(data) {
-    return this.apiService.postData('pmm2012', data);
+  // Get Doctor Details Based on the ID
+  getAllDoctors(data) {
+    return this.apiService.postData('RSGetDoctor', data);
   }
   
-  // Add a New Employee
-  addEmployee(data) {
-    return this.apiService.postData('pmm2016', data);
+  //Add Doctor Image
+  addDoctorsImage(Imagedata) {
+    return this.apiService.postImageData('RDIimageUpload', Imagedata);
+  }
+  
+  // Add a New Doctor
+  addDoctors(data) {
+    return this.apiService.postData('RSDoctorAdd', data);
   }
 
   // Update a existing Employee

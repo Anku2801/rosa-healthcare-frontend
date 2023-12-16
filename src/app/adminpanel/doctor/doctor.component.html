@@ -8,11 +8,15 @@
                         <table id="doctor-list-tbl" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-no-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>SR. No</th>
+                                    <!-- <th>SR. No</th> -->
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_IMG}}</th>
                                     <th>{{props.DOCTOR_DETAILS.DOCTOR_NAME}}</th>
-                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_EMAIL}}</th>
-                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_MOBILE}}</th>
                                     <th>{{props.DOCTOR_DETAILS.DOCTOR_SERVICE}}</th>
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_AVAILABILITITY}}</th>
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_TIME}}</th>
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_DEG}}</th>
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_MOBILE}}</th>
+                                    <th>{{props.DOCTOR_DETAILS.DOCTOR_EMAIL}}</th>
                                     <th>{{props.DOCTOR_DETAILS.DOCTOR_EXP}}</th>
                                     <th>{{props.DOCTOR_DETAILS.DOCTOR_STATUS}}</th>
                                     <th>{{props.DOCTOR_DETAILS.DOCTOR_ACTION}}</th>
@@ -20,13 +24,23 @@
                             </thead>
                             <tbody *ngIf="doctorsList">
                                 <ng-container *ngFor="let doctors of doctorsList; index as i">
-                                    <tr *ngIf="doctors.offer_id">
-                                        <td>{{i+1}}</td>
-                                        <td width="20%">{{doctors.offers.name}}</td>
-                                        <td width="20%">{{doctors.vehicle.name}}</td>
-                                        <td width="15%">{{doctors.offer_amount}}</td>
-                                        <td width="15%">{{doctors.start_time | date :'medium'}}</td>
-                                        <td width="15%">{{doctors.end_time | date :'medium'}}</td>
+                                    <tr *ngIf="doctors.user.email">
+                                        <td><div class="table-img"><img src="{{doctors.image}}"/></div></td>
+                                        <td width="14%">{{doctors.user.first_name}} {{doctors.user.last_name}}</td>
+                                        <td>{{doctors.department.name}}</td>
+                                        <td>{{doctors.available_status}}</td>
+                                        <td width="12%">{{doctors.available_start_time | date}} to {{doctors.available_end_time | date :'medium'}}</td>
+                                        <td>{{doctors.education}}</td>
+                                        <td width="10%">{{doctors.user.phone_no}}</td>
+                                        <td>{{doctors.user.email}}</td>
+                                        <td>{{doctors.exp_years}}</td>
+                                        <td>
+                                          <span class="badge badge-solid-active" *ngIf="doctors.user.status == props.USER_DETAILS.USER_ACTIVE">{{doctors.user.status}}</span>
+                                          <span class="badge badge-solid-inactive" *ngIf="doctors.user.status == props.USER_DETAILS.USER_INACTIVE">{{doctors.user.status}}</span>
+                                        </td>
+                                        <td width="7%" class="text-center">
+                                          <span><button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update"><i class="fa fa-pencil-square-o"></i></button></span>
+                                        </td>
                                     </tr>
                                 </ng-container>
                             </tbody>

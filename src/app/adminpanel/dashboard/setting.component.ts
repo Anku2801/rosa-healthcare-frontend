@@ -29,9 +29,9 @@ export class SettingComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.settingsForm = this.formBuilder.group({
-      // userFirstName: ['', Validators.required],
-      // userLastName: ['', Validators.required],
-      // userAddress: ['', Validators.required],
+      userFirstName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userLastName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+      userAddress: ['', Validators.required],
       userPassword: ['', ''],
       userConfirmPassword: ['', '']
     });
