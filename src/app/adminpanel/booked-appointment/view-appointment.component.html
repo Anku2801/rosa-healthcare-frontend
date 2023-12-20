@@ -22,23 +22,24 @@
                             <tbody *ngIf="bookedAppointmentsLists">
                                 <ng-container *ngFor="let bookedappointment of bookedAppointmentsLists; index as i">
                                     <tr *ngIf="bookedappointment.email">
-                                        <td>{{bookedappointment.name}}</td>
+                                        <td>{{bookedappointment.firstName}} {{bookedappointment.lastName}}</td>
                                         <td width="5%">
                                             <span class="badge badge-solid-green" *ngIf="bookedappointment.gender == props.USER_DETAILS.GENDER_MALE">{{bookedappointment.gender}}</span>
                                             <span class="badge badge-solid-purple" *ngIf="bookedappointment.gender == props.USER_DETAILS.GENDER_FEMALE">{{bookedappointment.gender}}</span>
                                         </td>
                                         <td>{{bookedappointment.email}}</td>
-                                        <td>{{bookedappointment.date}}, {{bookedappointment.time}}</td>
-                                        <td width="10%">{{bookedappointment.phone}}</td>
-                                        <td><a href="">{{bookedappointment.assigneddoc}}</a></td>
-                                        <td width="7%">{{bookedappointment.diseases}}</td>
+                                        <td>{{bookedappointment.appointmentDate}}, {{bookedappointment.appointmentTime}}</td>
+                                        <td width="10%">{{bookedappointment.mobile}}</td>
+                                        <td><a href="">Dr.{{bookedappointment.doctor.user.first_name}} {{bookedappointment.doctor.user.last_name}}</a></td>
+                                        <td width="7%">{{bookedappointment.injury}}</td>
                                         <td width="7%">
-                                          <span class="badge badge-solid-blue" *ngIf="bookedappointment.status == props.USER_DETAILS.VISITED">{{bookedappointment.status}}</span>
-                                          <span class="badge badge-solid-red" *ngIf="bookedappointment.status == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.status}}</span>
+                                            <span class="badge badge-solid-purple" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING">{{bookedappointment.appointmentStatus}}</span>
+                                            <span class="badge badge-solid-blue" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.VISITED">{{bookedappointment.appointmentStatus}}</span>
+                                            <span class="badge badge-solid-red" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.appointmentStatus}}</span>
                                         </td>
                                         <th width="5%">
                                           <span>
-                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right"  tooltip="Update" [state]="bookedappointment" routerLink="/admin/book-appointment"><i class="fa fa-pencil-square-o"></i></button>
                                           </span>
                                         </th>
                                     </tr>

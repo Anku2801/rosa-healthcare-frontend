@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatButtonToggleGroup, MatButtonToggleModule, MatButtonToggleChange } from '@angular/material/button-toggle';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -8,7 +8,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { BookedAppointmentService } from './booked-appointment.service';
-
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-book-appointment',
@@ -22,6 +22,7 @@ export class BookAppointmentComponent implements OnInit {
   datePipe = new DatePipe("en-US");
   public selectedVal: string;
   currentUser: any;
+  editBookingId: any;
 
   doctorsList = [
     {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
@@ -35,6 +36,7 @@ export class BookAppointmentComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
               private bookingService: BookedAppointmentService) {
@@ -46,7 +48,7 @@ export class BookAppointmentComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
-  
+
     this.addBookingAppoinmentForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -60,6 +62,29 @@ export class BookAppointmentComponent implements OnInit {
       userAppointmentTime: ['', Validators.required],
       userInjury: ['', '']
     });
+  
+    // Get details
+    this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editBookingData = res;
+
+      console.log('editBookingData====');
+      console.log(editBookingData);
+      if(editBookingData && (editBookingData != null) && editBookingData.firstName) {
+        this.editBookingId = editBookingData.id;
+        this.addBookingAppoinmentForm.controls.userFirstname.setValue(editBookingData.firstName);
+        this.addBookingAppoinmentForm.controls.userLastname.setValue(editBookingData.lastName);
+        this.addBookingAppoinmentForm.controls.userGender.setValue(editBookingData.gender);
+        this.addBookingAppoinmentForm.controls.userMobile.setValue(editBookingData.mobile);
+        this.addBookingAppoinmentForm.controls.userAddress.setValue(editBookingData.address);
+        this.addBookingAppoinmentForm.controls.userEmail.setValue(editBookingData.email);
+        this.addBookingAppoinmentForm.controls.userBirthDate.setValue(editBookingData.birthDate);
+        this.addBookingAppoinmentForm.controls.doctorId.setValue(editBookingData.doctor.user.id);
+        this.addBookingAppoinmentForm.controls.userAppointmentDate.setValue(editBookingData.appointmentDate);
+        this.addBookingAppoinmentForm.controls.userAppointmentTime.setValue(editBookingData.appointmentTime);
+        this.selectedVal = editBookingData.appointmentTime;        
+        this.addBookingAppoinmentForm.controls.userInjury.setValue(editBookingData.injury);
+      }
+    })
   }
 
   // For easy access to form fields
@@ -98,12 +123,17 @@ export class BookAppointmentComponent implements OnInit {
             }
         }
     };
-  
-    console.log('===data====');
-    console.log(data);
+
     this.bookingService.addBooking(data).subscribe((response:any) => {
       this.spinner.hide();
-      console.log(response);
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.addBookingAppoinmentForm.reset();
+        this.router.navigate(['/admin/view-appointments']);
+      } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+      }
     })
   }
 }

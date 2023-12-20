@@ -125,27 +125,20 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
                 rs_doctor_image: this.imgFile.name,
                 rs_doctor_status: this.f.doctorStatus.value,
-                rs_created_user_id: this.currentUser.id
+                rs_created_user_id: 1
             }
         }
     };
-  
-    console.log('===data====');
-    console.log(data);
 
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
 
     this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log('====imageObj=====');
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
           this.doctorService.addDoctors(data).subscribe((DocResponse: any) => {
           this.spinner.hide();
           let getResponseObj = JSON.parse(JSON.stringify(DocResponse));
-          console.log('====getResponseObj=====');
-          console.log(getResponseObj);
           if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
             this.notifyService.showSuccess(getResponseObj.responseMessage);
             this.addDoctorForm.reset();

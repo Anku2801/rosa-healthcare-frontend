@@ -2,11 +2,16 @@
 <div class="wrapper admin-panel">
   <div class="sidebar" data-color="azure" data-image="">
       <app-doctor-sidebar></app-doctor-sidebar>
-      <div class="sidebar-background" style="background-image: url(/assets/images/medical-bg.jpg)"></div>
+      <div class="sidebar-background" style="background-image: url(assets/images/medical-bg.jpg)"></div>
   </div>
 
   <div class="main-panel">
       <navbar-cmp></navbar-cmp>
       <router-outlet></router-outlet>
+      <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" 
+        size = "medium" color = "#fff" 
+        type = "square-jelly-box" [fullScreen] = "true">
+        <p style="color: white" > Loading... </p>
+      </ngx-spinner>
   </div>
 </div>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lbd-free-angular-cli": {
+    "ROSAHEALTHApp": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/ROSAHEALTHApp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
@@ -25,10 +25,10 @@
               "node_modules/animate.css/animate.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/ngx-spinner/animations/square-jelly-box.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "node_modules/ngx-spinner/animations/square-jelly-box.css",
               "src/assets/sass/light-bootstrap-dashboard.scss",
               "src/assets/css/demo.css",
               "src/assets/css/roboto.css",
@@ -46,9 +46,8 @@
               "node_modules/datatables.net-buttons/js/buttons.flash.js",
               "node_modules/datatables.net-buttons/js/buttons.html5.js",
               "node_modules/datatables.net-buttons/js/buttons.print.js"
-
             ],
-            "baseHref": "/rosahealthcare"
+            "baseHref": "/rosahealthcare/"
           },
           "configurations": {
             "production": {
@@ -66,6 +65,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "baseHref": "/rosahealthcare/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -88,29 +88,29 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "baseHref": "/rosahealthcare"
+              "baseHref": "/rosahealthcare/"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "defaultConfiguration": "development",
           "options": {
-            "browserTarget": "lbd-free-angular-cli:build"
+            "browserTarget": "ROSAHEALTHApp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "lbd-free-angular-cli:build:production"
+              "browserTarget": "ROSAHEALTHApp:build:production"
             },
             "development": {
-              "browserTarget": "lbd-free-angular-cli:build:development"
-            },
-            "defaultConfiguration": "development"
+              "browserTarget": "ROSAHEALTHApp:build:development"
+            }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lbd-free-angular-cli:build"
+            "browserTarget": "ROSAHEALTHApp:build"
           }
         },
         "test": {
@@ -148,7 +148,7 @@
         }
       }
     },
-    "lbd-free-angular-cli-e2e": {
+    "ROSAHEALTHApp-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -157,7 +157,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "lbd-free-angular-cli:serve"
+            "devServerTarget": "ROSAHEALTHApp:serve"
           }
         },
         "lint": {
@@ -172,7 +172,7 @@
       }
     }
   },
-  "defaultProject": "lbd-free-angular-cli",
+  "defaultProject": "ROSAHEALTHApp",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

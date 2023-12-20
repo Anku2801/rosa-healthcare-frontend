@@ -20,6 +20,13 @@ export class AddUserComponent implements OnInit {
   submitted: boolean = false;
   datePipe = new DatePipe("en-US");
   currentUser: any;
+
+  doctorsList = [
+    {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
+    {id: 2, name: "Dr. Zachary Brown", service: "Cardiologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"},
+    {id: 3, name: "Dr. Isabella Davies", service: "Gynecologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item3.jpg"},
+    {id: 4, name: "Dr. William Davies", service: "Nursing", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"}
+  ];
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -43,6 +50,7 @@ export class AddUserComponent implements OnInit {
       userBirthDate: ['', Validators.required],
       userAge: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
       userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
+      doctorId: ['', Validators.required],
       userMaritalStatus: ['', Validators.required],
       userAddress: ['', Validators.required],
       userBloodGroup: ['', Validators.required],
@@ -67,7 +75,7 @@ export class AddUserComponent implements OnInit {
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {
-        RSUSERADDOP: {
+        RSPATIENTADDOP: {
             rs_ad_recin: {
                 rs_user_first_name: userfirstname,
                 rs_user_last_name: userlastname,
@@ -77,6 +85,7 @@ export class AddUserComponent implements OnInit {
                 rs_user_age: this.f.userAge.value,
                 rs_user_email: this.f.userEmail.value,
                 rs_user_password: 'rosahealthcare',
+                rs_doctor_id: this.f.doctorId.value,
                 rs_user_marital_status: this.f.userMaritalStatus.value,
                 rs_user_address: this.f.userAddress.value,
                 rs_user_blood_group: this.f.userBloodGroup.value,
@@ -84,6 +93,7 @@ export class AddUserComponent implements OnInit {
                 rs_user_sugger: this.f.userSugger.value,
                 rs_user_injury: this.f.userInjury.value,
                 rs_user_status: this.f.userStatus.value,
+                rs_created_user_id: this.currentUser.id
 
             }
         }

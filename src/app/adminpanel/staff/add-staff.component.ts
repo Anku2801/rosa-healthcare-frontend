@@ -95,7 +95,8 @@ export class AddStaffComponent implements OnInit {
         return;
     }
     if (this.f.userPassword.value !== this.f.userReenterPassword.value) {
-      this.notifyService.showError('Passwords do not match.');
+      this.notifyService.showError('Password do not match.');
+      return;
     }
 
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
@@ -129,18 +130,16 @@ export class AddStaffComponent implements OnInit {
     this.staffService.addUser(data).subscribe((response:any) => {
       this.spinner.hide();
       console.log(response);
-      // if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-      //   let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-      //   if (msg.includes('successfully')) {
-      //     this.notifyService.showSuccess(msg);
-      //     setTimeout(() => {
-      //       this.router.navigate(['/admin/search-employee']);
-      //     }, 1500)
-      //   } else {
-      //     this.notifyService.showError(msg);
-      //     this.submitted = false;
-      //   }
-      // }
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log('====getResponseObj=====');
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.addStaffForm.reset();
+        this.router.navigate(['/admin/all-staff']);
+      } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+      }
     })
   }
 }

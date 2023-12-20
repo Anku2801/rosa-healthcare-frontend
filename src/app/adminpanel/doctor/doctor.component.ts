@@ -72,8 +72,6 @@ export class DoctorComponent implements OnInit {
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
          this.doctorsList = getResponseObj.responseData;
-         console.log('====response=====');
-         console.log(this.doctorsList);
          this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
       } else {
          this.doctorsList = null;

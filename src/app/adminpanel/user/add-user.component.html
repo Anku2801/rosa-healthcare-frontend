@@ -83,6 +83,15 @@
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group">
+                            <label class="form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
+                            <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
+                              <option value="" disabled>Choose a Doctor</option>
+                              <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
                               <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BLOOD_GROUP}} <span class="text-danger">*</span></label>
                               <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_BLOOD_GROUP}}" formControlName="userBloodGroup" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userBloodGroup.errors}">
                           </div>

@@ -47,71 +47,7 @@ export class UserComponent implements OnInit {
     this.dtOptions = this.dataTableService.getDataTableOptionsWithFilter(dtOptionsObj);
   }
 
-  getPatientsList(resetFilter){
-    // this.patientsList = 
-    // [
-    //   {
-    //     "id": 1,
-    //     "name": "Leanne Graham",
-    //     "email": "Sincere@april.biz",
-    //     "gender": "Male",
-    //     "address": "NEW Delhi - 422101",
-    //     "phone": "777368031",
-    //     "birthdate": "12/05/2016",
-    //     "bloodgroup": "O+",
-    //     "treatment": "Fever",
-    //     "status": "Active"
-    //   },
-    //   {
-    //     "id": 2,
-    //     "name": "Ervin Howell",
-    //     "email": "Shanna@melissa.tv",
-    //     "gender": "Male",
-    //     "address": "NEW Delhi - 422101",
-    //     "phone": "987368031",
-    //     "birthdate": "09/05/2016",
-    //     "bloodgroup": "AB+",
-    //     "treatment": "Malaria",
-    //     "status": "Active"
-    //   },
-    //   {
-    //     "id": 3,
-    //     "name": "Sharon Hinje",
-    //     "email": "sharon@melissa.tv",
-    //     "gender": "Female",
-    //     "address": "NEW Delhi - 422101",
-    //     "phone": "825368031",
-    //     "birthdate": "09/05/2016",
-    //     "bloodgroup": "A+",
-    //     "treatment": "Malaria",
-    //     "status": "Inactive"
-    //   },
-    //   {
-    //     "id": 4,
-    //     "name": "Jun Howell",
-    //     "email": "junetest@melissa.tv",
-    //     "gender": "Male",
-    //     "address": "NEW Mumbai - 422101",
-    //     "phone": "677368031",
-    //     "birthdate": "09/05/2016",
-    //     "bloodgroup": "B+",
-    //     "treatment": "Malaria",
-    //     "status": "Active"
-    //   },
-    //   {
-    //     "id": 5,
-    //     "name": "Rockey Jadhav",
-    //     "email": "rockey@melissa.tv",
-    //     "gender": "Female",
-    //     "address": "NEW Nashik - 422101",
-    //     "phone": "817368031",
-    //     "birthdate": "09/05/2016",
-    //     "bloodgroup": "O+",
-    //     "treatment": "Malaria",
-    //     "status": "Inactive"
-    //   }
-    // ];
-    // this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+  getPatientsList(resetFilter) {
     this.spinner.show();
     var data = {
       GetPatientOperation: {
@@ -123,13 +59,13 @@ export class UserComponent implements OnInit {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);
-      // if (getResponseObj != null && getResponseObj.responseData != null) {
-      //   this.patientsList = getResponseObj.responseData;
-      //   this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
-      // } else {
-      //   this.patientsList = null;
-      //   this.notifyService.showError(getResponseObj.responseMessage);
-      // }
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.patientsList = getResponseObj.responseData;
+        this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      } else {
+        this.patientsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
     });
   }
 }
