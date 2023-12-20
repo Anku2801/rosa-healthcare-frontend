@@ -28,7 +28,7 @@
                                             <span class="badge badge-solid-purple" *ngIf="bookedappointment.gender == props.USER_DETAILS.GENDER_FEMALE">{{bookedappointment.gender}}</span>
                                         </td>
                                         <td>{{bookedappointment.email}}</td>
-                                        <td>{{bookedappointment.appointmentDate}}, {{bookedappointment.appointmentTime}}</td>
+                                        <td>{{bookedappointment.appointmentDate | date: 'dd/MM/yyyy'}}, {{bookedappointment.appointmentTime}}</td>
                                         <td width="10%">{{bookedappointment.mobile}}</td>
                                         <td><a href="">Dr.{{bookedappointment.doctor.user.first_name}} {{bookedappointment.doctor.user.last_name}}</a></td>
                                         <td width="7%">{{bookedappointment.injury}}</td>

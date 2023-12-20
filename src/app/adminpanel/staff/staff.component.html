@@ -29,7 +29,7 @@
                                         <td width="15%">{{staff.userDO.email}}</td>
                                         <td width="18%">{{staff.address}}</td>
                                         <td width="8%">{{staff.userDO.phone_no}}</td>
-                                        <td>{{staff.birthDate}}</td>
+                                        <td>{{staff.birthDate | date: 'dd/MM/yyyy'}}</td>
                                         <td width="4%">
                                             <span class="badge badge-solid-active" *ngIf="staff.status == props.USER_DETAILS.USER_ACTIVE">{{staff.status}}</span>
                                             <span class="badge badge-solid-inactive" *ngIf="staff.status == props.USER_DETAILS.USER_INACTIVE">{{staff.status}}</span>
