@@ -52,46 +52,52 @@ export class SettingComponent implements OnInit {
       if ((this.f.userPassword.value == '') || (this.f.userConfirmPassword.value == '') || (this.f.userPassword.value !== this.f.userConfirmPassword.value)) {
         this.notifyService.showError('Passwords do not match.');
         return;
-      } else {
-        var data = {
-          RSDOCADDOP: {
-            rs_ad_recin: {
-                rs_user_pswd: this.f.userPassword.value,
-                rs_created_user_id: this.currentUser.id
-            }
-          }
-        };
-
-        console.log('changePassword===========');
-        console.log(data);
-
-        this.settingService.changePassword(data).subscribe((response: any) => {
-          let getResponseObj = JSON.parse(JSON.stringify(response));
-          console.log('====changePassword=====');
-          console.log(getResponseObj);
-        });
       }
-    } else {
-      let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
-      let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
+
+      var data = {
+        RSDOCADDOP: {
+          rs_ad_recin: {
+              rs_user_pswd: this.f.userPassword.value,
+              rs_user_id: this.currentUser.id
+          }
+        }
+      };
+
+      this.settingService.changePassword(data).subscribe((response: any) => {
+        this.spinner.hide();
+        let getResponseObj = JSON.parse(JSON.stringify(response));
+        if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+          this.notifyService.showSuccess(getResponseObj.responseMessage);
+          this.settingsForm.get('userPassword').reset();
+          this.settingsForm.get('userConfirmPassword').reset();
+        } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+        }
+      });
+    } 
+    
+    if (type == 'changes') {
+      let userfirstname = this.f.userFirstName.value.charAt(0).toUpperCase() + this.f.userFirstName.value.slice(1).toLowerCase();
+      let userlastname = this.f.userLastName.value.charAt(0).toUpperCase() + this.f.userLastName.value.slice(1).toLowerCase();
       var userData = {
         RSDOCADDOP: {
           rs_ad_recin: {
             rs_user_first_name: userfirstname,
             rs_user_last_name: userlastname,
             rs_user_address: this.f.userAddress.value,
-            rs_created_user_id: this.currentUser.id
+            rs_user_id: this.currentUser.id
           }
         }
       };
 
-      console.log('userData===========');
-      console.log(userData);
-
       this.settingService.changeUserData(userData).subscribe((response: any) => {
+        this.spinner.hide();
         let getResponseObj = JSON.parse(JSON.stringify(response));
-        console.log('====changeUserData=====');
-        console.log(getResponseObj);
+        if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+          this.notifyService.showSuccess(getResponseObj.responseMessage);
+        } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+        }
       });
     }
   }

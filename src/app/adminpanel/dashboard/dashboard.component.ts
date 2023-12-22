@@ -4,6 +4,7 @@ import { Chart, registerables } from 'chart.js';
 import { NgxSpinnerService } from "ngx-spinner";
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
+import { SettingService } from './setting.service';
 
 Chart.register(...registerables);
 
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   currentUserName: String ;
   currentUserEmail: String ;
   public chart: any;
+  bookingData: any;
   diseases_badge_colors = ["col-red", "col-green", "col-cyan", "col-orange", "col-purple"];
 
   appointmentList = [
@@ -31,7 +33,10 @@ export class DashboardComponent implements OnInit {
     {id: 6, name: "Cara Stevens", doctor: "Dr.Amit Trivedi", date: "12/05/2016", time: "2.00 PM", diseases: "Infection"}
   ];
 
-  constructor(public spinner: NgxSpinnerService, public notifyService: NotificationmsgService, private router: Router) { }
+  constructor(public spinner: NgxSpinnerService, 
+    public notifyService: NotificationmsgService, 
+    private router: Router,
+    private settingService: SettingService) { }
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -39,7 +44,23 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/home']);
     } else {
       this.createChart();
+      this.getDashboardData();
     }
+  }
+
+  getDashboardData() {
+    this.spinner.show();
+    this.settingService.getBookings().subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+         this.bookingData = getResponseObj.responseData;
+      } else {
+         this.bookingData = null;
+         this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 
   createChart() {

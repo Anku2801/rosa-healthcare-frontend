@@ -18,9 +18,4 @@ export class BookedAppointmentService {
   addBooking(data) {
     return this.apiService.postData('RSBooking', data);
   }
-
-  // Update a existing Employee
-  // updateEmployee(data) {
-  //   return this.apiService.postData('pmm2019', data);
-  // }
 }

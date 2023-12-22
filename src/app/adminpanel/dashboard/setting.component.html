@@ -48,7 +48,7 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                         <label class="form-label fw-bold">{{props.USER_DETAILS.USER_LAST_NAME}} <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="userFirstName" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userLastname.errors}">
+                        <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="userLastName" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userLastName.errors}">
                     </div>
                   </div>
                   <div class="col-sm-12">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="row justify-content-end" style="margin-top: 10px;">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.settingsForm.valid" (click)="updateAccount('data')">{{props.BTN_SEARCH.SAVE_CHANGES}}</button>
+                    <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.settingsForm.valid" (click)="updateAccount('changes')">{{props.BTN_SEARCH.SAVE_CHANGES}}</button>
                   </div>
                 </div>
                 <div class="clearfix"></div>

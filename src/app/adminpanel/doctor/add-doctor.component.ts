@@ -125,7 +125,7 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
                 rs_doctor_image: this.imgFile.name,
                 rs_doctor_status: this.f.doctorStatus.value,
-                rs_created_user_id: 1
+                rs_created_user_id: this.currentUser.id
             }
         }
     };

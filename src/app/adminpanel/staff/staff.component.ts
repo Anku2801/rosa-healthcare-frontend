@@ -31,6 +31,13 @@ export class StaffComponent implements OnInit {
     private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
+    // const x = [{"hello":"world"}, {"hello":"India"}];
+    // // This is OK
+    // x[0]['hello'] = "stackoverflow";
+    // x[0]['address'] = "newtesting";
+    // x[1]['hello'] = "new";
+    // x[1]['address'] = "Database";
+    // console.log(x);
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (this.currentUser == null) {
       this.router.navigate(['/home']);

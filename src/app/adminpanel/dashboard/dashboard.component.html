@@ -9,8 +9,8 @@
                       <div>
                         <h5 class="float-end">New Patients</h5>
                       </div>
-                      <div class="m-r-10 m-l-10">
-                        <h3 class="font-weight-bold float-end mb-0"> 129</h3>
+                      <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.activePatientCount">
+                        <h3 class="font-weight-bold float-end mb-0"> {{bookingData.activePatientCount}}</h3>
                       </div>
                     </div>
                   </a>
@@ -24,8 +24,8 @@
                     <div>
                       <h5 class="float-end">Appointments</h5>
                     </div>
-                    <div class="m-r-10 m-l-10">
-                      <h3 class="font-weight-bold float-end mb-0"> 650</h3>
+                    <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.next6monthsAppointments">
+                      <h3 class="font-weight-bold float-end mb-0"> {{bookingData.next6monthsAppointments}}</h3>
                     </div>
                   </div>
                 </a>
@@ -36,10 +36,10 @@
                     <img src="assets/images/dashboardimg3.PNG" class="animated animatedFadeInUp fadeInUp">
                     <div class="top-right">
                       <div>
-                        <h5 class="float-end">Operations</h5>
+                        <h5 class="float-end">Doctors</h5>
                       </div>
-                      <div class="m-r-10 m-l-10">
-                        <h3 class="font-weight-bold float-end mb-0"> 50</h3>
+                      <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.activeDoctorCount">
+                        <h3 class="font-weight-bold float-end mb-0"> {{bookingData.activeDoctorCount}}</h3>
                       </div>
                     </div>
                 </div>
@@ -80,14 +80,14 @@
                           <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="appointmentList">
-                        <ng-container *ngFor="let appointment of appointmentList; index as i">
+                      <tbody *ngIf="bookingData && bookingData.recentAppointments">
+                        <ng-container *ngFor="let appointment of bookingData.recentAppointments; index as i">
                           <tr>
-                            <td>{{appointment.name}}</td>
-                            <td>{{appointment.doctor}}</td>
-                            <td>{{appointment.date}}</td>
-                            <td>{{appointment.time}}</td>
-                            <td><div [className]="'badge ' + diseases_badge_colors[i % diseases_badge_colors.length]">{{appointment.diseases}}</div></td>
+                            <td>{{appointment.firstName}} {{appointment.lastName}}</td>
+                            <td>{{appointment.doctor.first_name}} {{appointment.doctor.last_name}}</td>
+                            <td>{{appointment.appointmentDate}}</td>
+                            <td>{{appointment.appointmentTime}}</td>
+                            <td><div [className]="'badge ' + diseases_badge_colors[i % diseases_badge_colors.length]">{{appointment.injury}}</div></td>
                           </tr>
                         </ng-container>
                       </tbody>

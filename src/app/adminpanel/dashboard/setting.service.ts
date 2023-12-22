@@ -10,16 +10,16 @@ export class SettingService {
   constructor(private apiService: ApiService) { }
 
   changeUserData(data) {
-    return this.apiService.postData('pmm2012', data);
+    return this.apiService.postData('RSUpdateUser', data);
   }
   
   // Add a New Employee
   changePassword(data) {
-    return this.apiService.postData('pmm2016', data);
+    return this.apiService.postData('RSUpdatePassword', data);
   }
 
-  // Update a existing Employee
-  updateEmployee(data) {
-    return this.apiService.postData('pmm2019', data);
+  //Get Dahboard data
+  getBookings() {
+    return this.apiService.postData('RSgetDashBoardData', '');
   }
 }

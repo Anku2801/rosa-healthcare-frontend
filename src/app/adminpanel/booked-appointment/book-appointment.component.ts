@@ -124,6 +124,10 @@ export class BookAppointmentComponent implements OnInit {
         }
     };
 
+    if (this.editBookingId) {
+      data.RSBOOKAPPADDOP.rs_ad_recin['booking_id'] = this.editBookingId;
+    }
+
     this.bookingService.addBooking(data).subscribe((response:any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
