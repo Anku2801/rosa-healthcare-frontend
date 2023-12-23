@@ -86,7 +86,7 @@
                             <label class="form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
                             <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
                               <option value="" disabled>Choose a Doctor</option>
-                              <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.name}}</option>
+                              <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.first_name}} {{doctor.last_name}}</option>
                             </select>
                           </div>
                         </div>

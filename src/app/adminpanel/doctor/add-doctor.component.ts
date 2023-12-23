@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { DoctorService } from './doctor.service';
+import { CommonService } from 'app/commonconfig/service/common.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -25,20 +26,14 @@ export class AddDoctorComponent implements OnInit {
   currentTime= new Date();
   currentUser: any;
   editDoctorId: any;
-  
-  services = [
-    { id: 1, name: "Neurology" },
-    { id: 2, name: "Orthopedics" },
-    { id: 3, name: "Gynaecology" },
-    { id: 4, name: "Microbiology" },
-    { id: 5, name: "Nursing" }
-  ];
+  services: any;
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private spinner: NgxSpinnerService,
               private activatedRoute: ActivatedRoute,
               private notifyService: NotificationmsgService,
+              private commonService: CommonService,
               private doctorService: DoctorService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
@@ -48,6 +43,8 @@ export class AddDoctorComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     } 
+
+    this.getServices();
 
     this.addDoctorForm = this.formBuilder.group({
       doctorFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -117,6 +114,28 @@ export class AddDoctorComponent implements OnInit {
     }
   }
 
+  getServices() {
+    this.spinner.show();
+    var data = {
+      GetDepartmentOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getDepartments(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.services = getResponseObj.responseData;
+      } else {
+        this.services = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
+
   // For adding a new doctor
   addDoctor() {
     this.spinner.show();
@@ -160,6 +179,8 @@ export class AddDoctorComponent implements OnInit {
 
     if (this.editDoctorId) {
       data.RSDOCADDOP.rs_ad_recin['rs_doctor_id'] = this.editDoctorId;
+    } else {
+      data.RSDOCADDOP.rs_ad_recin['rs_doctor_id'] = '';
     }
 
     const uploadImageData = new FormData();

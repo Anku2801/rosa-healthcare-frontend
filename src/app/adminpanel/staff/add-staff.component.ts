@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { StaffService } from './staff.service';
+import { CommonService } from 'app/commonconfig/service/common.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -25,21 +26,15 @@ export class AddStaffComponent implements OnInit {
   currentTime= new Date();
   currentUser: any;
   editStaffId: any;
-
-  services = [
-    { id: 1, name: "Neurology" },
-    { id: 2, name: "Orthopedics" },
-    { id: 3, name: "Gynaecology" },
-    { id: 4, name: "Microbiology" },
-    { id: 5, name: "Nursing" }
-  ];
+  services: any;
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
-              private staffService: StaffService) {
+              private staffService: StaffService,
+              private commonService: CommonService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
 
@@ -48,6 +43,8 @@ export class AddStaffComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
+
+    this.getServices();
 
     this.addStaffForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -84,8 +81,8 @@ export class AddStaffComponent implements OnInit {
         this.addStaffForm.controls.userDesignation.setValue(editStaffData.designation);
         this.addStaffForm.controls.userDepartment.setValue(editStaffData.department);
         this.addStaffForm.controls.userAvailablitityStatus.setValue(editStaffData.available_status);
-        this.addStaffForm.controls.userAvailableStartTime.setValue(new Date(editStaffData.availableStartTime));
-        this.addStaffForm.controls.userAvailableEndTime.setValue(new Date(editStaffData.availableEndTime));
+        this.addStaffForm.controls.userAvailableStartTime.setValue(this.datePipe.transform(editStaffData.availableStartTime, 'HH::mm:ss'));
+        // this.addStaffForm.controls.userAvailableEndTime.setValue(new Date(editStaffData.availableEndTime));
         this.addStaffForm.controls.userAddress.setValue(editStaffData.address);
         this.addStaffForm.controls.userEmail.setValue(editStaffData.userDO.email);
         this.addStaffForm.controls.userBirthDate.setValue(editStaffData.birthDate);
@@ -98,6 +95,28 @@ export class AddStaffComponent implements OnInit {
 
   // For easy access to form fields
   get f() { return this.addStaffForm.controls; }
+
+  getServices() {
+    this.spinner.show();
+    var data = {
+      GetDepartmentOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getDepartments(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.services = getResponseObj.responseData;
+      } else {
+        this.services = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
 
   processFile(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -155,6 +174,8 @@ export class AddStaffComponent implements OnInit {
   
     if (this.editStaffId) {
       data.RSADMINAPPADDOP.rs_ad_recin['rs_admin_id'] = this.editStaffId;
+    } else {
+      data.RSADMINAPPADDOP.rs_ad_recin['rs_admin_id'] = '';
     }
 
     console.log('===data====');

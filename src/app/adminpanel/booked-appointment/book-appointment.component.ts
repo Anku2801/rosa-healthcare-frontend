@@ -8,6 +8,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { BookedAppointmentService } from './booked-appointment.service';
+import { CommonService } from 'app/commonconfig/service/common.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -39,6 +40,7 @@ export class BookAppointmentComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
+              private commonService: CommonService,
               private bookingService: BookedAppointmentService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
@@ -48,6 +50,8 @@ export class BookAppointmentComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
+
+    this.getActiveDoctors();
 
     this.addBookingAppoinmentForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -92,6 +96,28 @@ export class BookAppointmentComponent implements OnInit {
     this.selectedVal = val;
     this.f.userAppointmentTime.setValue(this.selectedVal);
     console.log(this.selectedVal);
+  }
+
+  getActiveDoctors() {
+    this.spinner.show();
+    var data = {
+      GetDoctorOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.doctorsList = getResponseObj.responseData;
+      } else {
+        this.doctorsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 
   // For adding a new booking an appoinment

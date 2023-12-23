@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { UserService } from './user.service';
+import { CommonService } from 'app/commonconfig/service/common.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -33,6 +34,7 @@ export class AddUserComponent implements OnInit {
               private router: Router,
               private spinner: NgxSpinnerService,
               private activatedRoute: ActivatedRoute,
+              private commonService: CommonService,
               private notifyService: NotificationmsgService,
               private patientService: UserService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
@@ -43,6 +45,8 @@ export class AddUserComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
+
+    this.getActiveDoctors();
 
     this.addPatientForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -74,7 +78,8 @@ export class AddUserComponent implements OnInit {
         this.addPatientForm.controls.userLastname.setValue(editPatientData.user.last_name);
         this.addPatientForm.controls.userGender.setValue(editPatientData.gender);
         this.addPatientForm.controls.userMobile.setValue(editPatientData.user.phone_no);
-        this.addPatientForm.controls.userBirthDate.setValue(editPatientData.birth_date);
+        console.log(editPatientData.birth_date);
+        this.addPatientForm.controls.userBirthDate.setValue(this.datePipe.transform(editPatientData.birth_date, 'YYYY-MM-dd'));
         this.addPatientForm.controls.userAge.setValue(editPatientData.age);
         this.addPatientForm.controls.userEmail.setValue(editPatientData.user.email);
         this.addPatientForm.controls.doctorId.setValue(editPatientData.doctor.user.id);
@@ -91,6 +96,28 @@ export class AddUserComponent implements OnInit {
 
   // For easy access to form fields
   get f() { return this.addPatientForm.controls; }
+
+  getActiveDoctors() {
+    this.spinner.show();
+    var data = {
+      GetDoctorOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.doctorsList = getResponseObj.responseData;
+      } else {
+        this.doctorsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
 
   // For adding a new user
   addPatient() {
@@ -129,6 +156,8 @@ export class AddUserComponent implements OnInit {
   
     if (this.editPatientId) {
       data.RSPATIENTADDOP.rs_ad_recin['rs_patient_id'] = this.editPatientId;
+    } else {
+      data.RSPATIENTADDOP.rs_ad_recin['rs_patient_id'] = '';
     }
 
     console.log('===data====');

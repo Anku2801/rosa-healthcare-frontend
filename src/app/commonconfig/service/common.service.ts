@@ -5,22 +5,17 @@ import { ApiService } from 'app/commonconfig/service/api.service';
   providedIn: 'root'
 })
 
-export class StaffService {
+export class CommonService {
 
   constructor(private apiService: ApiService) { }
 
-  // Get All Staff
-  getAllStaffList(data) {
-    return this.apiService.postData('RSGetAdmin', data);
-  }
-  
-  // Add a add User
-  addUser(data) {
-    return this.apiService.postData('RSAdminAdd', data);
-  }
-
-  // Update a existing Employee
+  // Get Departments
   getDepartments(data) {
     return this.apiService.postData('RSGetDepartment', data);
+  }
+
+  // Get Active Doctors
+  getActiveDoctors(data) {
+    return this.apiService.postData('RSGetActiveDoctor', data);
   }
 }
