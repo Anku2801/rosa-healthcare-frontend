@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { DoctorService } from './doctor.service';
-
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-doctor',
@@ -24,6 +24,7 @@ export class AddDoctorComponent implements OnInit {
   imgFile: File;
   currentTime= new Date();
   currentUser: any;
+  editDoctorId: any;
   
   services = [
     { id: 1, name: "Neurology" },
@@ -36,6 +37,7 @@ export class AddDoctorComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private spinner: NgxSpinnerService,
+              private activatedRoute: ActivatedRoute,
               private notifyService: NotificationmsgService,
               private doctorService: DoctorService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
@@ -68,6 +70,32 @@ export class AddDoctorComponent implements OnInit {
       doctorPhoto: ['', Validators.required],
       doctorStatus: ['', Validators.required]      
     });
+
+     // Get details
+     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editDoctorData = res;
+
+      console.log('editDoctorDatabnnnnnnnnnn====');
+      console.log(editDoctorData);
+      if(editDoctorData && (editDoctorData != null) && (editDoctorData.gender)) {
+        this.editDoctorId = editDoctorData.id;
+        this.addDoctorForm.controls.userFirstname.setValue(editDoctorData.user.first_name);
+        this.addDoctorForm.controls.userLastname.setValue(editDoctorData.user.last_name);
+        this.addDoctorForm.controls.userGender.setValue(editDoctorData.gender);
+        this.addDoctorForm.controls.userMobile.setValue(editDoctorData.user.phone_no);
+        this.addDoctorForm.controls.userBirthDate.setValue(editDoctorData.birth_date);
+        this.addDoctorForm.controls.userAge.setValue(editDoctorData.age);
+        this.addDoctorForm.controls.userEmail.setValue(editDoctorData.user.email);
+        this.addDoctorForm.controls.doctorId.setValue(editDoctorData.doctor.user.id);
+        this.addDoctorForm.controls.userMaritalStatus.setValue(editDoctorData.marital_status);
+        this.addDoctorForm.controls.userAddress.setValue(editDoctorData.address);
+        this.addDoctorForm.controls.userBloodGroup.setValue(editDoctorData.blood_group);
+        this.addDoctorForm.controls.userBloodPresure.setValue(editDoctorData.blood_presure);
+        this.addDoctorForm.controls.userSugger.setValue(editDoctorData.sugger);
+        this.addDoctorForm.controls.userInjury.setValue(editDoctorData.injury);
+        this.addDoctorForm.controls.userStatus.setValue(editDoctorData.user.status); 
+      }
+    })
   }
 
   // For easy access to form fields
@@ -129,6 +157,10 @@ export class AddDoctorComponent implements OnInit {
             }
         }
     };
+
+    if (this.editDoctorId) {
+      data.RSDOCADDOP.rs_ad_recin['rs_doctor_id'] = this.editDoctorId;
+    }
 
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);

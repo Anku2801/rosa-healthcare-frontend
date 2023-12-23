@@ -15,11 +15,11 @@ export class LoginService {
     return this.apiService.postData("RSLogin", data);
   }
 
-  // // Logout the current user
+  // Logout the current user
   logout() {
-    // localStorage.setItem('currentUser', null);
-    // localStorage.removeItem('currentUser');
-    // localStorage.clear();
+    localStorage.setItem('currentUser', null);
+    localStorage.removeItem('currentUser');
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 }

@@ -40,10 +40,11 @@
                                             <span class="badge badge-solid-active" *ngIf="patients.user.status == props.USER_DETAILS.USER_ACTIVE">{{patients.user.status}}</span>
                                             <span class="badge badge-solid-inactive" *ngIf="patients.user.status == props.USER_DETAILS.USER_INACTIVE">{{patients.user.status}}</span>
                                         </td>
-                                        <td width="3%">
-                                          <span>
-                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update"><i class="fa fa-pencil-square-o"></i></button>
-                                          </span>
+                                        <td width="8%">
+                                            <span style="display: inline-flex;">
+                                                <button type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [state]="patients" routerLink="/admin/prescriptions"><i class="fa fa-pencil-square-o"></i></button>
+                                                <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="patients" routerLink="/admin/add-patient"><i class="fa fa-pencil-square-o"></i></button>
+                                            </span>
                                         </td>
                                     </tr>
                                 </ng-container>

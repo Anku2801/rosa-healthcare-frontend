@@ -63,7 +63,9 @@ export const constantsProps = {
     USER_INACTIVE: 'Inactive',
     USER_ACTION: 'Action',
     USER_ADD_BTN: 'Add New Patient',
-    USER_UPDATE_BTN: 'Update Patient'
+    USER_UPDATE_BTN: 'Update Patient',
+    STAFF_ADD_BTN: 'Add New Staff',
+    STAFF_UPDATE_BTN: 'Update Staff'
   },
   MENUS: {
     LOGOUT: 'Logout',

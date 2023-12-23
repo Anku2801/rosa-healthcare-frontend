@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { constantsProps } from '../../commonconfig/props/constants.props';
+import { LoginService } from '../../login/login.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -19,7 +20,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/all-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_LIST_PAGE_NAME,  icon:'fa fa-users', class: '' },
     { path: '/admin/add-staff', title: constantsProps.DOCTOR_DETAILS.DOCTOR_STAFF_ADD_PAGE_NAME,  icon:'fa fa-plus-square-o', class: '' },
     { path: '/admin/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-cog', class: '' },
-    { path: '/admin/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
+    // { path: '/admin/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
 ];
 
 @Component({
@@ -30,7 +31,7 @@ export class AdminSidebarComponent implements OnInit {
   menuItems: any[];
   props = constantsProps;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -41,4 +42,9 @@ export class AdminSidebarComponent implements OnInit {
       }
       return true;
   };
+
+  // Logout current User
+  logout() {
+    this.loginService.logout();
+  }
 }

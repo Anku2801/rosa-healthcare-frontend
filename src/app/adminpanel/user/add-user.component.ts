@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { UserService } from './user.service';
-
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-user',
@@ -20,6 +20,7 @@ export class AddUserComponent implements OnInit {
   submitted: boolean = false;
   datePipe = new DatePipe("en-US");
   currentUser: any;
+  editPatientId: any;
 
   doctorsList = [
     {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
@@ -31,6 +32,7 @@ export class AddUserComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private spinner: NgxSpinnerService,
+              private activatedRoute: ActivatedRoute,
               private notifyService: NotificationmsgService,
               private patientService: UserService) {
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
@@ -59,6 +61,32 @@ export class AddUserComponent implements OnInit {
       userInjury: ['', Validators.required],
       userStatus: ['', Validators.required]
     });
+
+    // Get details
+    this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editPatientData = res;
+
+      console.log('editPatientDatabnnnnnnnnnn====');
+      console.log(editPatientData);
+      if(editPatientData && (editPatientData != null) && (editPatientData.gender)) {
+        this.editPatientId = editPatientData.id;
+        this.addPatientForm.controls.userFirstname.setValue(editPatientData.user.first_name);
+        this.addPatientForm.controls.userLastname.setValue(editPatientData.user.last_name);
+        this.addPatientForm.controls.userGender.setValue(editPatientData.gender);
+        this.addPatientForm.controls.userMobile.setValue(editPatientData.user.phone_no);
+        this.addPatientForm.controls.userBirthDate.setValue(editPatientData.birth_date);
+        this.addPatientForm.controls.userAge.setValue(editPatientData.age);
+        this.addPatientForm.controls.userEmail.setValue(editPatientData.user.email);
+        this.addPatientForm.controls.doctorId.setValue(editPatientData.doctor.user.id);
+        this.addPatientForm.controls.userMaritalStatus.setValue(editPatientData.marital_status);
+        this.addPatientForm.controls.userAddress.setValue(editPatientData.address);
+        this.addPatientForm.controls.userBloodGroup.setValue(editPatientData.blood_group);
+        this.addPatientForm.controls.userBloodPresure.setValue(editPatientData.blood_presure);
+        this.addPatientForm.controls.userSugger.setValue(editPatientData.sugger);
+        this.addPatientForm.controls.userInjury.setValue(editPatientData.injury);
+        this.addPatientForm.controls.userStatus.setValue(editPatientData.user.status); 
+      }
+    })
   }
 
   // For easy access to form fields
@@ -99,6 +127,10 @@ export class AddUserComponent implements OnInit {
         }
     };
   
+    if (this.editPatientId) {
+      data.RSPATIENTADDOP.rs_ad_recin['rs_patient_id'] = this.editPatientId;
+    }
+
     console.log('===data====');
     console.log(data);
     this.patientService.addPatient(data).subscribe((response:any) => {

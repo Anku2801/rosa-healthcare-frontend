@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { StaffService } from './staff.service';
-
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-staff',
@@ -24,7 +24,8 @@ export class AddStaffComponent implements OnInit {
   imgFile: any;
   currentTime= new Date();
   currentUser: any;
-  
+  editStaffId: any;
+
   services = [
     { id: 1, name: "Neurology" },
     { id: 2, name: "Orthopedics" },
@@ -35,6 +36,7 @@ export class AddStaffComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
               private staffService: StaffService) {
@@ -66,6 +68,32 @@ export class AddStaffComponent implements OnInit {
       userExpYears: ['', Validators.required],
       userStatus: ['', Validators.required]      
     });
+
+    // Get details
+    this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editStaffData = res;
+
+      console.log('editStaffDatabnnnnnnnnnn====');
+      console.log(editStaffData);
+      if(editStaffData && (editStaffData != null) && (editStaffData.gender)) {
+        this.editStaffId = editStaffData.id;
+        this.addStaffForm.controls.userFirstname.setValue(editStaffData.userDO.first_name);
+        this.addStaffForm.controls.userLastname.setValue(editStaffData.userDO.last_name);
+        this.addStaffForm.controls.userGender.setValue(editStaffData.gender);
+        this.addStaffForm.controls.userMobile.setValue(editStaffData.userDO.phone_no);
+        this.addStaffForm.controls.userDesignation.setValue(editStaffData.designation);
+        this.addStaffForm.controls.userDepartment.setValue(editStaffData.department);
+        this.addStaffForm.controls.userAvailablitityStatus.setValue(editStaffData.available_status);
+        this.addStaffForm.controls.userAvailableStartTime.setValue(new Date(editStaffData.availableStartTime));
+        this.addStaffForm.controls.userAvailableEndTime.setValue(new Date(editStaffData.availableEndTime));
+        this.addStaffForm.controls.userAddress.setValue(editStaffData.address);
+        this.addStaffForm.controls.userEmail.setValue(editStaffData.userDO.email);
+        this.addStaffForm.controls.userBirthDate.setValue(editStaffData.birthDate);
+        this.addStaffForm.controls.userEducation.setValue(editStaffData.education);
+        this.addStaffForm.controls.userExpYears.setValue(editStaffData.expYears);
+        this.addStaffForm.controls.userStatus.setValue(editStaffData.userDO.status); 
+      }
+    })
   }
 
   // For easy access to form fields
@@ -125,6 +153,10 @@ export class AddStaffComponent implements OnInit {
         }
     };
   
+    if (this.editStaffId) {
+      data.RSADMINAPPADDOP.rs_ad_recin['rs_admin_id'] = this.editStaffId;
+    }
+
     console.log('===data====');
     console.log(data);
     this.staffService.addUser(data).subscribe((response:any) => {

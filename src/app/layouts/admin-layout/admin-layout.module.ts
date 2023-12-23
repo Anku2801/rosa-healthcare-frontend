@@ -16,6 +16,8 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../adminpanel/dashboard/dashboard.component';
 import { UserComponent } from '../../adminpanel/user/user.component';
 import { AddUserComponent } from '../../adminpanel/user/add-user.component';
+import { PrescriptionComponent } from '../../adminpanel/user/prescription.component';
+import { AddPrescriptionComponent } from '../../adminpanel/user/add-prescription.component';
 import { DoctorComponent } from '../../adminpanel/doctor/doctor.component';
 import { AddDoctorComponent } from '../../adminpanel/doctor/add-doctor.component';
 import { ViewAppointmentComponent } from '../../adminpanel/booked-appointment/view-appointment.component';
@@ -43,6 +45,8 @@ import { SettingComponent } from '../../adminpanel/dashboard/setting.component';
     DashboardComponent,
     UserComponent,
     AddUserComponent,
+    PrescriptionComponent,
+    AddPrescriptionComponent,
     DoctorComponent,
     AddDoctorComponent,
     ViewAppointmentComponent,

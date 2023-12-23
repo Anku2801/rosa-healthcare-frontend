@@ -31,12 +31,12 @@
                                         <td width="8%">{{staff.userDO.phone_no}}</td>
                                         <td>{{staff.birthDate | date: 'dd/MM/yyyy'}}</td>
                                         <td width="4%">
-                                            <span class="badge badge-solid-active" *ngIf="staff.status == props.USER_DETAILS.USER_ACTIVE">{{staff.status}}</span>
-                                            <span class="badge badge-solid-inactive" *ngIf="staff.status == props.USER_DETAILS.USER_INACTIVE">{{staff.status}}</span>
+                                            <span class="badge badge-solid-active" *ngIf="staff.userDO.status == props.USER_DETAILS.USER_ACTIVE">{{staff.userDO.status}}</span>
+                                            <span class="badge badge-solid-inactive" *ngIf="staff.userDO.status == props.USER_DETAILS.USER_INACTIVE">{{staff.userDO.status}}</span>
                                         </td>
                                         <th width="3%">
                                           <span>
-                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="staff" routerLink="/admin/add-staff"><i class="fa fa-pencil-square-o"></i></button>
                                           </span>
                                         </th>
                                     </tr>
