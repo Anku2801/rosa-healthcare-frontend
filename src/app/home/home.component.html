@@ -376,6 +376,7 @@
                   [bsConfig]="dateConfig"
                   formControlName="userBirthDate"
                   placement="bottom"
+                  [maxDate]="maxDate"
                   [ngClass]="{ 'is-invalid': submitted && f.userBirthDate.errors}">
             </div>
           </div>
@@ -396,6 +397,7 @@
                     [bsConfig]="dateConfig"
                     formControlName="userAppointmentDate"
                     placement="top"
+                    [minDate]="minDate"
                     [ngClass]="{ 'is-invalid': submitted && f.userAppointmentDate.errors}">
             </div>
           </div>

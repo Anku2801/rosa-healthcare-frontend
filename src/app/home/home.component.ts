@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   doctorsList: any;
   availableDoctor: any;
   services: any;
+  maxDate = new Date();
 
   constructor(private router: Router, private formBuilder: FormBuilder, private element: ElementRef, private bookingService: BookedAppointmentService, private spinner: NgxSpinnerService, private commonService: CommonService, private notifyService: NotificationmsgService) { 
     this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
