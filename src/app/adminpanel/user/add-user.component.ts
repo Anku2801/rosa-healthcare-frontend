@@ -23,7 +23,8 @@ export class AddUserComponent implements OnInit {
   currentUser: any;
   editPatientId: any;
   doctorsList: any;
-  
+  maxDate: Date;
+
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private spinner: NgxSpinnerService,
@@ -31,6 +32,7 @@ export class AddUserComponent implements OnInit {
               private commonService: CommonService,
               private notifyService: NotificationmsgService,
               private patientService: UserService) {
+                this.maxDate = new Date();
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
 
@@ -72,11 +74,10 @@ export class AddUserComponent implements OnInit {
         this.addPatientForm.controls.userLastname.setValue(editPatientData.user.last_name);
         this.addPatientForm.controls.userGender.setValue(editPatientData.gender);
         this.addPatientForm.controls.userMobile.setValue(editPatientData.user.phone_no);
-        console.log(editPatientData.birth_date);
         this.addPatientForm.controls.userBirthDate.setValue(new Date(editPatientData.birth_date));
         this.addPatientForm.controls.userAge.setValue(editPatientData.age);
         this.addPatientForm.controls.userEmail.setValue(editPatientData.user.email);
-        this.addPatientForm.controls.doctorId.setValue(editPatientData.doctor.user.id);
+        this.addPatientForm.controls.doctorId.setValue(editPatientData.doctor.id);
         this.addPatientForm.controls.userMaritalStatus.setValue(editPatientData.marital_status);
         this.addPatientForm.controls.userAddress.setValue(editPatientData.address);
         this.addPatientForm.controls.userBloodGroup.setValue(editPatientData.blood_group);

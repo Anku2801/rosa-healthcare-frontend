@@ -27,6 +27,7 @@ export class AddDoctorComponent implements OnInit {
   currentUser: any;
   editDoctorId: any;
   services: any;
+  maxDate: Date;
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -35,6 +36,7 @@ export class AddDoctorComponent implements OnInit {
               private notifyService: NotificationmsgService,
               private commonService: CommonService,
               private doctorService: DoctorService) {
+                this.maxDate = new Date();
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
 
@@ -83,7 +85,7 @@ export class AddDoctorComponent implements OnInit {
         this.addDoctorForm.controls.userBirthDate.setValue(new Date(editDoctorData.birth_date));
         this.addDoctorForm.controls.userAge.setValue(editDoctorData.age);
         this.addDoctorForm.controls.userEmail.setValue(editDoctorData.user.email);
-        this.addDoctorForm.controls.doctorId.setValue(editDoctorData.doctor.user.id);
+        this.addDoctorForm.controls.doctorId.setValue(editDoctorData.doctor.id);
         this.addDoctorForm.controls.userMaritalStatus.setValue(editDoctorData.marital_status);
         this.addDoctorForm.controls.userAddress.setValue(editDoctorData.address);
         this.addDoctorForm.controls.userBloodGroup.setValue(editDoctorData.blood_group);

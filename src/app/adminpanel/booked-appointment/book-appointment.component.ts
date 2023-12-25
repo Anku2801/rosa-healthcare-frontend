@@ -24,13 +24,10 @@ export class BookAppointmentComponent implements OnInit {
   public selectedVal: string;
   currentUser: any;
   editBookingId: any;
-
-  doctorsList = [
-    {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
-    {id: 2, name: "Dr. Zachary Brown", service: "Cardiologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"},
-    {id: 3, name: "Dr. Isabella Davies", service: "Gynecologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item3.jpg"},
-    {id: 4, name: "Dr. William Davies", service: "Nursing", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"}
-  ];
+  doctorsList: any;
+  availableDoctor: any;
+  maxDate: Date;
+  minDate: Date;
 
   @ViewChild("matButtonToggleGroup", { static: true }) 
   buttonToggleGroup: MatButtonToggleGroup;
@@ -42,6 +39,8 @@ export class BookAppointmentComponent implements OnInit {
               private notifyService: NotificationmsgService,
               private commonService: CommonService,
               private bookingService: BookedAppointmentService) {
+                this.maxDate = new Date();
+                this.minDate = new Date();
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
     
@@ -58,18 +57,19 @@ export class BookAppointmentComponent implements OnInit {
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userGender: ['', Validators.required],
       userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      userAddress: ['', ''],
+      userAddress: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
       userBirthDate: ['', Validators.required],
       doctorId: ['', Validators.required],
       userAppointmentDate: ['', Validators.required],
       userAppointmentTime: ['', Validators.required],
-      userInjury: ['', '']
+      userInjury: ['', Validators.required]
     });
   
     // Get details
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
       let editBookingData = res;
+      console.log(editBookingData);
 
       if(editBookingData && (editBookingData != null) && editBookingData.firstName) {
         this.editBookingId = editBookingData.id;
@@ -80,7 +80,7 @@ export class BookAppointmentComponent implements OnInit {
         this.addBookingAppoinmentForm.controls.userAddress.setValue(editBookingData.address);
         this.addBookingAppoinmentForm.controls.userEmail.setValue(editBookingData.email);
         this.addBookingAppoinmentForm.controls.userBirthDate.setValue(new Date(editBookingData.birthDate));
-        this.addBookingAppoinmentForm.controls.doctorId.setValue(editBookingData.doctor.user.id);
+        this.addBookingAppoinmentForm.controls.doctorId.setValue(editBookingData.doctor.id);
         this.addBookingAppoinmentForm.controls.userAppointmentDate.setValue(new Date(editBookingData.appointmentDate));
         this.selectedVal = editBookingData.appointmentTime;
         this.f.userAppointmentTime.setValue(this.selectedVal);        
@@ -113,8 +113,10 @@ export class BookAppointmentComponent implements OnInit {
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.doctorsList = getResponseObj.responseData;
+        this.availableDoctor = this.doctorsList.filter(x => x.available_status == 'Available');
       } else {
         this.doctorsList = null;
+        this.availableDoctor= null;
         this.notifyService.showError(getResponseObj.responseMessage);
       }
     });
@@ -149,7 +151,9 @@ export class BookAppointmentComponent implements OnInit {
     };
 
     if (this.editBookingId) {
-      data.RSBOOKAPPADDOP.rs_ad_recin['booking_id'] = this.editBookingId;
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_appointment_id'] = this.editBookingId;
+    } else {
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_appointment_id'] = '';
     }
 
     this.bookingService.addBooking(data).subscribe((response:any) => {

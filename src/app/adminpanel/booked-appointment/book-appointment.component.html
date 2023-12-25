@@ -40,8 +40,8 @@
                           </div>
                           <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} </label>
-                                <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500"></textarea>
+                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
+                                <textarea rows="6" style="height: 75px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors}"></textarea>
                             </div>
                           </div>
                           <div class="col-sm-6">
@@ -61,6 +61,7 @@
                                         [bsConfig]="dateConfig"
                                         formControlName="userBirthDate"
                                         placement="top"
+                                        [maxDate]="maxDate"
                                         [ngClass]="{ 'is-invalid': submitted && f.userBirthDate.errors}">
                                 </div>
                             </div>
@@ -88,6 +89,7 @@
                                       [bsConfig]="dateConfig"
                                       formControlName="userAppointmentDate"
                                       placement="top"
+                                      [minDate]="minDate"
                                       [ngClass]="{ 'is-invalid': submitted && f.userAppointmentDate.errors}">
                               </div>
                             </div>
@@ -113,8 +115,8 @@
                           </div>
                           <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="form-label fw-bold">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} </label>
-                                <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userInjury" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" maxlength="500"></textarea>
+                                <label class="form-label fw-bold">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} <span class="text-danger">*</span></label>
+                                <textarea rows="6" style="height: 75px;" class="form-control" formControlName="userInjury" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userInjury.errors}"></textarea>
                             </div>
                           </div>
                         </div>

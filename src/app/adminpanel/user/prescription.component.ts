@@ -29,7 +29,7 @@ export class PrescriptionComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.getPatientsList(this.resetFilter);
+      this.getPrescriptionsList(this.resetFilter);
     }, 800)
     this.setDataTableOptionsForSearch();
   }
@@ -41,31 +41,31 @@ export class PrescriptionComponent implements OnInit {
   setDataTableOptionsForSearch() {
     let dtOptionsObj = new DataTableOptions();
     dtOptionsObj.dataTableElement = this.dataTableElement;
-    dtOptionsObj.stateSave = false;
-    dtOptionsObj.exportTitle = this.props.APP_Name + ' - Patients';
-    dtOptionsObj.exportFileName = 'rs_patients_list';
+    // dtOptionsObj.stateSave = false;
+    // dtOptionsObj.exportTitle = this.props.APP_Name + ' - Patients';
+    // dtOptionsObj.exportFileName = 'rs_patients_list';
     this.dtOptions = this.dataTableService.getDataTableOptionsWithFilter(dtOptionsObj);
   }
 
-  getPatientsList(resetFilter) {
+  getPrescriptionsList(resetFilter) {
     this.spinner.show();
     var data = {
-      GetPatientOperation: {
+      GetPrescriptionOperation: {
         rs_add_recin: {
         }
       }
     };
-    this.userService.getAllPatientsList(data).subscribe((response: any) => {
+    this.userService.getAllPrescriptionsList(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);
-      if (getResponseObj != null && getResponseObj.responseData != null) {
-        this.patientsList = getResponseObj.responseData;
-        this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
-      } else {
-        this.patientsList = null;
-        this.notifyService.showError(getResponseObj.responseMessage);
-      }
+      // if (getResponseObj != null && getResponseObj.responseData != null) {
+      //   this.patientsList = getResponseObj.responseData;
+      //   this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      // } else {
+      //   this.patientsList = null;
+      //   this.notifyService.showError(getResponseObj.responseMessage);
+      // }
     });
   }
 }

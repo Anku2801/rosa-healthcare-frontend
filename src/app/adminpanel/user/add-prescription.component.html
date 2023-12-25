@@ -4,126 +4,25 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="header">
-                  <h4 class="title">Patient Profile</h4>
+                  <h4 class="title">Add Prescription</h4>
                 </div>
                 <div class="content">
-                    <form id="add-user" [formGroup]="addPatientForm" autocomplete="off">
+                    <form id="add-user" [formGroup]="addPrescriptionsForm" autocomplete="off">
                       <div class="row justify-content-center">
                         <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_FIRST_NAME}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_FIRST_NAME}}" formControlName="userFirstname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userFirstname.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_LAST_NAME}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="userLastname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userLastname.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.GENDER}} <span class="text-danger">*</span></label>
-                              <select class="form-control form-select" formControlName="userGender" [ngClass]="{ 'is-invalid': submitted && f.userGender.errors}">
-                                <option value="" disabled>Choose a Gender</option>
-                                <option value="{{props.USER_DETAILS.GENDER_MALE}}">{{props.USER_DETAILS.GENDER_MALE}}</option>
-                                <option value="{{props.USER_DETAILS.GENDER_FEMALE}}">{{props.USER_DETAILS.GENDER_FEMALE}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_MOBILE}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_MOBILE}}" formControlName="userMobile" maxlength="10" [ngClass]="{ 'is-invalid': submitted && f.userMobile.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BIRTH}} <span class="text-danger">*</span></label>
-                                <div id="datepicker">
-                                    <input type="text"
-                                        class="form-control form-control-sm"
-                                        placeholder="DD-MM-YYYY"
-                                        bsDatepicker
-                                        [bsConfig]="dateConfig"
-                                        formControlName="userBirthDate"
-                                        placement="top"
-                                        [ngClass]="{ 'is-invalid': submitted && f.userBirthDate.errors}">
-                                </div>
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_AGE}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_AGE}}" formControlName="userAge" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userAge.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                  <label class="form-label fw-bold">{{props.USER_DETAILS.USER_EMAIL}} <span class="text-danger">*</span></label>
-                                  <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_EMAIL}}" formControlName="userEmail" maxlength="100" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors}">
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_MARITAL_STATUS}} <span class="text-danger">*</span></label>
-                                <select class="form-control form-select" formControlName="userMaritalStatus" [ngClass]="{ 'is-invalid': submitted && f.userMaritalStatus.errors}">
-                                  <option value="" disabled>Choose a Gender</option>
-                                  <option value="{{props.USER_DETAILS.USER_MARITAL_SINGLE}}">{{props.USER_DETAILS.USER_MARITAL_SINGLE}}</option>
-                                  <option value="{{props.USER_DETAILS.USER_MARITAL_MARRIED}}">{{props.USER_DETAILS.USER_MARITAL_MARRIED}}</option>
-                                </select>
-                            </div>
-                          </div>
-                          <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
-                                <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors}"></textarea>
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
                               <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
                                 <option value="" disabled>Choose a Doctor</option>
-                                <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.name}}</option>
+                                <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.first_name}} {{doctor.last_name}}</option>
                               </select>
                             </div>
                           </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BLOOD_GROUP}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_BLOOD_GROUP}}" formControlName="userBloodGroup" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userBloodGroup.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BLOOD_PRESURE}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_BLOOD_PRESURE}}" formControlName="userBloodPresure" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userBloodPresure.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_SUGGER}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_SUGGER}}" formControlName="userSugger" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userSugger.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" formControlName="userInjury" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userInjury.errors}">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_STATUS}} <span class="text-danger">*</span></label>
-                              <div>
-                                  <input type="radio" class="form-check-input" formControlName="userStatus" value="Active" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors}">
-                                  <label class="form-label fw-bold">  {{props.USER_DETAILS.USER_ACTIVE}}</label>
-                                  
-                                  <input type="radio" class="form-check-input" formControlName="userStatus" value="Inactive" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors}">
-                                  <label class="form-label fw-bold">  {{props.USER_DETAILS.USER_INACTIVE}}</label>                                    
-                              </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.DOSAGE_INSTRUCTION}} <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                              <textarea rows="10" style="height: 150px;" class="form-control" formControlName="dosageInstruction" placeholder="{{props.USER_DETAILS.DOSAGE_INSTRUCTION}}" maxlength="4000" [ngClass]="{ 'is-invalid': submitted && f.dosageInstruction.errors}"></textarea>
                             </div>
                           </div>
                         </div>
@@ -131,7 +30,7 @@
                         <div class="row justify-content-end">
                           <div class="form-group">
                             <button type="button" class="btn btn-default pull-right" routerLink="/admin/patients" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
-                            <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.addPatientForm.valid" (click)="addPatient()">{{props.USER_DETAILS.USER_ADD_BTN}}</button>
+                            <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.addPrescriptionsForm.valid" (click)="addPrescriptions()">{{props.USER_DETAILS.USER_PRESCRIPTION}}</button>
                           </div>
                         </div>
                         <div class="clearfix"></div>

@@ -19,8 +19,8 @@ export class UserService {
     return this.apiService.postData('RSAddPatient', data);
   }
 
-  // Update a existing Employee
-  updateEmployee(data) {
-    return this.apiService.postData('pmm2019', data);
+  // Get all patient Predictions
+  getAllPrescriptionsList(data) {
+    return this.apiService.postData('RSAddPatient', data);
   }
 }

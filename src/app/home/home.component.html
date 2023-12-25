@@ -383,7 +383,7 @@
             <label class="form-label">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
             <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
               <option value="" disabled>Choose a Doctor</option>
-              <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.name}}</option>
+              <option *ngFor="let doctor of availableDoctor" [value]="doctor.id">{{doctor.first_name}} {{doctor.last_name}}</option>
             </select>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
@@ -400,7 +400,7 @@
             </div>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-            <label class="form-label">{{props.BOOKING.APPOINTMENT_TIME}} </label>
+            <label class="form-label">{{props.BOOKING.APPOINTMENT_TIME}} <span class="text-danger">*</span></label>
             <select class="form-control form-select" formControlName="userAppointmentTime" [ngClass]="{ 'is-invalid': submitted && f.userAppointmentTime.errors}">
               <option value="" disabled>Choose a Time</option>
               <option value="10:00-10:30">10:00-10:30 AM</option>
@@ -416,8 +416,12 @@
             </select>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-            <label class="form-label">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} </label>
-            <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userInjury" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" maxlength="500"></textarea>
+            <label class="form-label">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
+            <textarea rows="4" style="height: 70px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors}"></textarea>
+          </div>
+          <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+            <label class="form-label">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} <span class="text-danger">*</span></label>
+            <textarea rows="4" style="height: 70px;" class="form-control" formControlName="userInjury" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userInjury.errors}"></textarea>
           </div>
         </form>
       </div>
@@ -487,13 +491,13 @@
                         <div class="team-member d-flex align-items-center">
                           <div class="col-md-6">
                             <div class="image-holder me-4 mb-4">
-                              <img [src]="doctor.img" alt="team member" class="border-radius-10 img-fluid">
+                              <img [src]="doctor.image" alt="team member" class="border-radius-10 img-fluid">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="member-info">
-                              <h3 class="fs-4 fw-bold text-dark">{{doctor.name}}</h3>
-                              <span class="text-uppercase fs-6 text-cadet-blue pb-2 d-block">{{doctor.service}}</span>
+                              <h3 class="fs-4 fw-bold text-dark">{{doctor.first_name}} {{doctor.last_name}}</h3>
+                              <span class="text-uppercase fs-6 text-cadet-blue pb-2 d-block">{{doctor.department.name}}</span>
                               <p>{{doctor.description}}</p>
                               <ul class="social-links list-unstyled d-flex">
                                 <li>

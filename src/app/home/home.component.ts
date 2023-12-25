@@ -4,7 +4,10 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
+import { BookedAppointmentService } from '../adminpanel/booked-appointment/booked-appointment.service';
 import { NotificationmsgService } from '../commonconfig/service/notificationmsg.service';
+import { CommonService } from 'app/commonconfig/service/common.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -21,8 +24,11 @@ export class HomeComponent implements OnInit {
   dateConfig: Partial<BsDatepickerConfig>;
   minDate = new Date();
   location: Location;
+  doctorsList: any;
+  availableDoctor: any;
+  services: any;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private element: ElementRef, private notifyService: NotificationmsgService) { 
+  constructor(private router: Router, private formBuilder: FormBuilder, private element: ElementRef, private bookingService: BookedAppointmentService, private spinner: NgxSpinnerService, private commonService: CommonService, private notifyService: NotificationmsgService) { 
     this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
   }
 
@@ -61,13 +67,6 @@ export class HomeComponent implements OnInit {
     },
     nav: false
   }
-  
-  doctorsList = [
-    {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
-    {id: 2, name: "Dr. Zachary Brown", service: "Cardiologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"},
-    {id: 3, name: "Dr. Isabella Davies", service: "Gynecologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item3.jpg"},
-    {id: 4, name: "Dr. William Davies", service: "Nursing", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"}
-  ];
 
   testimonialList = [
     {id: 1, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.The more content you provide about you. Lorem, Quos saepe suscipit, nemo dolore sapiente!", name: "James Rodrigo"},
@@ -76,19 +75,12 @@ export class HomeComponent implements OnInit {
     {id: 4, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.The more content you provide about you. Lorem, Quos saepe suscipit, nemo dolore sapiente!", name: "Shotgun Garfunkel"},
     {id: 5, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.The more content you provide about you. Lorem, Quos saepe suscipit, nemo dolore sapiente!", name: "Mrs. James"}
   ];
-  
-  services = [
-    { id: 1, name: "Physiotherapy" },
-    { id: 2, name: "Dentistry" },
-    { id: 3, name: "Orthopedic" },
-    { id: 4, name: "Pharmacy" },
-    { id: 5, name: "Nursing" }
-  ];
 
   ngOnInit() {
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
 
+    this.getActiveDoctors();
     window.addEventListener('scroll', this.scrollEvent, true);
 
     this.bookingForm = this.formBuilder.group({
@@ -101,7 +93,8 @@ export class HomeComponent implements OnInit {
       doctorId: ['', Validators.required],
       userAppointmentDate: ['', Validators.required],
       userAppointmentTime: ['', Validators.required],
-      userInjury: ['', '']
+      userAddress: ['', Validators.required],
+      userInjury: ['', Validators.required]
     });
   }
 
@@ -128,14 +121,38 @@ export class HomeComponent implements OnInit {
     else{this.scroll=false}
   }
 
+  getActiveDoctors() {
+    this.spinner.show();
+    var data = {
+      GetDoctorOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.doctorsList  = getResponseObj.responseData;
+        this.availableDoctor = this.doctorsList.filter(x => x.available_status == 'Available');
+      } else {
+        this.doctorsList = null;
+        this.availableDoctor = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
+  
   // For adding a appointment
   bookAppointment() {
+    this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
     if (this.bookingForm.invalid) {
         return;
     }
-
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {
@@ -145,7 +162,7 @@ export class HomeComponent implements OnInit {
                 rs_user_last_name: userlastname,
                 rs_user_gender: this.f.userGender.value,
                 rs_user_mobile: this.f.userMobile.value,
-                rs_user_address: '',
+                rs_user_address: this.f.userAddress.value,
                 rs_user_email: this.f.userEmail.value,
                 rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
                 rs_doctor_id: this.f.doctorId.value,
@@ -155,27 +172,17 @@ export class HomeComponent implements OnInit {
             }
         }
     };
-    console.log('===data====');
-    console.log(data);
 
-    this.notifyService.showSuccess('Hi, your appointment has been confirmed <br/>on ' + this.datePipe.transform(this.f.appointmentDate.value, 'dd-MM-YYYY') + '.');
-    this.bookingForm.reset();
-    // this.userService.addUser(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   console.log(response);
-    //   // if (response) {
-    //   //   let msg = response.msg;
-    //   //   if (msg.includes('successfully')) {
-    //   //     this.notifyService.showSuccess(msg);
-    //   //     setTimeout(() => {
-    //   //       this.router.navigate(['/search-employee']);
-    //   //     }, 1500)
-    //   //   } else {
-    //   //     this.notifyService.showError(msg);
-    //   //     this.submitted = false;
-    //   //   }
-    //   // }
-    // })
+    this.bookingService.addBooking(data).subscribe((response:any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.bookingForm.reset();
+      } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    })
   }
 
   sidebarOpen() {

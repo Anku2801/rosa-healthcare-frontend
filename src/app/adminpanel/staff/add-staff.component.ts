@@ -27,6 +27,7 @@ export class AddStaffComponent implements OnInit {
   currentUser: any;
   editStaffId: any;
   services: any;
+  maxDate: Date;
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -35,6 +36,7 @@ export class AddStaffComponent implements OnInit {
               private notifyService: NotificationmsgService,
               private staffService: StaffService,
               private commonService: CommonService) {
+                this.maxDate = new Date();
                 this.dateConfig = Object.assign({ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue', showWeekNumbers: false })
               }
 

@@ -88,13 +88,13 @@
                         <div class="col-sm-12">
                           <div class="form-group">
                               <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_DESCRIPTION}} <span class="text-danger">*</span></label>
-                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="doctorProfileDescription" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_DESCRIPTION}}" maxlength="250" [ngClass]="{ 'is-invalid': submitted && f.doctorProfileDescription.errors}"></textarea>
+                              <textarea rows="6" style="height: 75px;" class="form-control" formControlName="doctorProfileDescription" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_DESCRIPTION}}" maxlength="250" [ngClass]="{ 'is-invalid': submitted && f.doctorProfileDescription.errors}"></textarea>
                           </div>
                         </div>
                         <div class="col-sm-12">
                           <div class="form-group">
                               <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
-                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="doctorAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.doctorAddress.errors}"></textarea>
+                              <textarea rows="6" style="height: 75px;" class="form-control" formControlName="doctorAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.doctorAddress.errors}"></textarea>
                           </div>
                         </div>
                         <div class="col-sm-6">
@@ -114,6 +114,7 @@
                                       [bsConfig]="dateConfig"
                                       formControlName="doctorBirthDate"
                                       placement="top"
+                                      [maxDate]="maxDate"
                                       [ngClass]="{ 'is-invalid': submitted && f.doctorBirthDate.errors}">
                               </div>
                           </div>

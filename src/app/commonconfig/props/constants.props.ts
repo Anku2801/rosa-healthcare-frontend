@@ -62,6 +62,8 @@ export const constantsProps = {
     USER_ACTIVE: 'Active',
     USER_INACTIVE: 'Inactive',
     USER_ACTION: 'Action',
+    DOSAGE_INSTRUCTION: 'Dosage Instructions',
+    USER_PRESCRIPTION: 'Add Prescription',
     USER_ADD_BTN: 'Add New Patient',
     USER_UPDATE_BTN: 'Update Patient',
     STAFF_ADD_BTN: 'Add New Staff',

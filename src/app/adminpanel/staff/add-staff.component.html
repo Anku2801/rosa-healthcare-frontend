@@ -95,7 +95,7 @@
                         <div class="col-sm-12">
                           <div class="form-group">
                               <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} </label>
-                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500"></textarea>
+                              <textarea rows="6" style="height: 75px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500"></textarea>
                           </div>
                         </div>
                         <div class="col-sm-6">
@@ -115,6 +115,7 @@
                                       [bsConfig]="dateConfig"
                                       formControlName="userBirthDate"
                                       placement="top"
+                                      [maxDate]="maxDate"
                                       [ngClass]="{ 'is-invalid': submitted && f.userBirthDate.errors}">
                               </div>
                           </div>
