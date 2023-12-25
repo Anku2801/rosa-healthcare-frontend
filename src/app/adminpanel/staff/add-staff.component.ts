@@ -81,11 +81,11 @@ export class AddStaffComponent implements OnInit {
         this.addStaffForm.controls.userDesignation.setValue(editStaffData.designation);
         this.addStaffForm.controls.userDepartment.setValue(editStaffData.department);
         this.addStaffForm.controls.userAvailablitityStatus.setValue(editStaffData.available_status);
-        this.addStaffForm.controls.userAvailableStartTime.setValue(this.datePipe.transform(editStaffData.availableStartTime, 'HH::mm:ss'));
+        // this.addStaffForm.controls.userAvailableStartTime.setValue(this.datePipe.transform(editStaffData.availableStartTime, 'HH::mm:ss'));
         // this.addStaffForm.controls.userAvailableEndTime.setValue(new Date(editStaffData.availableEndTime));
         this.addStaffForm.controls.userAddress.setValue(editStaffData.address);
         this.addStaffForm.controls.userEmail.setValue(editStaffData.userDO.email);
-        this.addStaffForm.controls.userBirthDate.setValue(editStaffData.birthDate);
+        this.addStaffForm.controls.userBirthDate.setValue(new Date(editStaffData.birthDate));
         this.addStaffForm.controls.userEducation.setValue(editStaffData.education);
         this.addStaffForm.controls.userExpYears.setValue(editStaffData.expYears);
         this.addStaffForm.controls.userStatus.setValue(editStaffData.userDO.status); 
@@ -135,7 +135,6 @@ export class AddStaffComponent implements OnInit {
 
   // For adding a new user
   addUser() {
-    this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
     if (this.addStaffForm.invalid) {
@@ -146,6 +145,7 @@ export class AddStaffComponent implements OnInit {
       return;
     }
 
+    this.spinner.show();
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {

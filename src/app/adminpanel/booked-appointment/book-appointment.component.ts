@@ -79,11 +79,11 @@ export class BookAppointmentComponent implements OnInit {
         this.addBookingAppoinmentForm.controls.userMobile.setValue(editBookingData.mobile);
         this.addBookingAppoinmentForm.controls.userAddress.setValue(editBookingData.address);
         this.addBookingAppoinmentForm.controls.userEmail.setValue(editBookingData.email);
-        this.addBookingAppoinmentForm.controls.userBirthDate.setValue(editBookingData.birthDate);
+        this.addBookingAppoinmentForm.controls.userBirthDate.setValue(new Date(editBookingData.birthDate));
         this.addBookingAppoinmentForm.controls.doctorId.setValue(editBookingData.doctor.user.id);
-        this.addBookingAppoinmentForm.controls.userAppointmentDate.setValue(editBookingData.appointmentDate);
-        this.addBookingAppoinmentForm.controls.userAppointmentTime.setValue(editBookingData.appointmentTime);
-        this.selectedVal = editBookingData.appointmentTime;        
+        this.addBookingAppoinmentForm.controls.userAppointmentDate.setValue(new Date(editBookingData.appointmentDate));
+        this.selectedVal = editBookingData.appointmentTime;
+        this.f.userAppointmentTime.setValue(this.selectedVal);        
         this.addBookingAppoinmentForm.controls.userInjury.setValue(editBookingData.injury);
       }
     })

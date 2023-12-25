@@ -22,13 +22,7 @@ export class AddUserComponent implements OnInit {
   datePipe = new DatePipe("en-US");
   currentUser: any;
   editPatientId: any;
-
-  doctorsList = [
-    {id: 1, name: "Dr. Leslie Taylor", service: "Pediatrician", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item1.jpg"},
-    {id: 2, name: "Dr. Zachary Brown", service: "Cardiologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"},
-    {id: 3, name: "Dr. Isabella Davies", service: "Gynecologist", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item3.jpg"},
-    {id: 4, name: "Dr. William Davies", service: "Nursing", description: "Dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum habitant fames ac penatibus et.", img: "assets/images/team-item2.jpg"}
-  ];
+  doctorsList: any;
   
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -79,7 +73,7 @@ export class AddUserComponent implements OnInit {
         this.addPatientForm.controls.userGender.setValue(editPatientData.gender);
         this.addPatientForm.controls.userMobile.setValue(editPatientData.user.phone_no);
         console.log(editPatientData.birth_date);
-        this.addPatientForm.controls.userBirthDate.setValue(this.datePipe.transform(editPatientData.birth_date, 'YYYY-MM-dd'));
+        this.addPatientForm.controls.userBirthDate.setValue(new Date(editPatientData.birth_date));
         this.addPatientForm.controls.userAge.setValue(editPatientData.age);
         this.addPatientForm.controls.userEmail.setValue(editPatientData.user.email);
         this.addPatientForm.controls.doctorId.setValue(editPatientData.doctor.user.id);
@@ -121,12 +115,13 @@ export class AddUserComponent implements OnInit {
 
   // For adding a new user
   addPatient() {
-    this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
     if (this.addPatientForm.invalid) {
         return;
     }
+    
+    this.spinner.show();
     let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
     var data = {

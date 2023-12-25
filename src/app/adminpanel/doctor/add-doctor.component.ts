@@ -80,7 +80,7 @@ export class AddDoctorComponent implements OnInit {
         this.addDoctorForm.controls.userLastname.setValue(editDoctorData.user.last_name);
         this.addDoctorForm.controls.userGender.setValue(editDoctorData.gender);
         this.addDoctorForm.controls.userMobile.setValue(editDoctorData.user.phone_no);
-        this.addDoctorForm.controls.userBirthDate.setValue(editDoctorData.birth_date);
+        this.addDoctorForm.controls.userBirthDate.setValue(new Date(editDoctorData.birth_date));
         this.addDoctorForm.controls.userAge.setValue(editDoctorData.age);
         this.addDoctorForm.controls.userEmail.setValue(editDoctorData.user.email);
         this.addDoctorForm.controls.doctorId.setValue(editDoctorData.doctor.user.id);
@@ -138,7 +138,6 @@ export class AddDoctorComponent implements OnInit {
 
   // For adding a new doctor
   addDoctor() {
-    this.spinner.show();
     this.submitted = true;
     // Stop here if form is invalid
     if (this.addDoctorForm.invalid) {
@@ -149,6 +148,7 @@ export class AddDoctorComponent implements OnInit {
       return;
     }
 
+    this.spinner.show();
     let userfirstname = this.f.doctorFirstname.value.charAt(0).toUpperCase() + this.f.doctorFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.doctorLastname.value.charAt(0).toUpperCase() + this.f.doctorLastname.value.slice(1).toLowerCase();
     var data = {
