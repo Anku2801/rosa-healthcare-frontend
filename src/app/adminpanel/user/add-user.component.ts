@@ -135,7 +135,7 @@ export class AddUserComponent implements OnInit {
                 rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
                 rs_user_age: this.f.userAge.value,
                 rs_user_email: this.f.userEmail.value,
-                rs_user_password: 'rosahealthcare',
+                rs_user_password: (this.editPatientId) ? '' : 'rosahealthcare',
                 rs_doctor_id: this.f.doctorId.value,
                 rs_user_marital_status: this.f.userMaritalStatus.value,
                 rs_user_address: this.f.userAddress.value,

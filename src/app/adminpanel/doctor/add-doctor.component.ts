@@ -53,8 +53,8 @@ export class AddDoctorComponent implements OnInit {
       doctorLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       doctorGender: ['', Validators.required],
       doctorMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      doctorPassword: ['', Validators.required],
-      doctorReenterPassword: ['', Validators.required],
+      doctorPassword: ['', ''],
+      doctorReenterPassword: ['', ''],
       doctorDesignation: ['', Validators.required],
       doctorDepartment: ['', Validators.required],
       doctorAvailablitityStatus: ['', Validators.required],
@@ -66,7 +66,7 @@ export class AddDoctorComponent implements OnInit {
       doctorBirthDate: ['', Validators.required],
       doctorEducation: ['', Validators.required],
       doctorExpYears: ['', Validators.required],
-      doctorPhoto: ['', Validators.required],
+      doctorPhoto: ['', ''],
       doctorStatus: ['', Validators.required]      
     });
 
@@ -78,21 +78,34 @@ export class AddDoctorComponent implements OnInit {
       console.log(editDoctorData);
       if(editDoctorData && (editDoctorData != null) && (editDoctorData.gender)) {
         this.editDoctorId = editDoctorData.id;
-        this.addDoctorForm.controls.userFirstname.setValue(editDoctorData.user.first_name);
-        this.addDoctorForm.controls.userLastname.setValue(editDoctorData.user.last_name);
-        this.addDoctorForm.controls.userGender.setValue(editDoctorData.gender);
-        this.addDoctorForm.controls.userMobile.setValue(editDoctorData.user.phone_no);
-        this.addDoctorForm.controls.userBirthDate.setValue(new Date(editDoctorData.birth_date));
-        this.addDoctorForm.controls.userAge.setValue(editDoctorData.age);
-        this.addDoctorForm.controls.userEmail.setValue(editDoctorData.user.email);
-        this.addDoctorForm.controls.doctorId.setValue(editDoctorData.doctor.id);
-        this.addDoctorForm.controls.userMaritalStatus.setValue(editDoctorData.marital_status);
-        this.addDoctorForm.controls.userAddress.setValue(editDoctorData.address);
-        this.addDoctorForm.controls.userBloodGroup.setValue(editDoctorData.blood_group);
-        this.addDoctorForm.controls.userBloodPresure.setValue(editDoctorData.blood_presure);
-        this.addDoctorForm.controls.userSugger.setValue(editDoctorData.sugger);
-        this.addDoctorForm.controls.userInjury.setValue(editDoctorData.injury);
-        this.addDoctorForm.controls.userStatus.setValue(editDoctorData.user.status); 
+        let startTime = editDoctorData.available_start_time;
+        const startTimeArray = startTime.split(":").map((time) => +time);
+        const starttime = new Date();
+        starttime.setHours(startTimeArray[0]);
+        starttime.setMinutes(startTimeArray[1]);
+        let endTime = editDoctorData.available_end_time;
+        const endTimesArray = endTime.split(":").map((time) => +time);
+        const endtime = new Date();
+        endtime.setHours(endTimesArray[0]);
+        endtime.setMinutes(endTimesArray[1]);
+        this.addDoctorForm.controls.doctorFirstname.setValue(editDoctorData.user.first_name);
+        this.addDoctorForm.controls.doctorLastname.setValue(editDoctorData.user.last_name);
+        this.addDoctorForm.controls.doctorGender.setValue(editDoctorData.gender);
+        this.addDoctorForm.controls.doctorMobile.setValue(editDoctorData.user.phone_no);
+        this.addDoctorForm.controls.doctorDesignation.setValue(new Date(editDoctorData.birth_date));
+        this.addDoctorForm.controls.doctorDesignation.setValue(editDoctorData.designation);
+        this.addDoctorForm.controls.doctorDepartment.setValue(editDoctorData.department.id);
+        this.addDoctorForm.controls.doctorAvailablitityStatus.setValue(editDoctorData.available_status);
+        this.addDoctorForm.controls.doctorAvailableStartTime.setValue(starttime);
+        this.addDoctorForm.controls.doctorAvailableEndTime.setValue(endtime);
+        this.addDoctorForm.controls.doctorAddress.setValue(editDoctorData.address);
+        this.addDoctorForm.controls.doctorProfileDescription.setValue(editDoctorData.description);
+        this.addDoctorForm.controls.doctorEmail.setValue(editDoctorData.user.email);
+        this.addDoctorForm.controls.doctorBirthDate.setValue(new Date(editDoctorData.birth_date));
+        this.addDoctorForm.controls.doctorEducation.setValue(editDoctorData.education);
+        this.addDoctorForm.controls.doctorExpYears.setValue(editDoctorData.exp_years);
+        this.addDoctorForm.controls.doctorPhoto.setValue(editDoctorData.image); 
+        this.addDoctorForm.controls.doctorStatus.setValue(editDoctorData.user.status);
       }
     })
   }
@@ -145,12 +158,22 @@ export class AddDoctorComponent implements OnInit {
     if (this.addDoctorForm.invalid) {
         return;
     }
-    if (this.f.doctorPassword.value !== this.f.doctorReenterPassword.value) {
-      this.notifyService.showError('Passwords do not match.');
-      return;
+
+    if (this.editDoctorId) {
+      if (((this.f.doctorPassword.value != '') || (this.f.doctorReenterPassword.value != '')) && (this.f.doctorPassword.value !== this.f.doctorReenterPassword.value)) {
+        this.notifyService.showError('Passwords do not match.');
+        return;
+      }
+    } else {
+      if (this.f.doctorPassword.value && this.f.doctorReenterPassword.value && (this.f.doctorPassword.value !== this.f.doctorReenterPassword.value)) {
+        this.notifyService.showError('Passwords do not match.');
+        return;
+      }
     }
+    
 
     this.spinner.show();
+
     let userfirstname = this.f.doctorFirstname.value.charAt(0).toUpperCase() + this.f.doctorFirstname.value.slice(1).toLowerCase();
     let userlastname = this.f.doctorLastname.value.charAt(0).toUpperCase() + this.f.doctorLastname.value.slice(1).toLowerCase();
     var data = {
@@ -172,7 +195,7 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_birth_date: this.datePipe.transform(this.f.doctorBirthDate.value, 'YYYY-MM-dd'),
                 rs_doctor_education: this.f.doctorEducation.value,
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
-                rs_doctor_image: this.imgFile.name,
+                rs_doctor_image: (this.editDoctorId) ? (this.imgFile) ? this.imgFile.name : '': this.imgFile.name,
                 rs_doctor_status: this.f.doctorStatus.value,
                 rs_created_user_id: this.currentUser.id
             }
@@ -185,26 +208,49 @@ export class AddDoctorComponent implements OnInit {
       data.RSDOCADDOP.rs_ad_recin['rs_doctor_id'] = '';
     }
 
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
-
-    this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
-      let getResponseObj = JSON.parse(JSON.stringify(response));
-      if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
-          this.doctorService.addDoctors(data).subscribe((DocResponse: any) => {
-          this.spinner.hide();
-          let getResponseObj = JSON.parse(JSON.stringify(DocResponse));
-          if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
-            this.notifyService.showSuccess(getResponseObj.responseMessage);
-            this.addDoctorForm.reset();
-            this.router.navigate(['/admin/doctors']);
+    var checkImagSuccess = true;
+    if (this.editDoctorId) {
+      if (this.imgFile) {
+        const uploadImageData = new FormData();
+        uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
+        this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
+          let getResponseObj = JSON.parse(JSON.stringify(response));
+          if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+            checkImagSuccess = true;
           } else {
-             this.notifyService.showError(getResponseObj.responseMessage);
+            this.spinner.hide();
+            checkImagSuccess = false;
+            this.notifyService.showError(getResponseObj.responseMessage);
           }
         });
-      } else {
-        this.notifyService.showError(getResponseObj.responseMessage);
       }
-    });
+    } else {
+        const uploadImageData = new FormData();
+        uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
+        this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
+          let getResponseObj = JSON.parse(JSON.stringify(response));
+          if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+            checkImagSuccess = true;
+          } else {
+            this.spinner.hide();
+            checkImagSuccess = false;
+            this.notifyService.showError(getResponseObj.responseMessage);
+          }
+        });
+    }
+ 
+    if (checkImagSuccess) {
+      this.doctorService.addDoctors(data).subscribe((DocResponse: any) => {
+        this.spinner.hide();
+        let getResponseObj = JSON.parse(JSON.stringify(DocResponse));
+        if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
+          this.notifyService.showSuccess(getResponseObj.responseMessage);
+          this.addDoctorForm.reset();
+          this.router.navigate(['/admin/doctors']);
+        } else {
+            this.notifyService.showError(getResponseObj.responseMessage);
+        }
+      });
+    }
   }
 }

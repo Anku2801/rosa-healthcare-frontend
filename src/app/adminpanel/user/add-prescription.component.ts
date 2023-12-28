@@ -21,6 +21,7 @@ export class AddPrescriptionComponent implements OnInit {
   datePipe = new DatePipe("en-US");
   currentUser: any;
   doctorsList: any;
+  patientData: any;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -38,32 +39,33 @@ export class AddPrescriptionComponent implements OnInit {
     }
 
     this.addPrescriptionsForm = this.formBuilder.group({
-      doctorId: ['', Validators.required],
+      doctorId: ['', ''],
+      precritionTitle: ['', Validators.required],
       dosageInstruction: ['', Validators.required]
     });
-    this.getActiveDoctors();
+    this.getUserDetails();
   }
 
   // For easy access to form fields
   get f() { return this.addPrescriptionsForm.controls; }
 
-  getActiveDoctors() {
+  getUserDetails() {
     this.spinner.show();
     var data = {
-      GetDoctorOperation: {
+      GetPatientByIdOperation: {
         rs_add_recin: {
+          rs_user_id: 1
         }
       }
     };
-
-    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+    this.patientService.getPatientDetails(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
-        this.doctorsList  = getResponseObj.responseData;
+        this.patientData = getResponseObj.responseData;
       } else {
-        this.doctorsList = null;
+        this.patientData = null;
         this.notifyService.showError(getResponseObj.responseMessage);
       }
     });
@@ -73,5 +75,27 @@ export class AddPrescriptionComponent implements OnInit {
   addPrescriptions() {
     this.spinner.show();
     this.submitted = true;
+    var userData = {
+      RSPRESADDOP: {
+        rs_ad_recin: {
+          rs_prescription_title: this.f.precritionTitle.value,
+          rs_user_dosage_instruction: this.f.dosageInstruction.value,
+          rs_user_prescription_date: this.datePipe.transform(new Date(), 'YYYY-MM-dd'),
+          rs_doctor_id: 1,
+          rs_patient_id: this.currentUser.id
+        }
+      }
+    };
+
+    this.patientService.addPrescriptions(userData).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+      } else {
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 }

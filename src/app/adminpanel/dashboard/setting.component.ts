@@ -31,7 +31,7 @@ export class SettingComponent implements OnInit {
     this.settingsForm = this.formBuilder.group({
       userFirstName: [this.currentUser.first_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastName: [this.currentUser.last_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userAddress: [this.currentUser.last_name, Validators.required],
+      userAddress: [this.currentUser.Address, Validators.required],
       userPassword: ['', ''],
       userConfirmPassword: ['', '']
     });

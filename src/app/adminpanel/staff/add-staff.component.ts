@@ -53,8 +53,8 @@ export class AddStaffComponent implements OnInit {
       userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userGender: ['', Validators.required],
       userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      userPassword: ['', Validators.required],
-      userReenterPassword: ['', Validators.required],
+      userPassword: ['', ''],
+      userReenterPassword: ['', ''],
       userDesignation: ['', Validators.required],
       userDepartment: ['', Validators.required],
       userAvailablitityStatus: ['', Validators.required],
@@ -72,10 +72,18 @@ export class AddStaffComponent implements OnInit {
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
       let editStaffData = res;
 
-      console.log('editStaffDatabnnnnnnnnnn====');
-      console.log(editStaffData);
       if(editStaffData && (editStaffData != null) && (editStaffData.gender)) {
         this.editStaffId = editStaffData.id;
+        let startTime = editStaffData.availableStartTime;
+        const startTimeArray = startTime.split(":").map((time) => +time);
+        const starttime = new Date();
+        starttime.setHours(startTimeArray[0]);
+        starttime.setMinutes(startTimeArray[1]);
+        let endTime = editStaffData.availableEndTime;
+        const endTimesArray = endTime.split(":").map((time) => +time);
+        const endtime = new Date();
+        endtime.setHours(endTimesArray[0]);
+        endtime.setMinutes(endTimesArray[1]);
         this.addStaffForm.controls.userFirstname.setValue(editStaffData.userDO.first_name);
         this.addStaffForm.controls.userLastname.setValue(editStaffData.userDO.last_name);
         this.addStaffForm.controls.userGender.setValue(editStaffData.gender);
@@ -83,8 +91,8 @@ export class AddStaffComponent implements OnInit {
         this.addStaffForm.controls.userDesignation.setValue(editStaffData.designation);
         this.addStaffForm.controls.userDepartment.setValue(editStaffData.department);
         this.addStaffForm.controls.userAvailablitityStatus.setValue(editStaffData.available_status);
-        // this.addStaffForm.controls.userAvailableStartTime.setValue(this.datePipe.transform(editStaffData.availableStartTime, 'HH::mm:ss'));
-        // this.addStaffForm.controls.userAvailableEndTime.setValue(new Date(editStaffData.availableEndTime));
+        this.addStaffForm.controls.userAvailableStartTime.setValue(starttime);
+        this.addStaffForm.controls.userAvailableEndTime.setValue(endtime);
         this.addStaffForm.controls.userAddress.setValue(editStaffData.address);
         this.addStaffForm.controls.userEmail.setValue(editStaffData.userDO.email);
         this.addStaffForm.controls.userBirthDate.setValue(new Date(editStaffData.birthDate));
@@ -110,7 +118,6 @@ export class AddStaffComponent implements OnInit {
     this.commonService.getDepartments(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.services = getResponseObj.responseData;
       } else {
@@ -142,9 +149,17 @@ export class AddStaffComponent implements OnInit {
     if (this.addStaffForm.invalid) {
         return;
     }
-    if (this.f.userPassword.value !== this.f.userReenterPassword.value) {
-      this.notifyService.showError('Password do not match.');
-      return;
+
+    if (this.editStaffId) {
+      if (((this.f.userPassword.value != '') || (this.f.userReenterPassword.value != '')) && (this.f.userPassword.value !== this.f.userReenterPassword.value)) {
+        this.notifyService.showError('Passwords do not match.');
+        return;
+      }
+    } else {
+      if (this.f.userPassword.value && this.f.userReenterPassword.value && (this.f.userPassword.value !== this.f.userReenterPassword.value)) {
+        this.notifyService.showError('Passwords do not match.');
+        return;
+      }
     }
 
     this.spinner.show();
@@ -180,14 +195,9 @@ export class AddStaffComponent implements OnInit {
       data.RSADMINAPPADDOP.rs_ad_recin['rs_admin_id'] = '';
     }
 
-    console.log('===data====');
-    console.log(data);
     this.staffService.addUser(data).subscribe((response:any) => {
       this.spinner.hide();
-      console.log(response);
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log('====getResponseObj=====');
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
         this.notifyService.showSuccess(getResponseObj.responseMessage);
         this.addStaffForm.reset();

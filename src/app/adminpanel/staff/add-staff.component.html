@@ -39,13 +39,21 @@
                           </div>
                         </div>
                         <div class="col-sm-6">
-                          <div class="form-group">
+                          <div class="form-group" *ngIf="editStaffId">
+                            <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_PASS}}</label>
+                            <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_PASS}}" formControlName="userPassword" maxlength="15">
+                          </div>
+                          <div class="form-group" *ngIf="!editStaffId">
                               <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_PASS}} <span class="text-danger">*</span></label>
                               <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_PASS}}" formControlName="userPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.userPassword.errors}">
                           </div>
                         </div>
                         <div class="col-sm-6">
-                          <div class="form-group">
+                          <div class="form-group" *ngIf="editStaffId">
+                            <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_REPASS}}</label>
+                            <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_REPASS}}" formControlName="userReenterPassword" maxlength="15">
+                          </div>
+                          <div class="form-group" *ngIf="!editStaffId">
                               <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_REPASS}} <span class="text-danger">*</span></label>
                               <input type="password" class="form-control form-control-sm" placeholder="{{props.DOCTOR_DETAILS.DOCTOR_REPASS}}" formControlName="userReenterPassword" maxlength="15" [ngClass]="{ 'is-invalid': submitted && f.userReenterPassword.errors}">
                           </div>

@@ -41,9 +41,6 @@ export class PrescriptionComponent implements OnInit {
   setDataTableOptionsForSearch() {
     let dtOptionsObj = new DataTableOptions();
     dtOptionsObj.dataTableElement = this.dataTableElement;
-    // dtOptionsObj.stateSave = false;
-    // dtOptionsObj.exportTitle = this.props.APP_Name + ' - Patients';
-    // dtOptionsObj.exportFileName = 'rs_patients_list';
     this.dtOptions = this.dataTableService.getDataTableOptionsWithFilter(dtOptionsObj);
   }
 

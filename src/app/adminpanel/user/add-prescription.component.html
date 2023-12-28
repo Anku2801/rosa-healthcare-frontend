@@ -20,6 +20,12 @@
                             </div>
                           </div>
                           <div class="form-group row">
+                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.PRESCRIPTION_TITLE}} <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="{{props.USER_DETAILS.PRESCRIPTION_TITLE}}" formControlName="precritionTitle" maxlength="200" [ngClass]="{ 'is-invalid': submitted && f.precritionTitle.errors}">
+                            </div>
+                          </div>
+                          <div class="form-group row">
                             <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.DOSAGE_INSTRUCTION}} <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                               <textarea rows="10" style="height: 150px;" class="form-control" formControlName="dosageInstruction" placeholder="{{props.USER_DETAILS.DOSAGE_INSTRUCTION}}" maxlength="4000" [ngClass]="{ 'is-invalid': submitted && f.dosageInstruction.errors}"></textarea>

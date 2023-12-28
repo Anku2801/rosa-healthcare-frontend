@@ -35,8 +35,10 @@
                                           <span class="badge badge-solid-active" *ngIf="doctors.user.status == props.USER_DETAILS.USER_ACTIVE">{{doctors.user.status}}</span>
                                           <span class="badge badge-solid-inactive" *ngIf="doctors.user.status == props.USER_DETAILS.USER_INACTIVE">{{doctors.user.status}}</span>
                                         </td>
-                                        <td width="3%" class="text-center">
-                                          <span><button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="doctors" routerLink="/admin/add-doctors"><i class="fa fa-pencil-square-o"></i></button></span>
+                                        <td>
+                                          <span>
+                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="doctors" routerLink="/admin/add-doctor"><i class="fa fa-pencil-square-o"></i></button>
+                                          </span>
                                         </td>
                                     </tr>
                                 </ng-container>
