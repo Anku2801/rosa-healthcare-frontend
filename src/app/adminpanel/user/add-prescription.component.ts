@@ -43,11 +43,35 @@ export class AddPrescriptionComponent implements OnInit {
       precritionTitle: ['', Validators.required],
       dosageInstruction: ['', Validators.required]
     });
+    this.spinner.show();
     this.getUserDetails();
+    this.getActiveDoctors();
   }
 
   // For easy access to form fields
   get f() { return this.addPrescriptionsForm.controls; }
+
+  getActiveDoctors() {
+    this.spinner.show();
+    var data = {
+      GetDoctorOperation: {
+        rs_add_recin: {
+        }
+      }
+    };
+
+    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.doctorsList = getResponseObj.responseData;
+      } else {
+        this.doctorsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
 
   getUserDetails() {
     this.spinner.show();
@@ -64,6 +88,7 @@ export class AddPrescriptionComponent implements OnInit {
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.patientData = getResponseObj.responseData;
+        this.f.doctorId.setValue(this.patientData.doctor.id);
       } else {
         this.patientData = null;
         this.notifyService.showError(getResponseObj.responseMessage);

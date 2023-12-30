@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8081/'
+  apiUrl: 'https://finalrosaapitesting-finalrosaapitesting.apps.openhack.pvcz.p1.openshiftapps.com/'
 };
