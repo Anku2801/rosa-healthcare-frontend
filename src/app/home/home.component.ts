@@ -134,7 +134,6 @@ export class HomeComponent implements OnInit {
     this.commonService.getActiveDoctors(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.doctorsList  = getResponseObj.responseData;
         this.availableDoctor = this.doctorsList.filter(x => x.available_status == 'Available');

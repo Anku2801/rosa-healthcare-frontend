@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
     var data = {
       GetDoctorDashBoard: {
         rs_add_recin: {
-          rs_doctor_id: "2"
+          rs_user_id: this.currentUser.id
         }
       }
     };

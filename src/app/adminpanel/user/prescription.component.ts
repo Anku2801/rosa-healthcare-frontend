@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataTableDirective } from 'angular-datatables';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataTableOptions } from 'app/commonconfig/service/datatable.model';
 import { DataTableService } from 'app/commonconfig/service/datatable.service';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { UserService } from './user.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-prescription',
@@ -21,13 +23,27 @@ export class PrescriptionComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
   patientsList: any[]; 
+  currentUser: any;
+  patientId : any;
 
   constructor(private userService: UserService,
     private spinner: NgxSpinnerService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private dataTableService: DataTableService,
     private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+
+    console.log("innnnnn");
+    this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editPatientData = res;
+      this.patientId = editPatientData.id;
+    })
     setTimeout(() => {
       this.getPrescriptionsList(this.resetFilter);
     }, 800)
@@ -47,11 +63,13 @@ export class PrescriptionComponent implements OnInit {
   getPrescriptionsList(resetFilter) {
     this.spinner.show();
     var data = {
-      GetPrescriptionOperation: {
+      RSPRESGETOP: {
         rs_add_recin: {
+          rs_patient_id: this.patientId
         }
       }
     };
+
     this.userService.getAllPrescriptionsList(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));

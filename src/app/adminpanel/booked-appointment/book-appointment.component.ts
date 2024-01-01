@@ -50,7 +50,7 @@ export class BookAppointmentComponent implements OnInit {
       this.router.navigate(['/home']);
     }
 
-    this.getActiveDoctors();
+    this.getActiveDoctorLists();
 
     this.addBookingAppoinmentForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -98,7 +98,7 @@ export class BookAppointmentComponent implements OnInit {
     console.log(this.selectedVal);
   }
 
-  getActiveDoctors() {
+  getActiveDoctorLists() {
     this.spinner.show();
     var data = {
       GetDoctorOperation: {
@@ -107,7 +107,7 @@ export class BookAppointmentComponent implements OnInit {
       }
     };
 
-    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+    this.commonService.getActiveDoctorLists(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);

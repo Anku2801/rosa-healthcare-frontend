@@ -18,4 +18,8 @@ export class CommonService {
   getActiveDoctors(data) {
     return this.apiService.postData('RSGetActiveDoctor', data);
   }
+
+  getActiveDoctorLists(data) {
+    return this.apiService.postData('RSgetDoctorWithoutImage', data);
+  }
 }

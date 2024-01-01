@@ -45,13 +45,13 @@ export class AddPrescriptionComponent implements OnInit {
     });
     this.spinner.show();
     this.getUserDetails();
-    this.getActiveDoctors();
+    this.getActiveDoctorLists();
   }
 
   // For easy access to form fields
   get f() { return this.addPrescriptionsForm.controls; }
 
-  getActiveDoctors() {
+  getActiveDoctorLists() {
     this.spinner.show();
     var data = {
       GetDoctorOperation: {
@@ -60,7 +60,7 @@ export class AddPrescriptionComponent implements OnInit {
       }
     };
 
-    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+    this.commonService.getActiveDoctorLists(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);

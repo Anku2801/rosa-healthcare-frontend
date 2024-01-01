@@ -26,9 +26,9 @@
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card info-box7 l-bg-card3 order-info-box7">
                 <div class="info-box7-block">
-                  <h3 class="m-b-15">Todays Operations</h3>
+                  <h3 class="m-b-15">Doctors</h3>
                   <h2 class="text-end" *ngIf="bookingData">
-                    <i class="far fa-calendar-check float-start"></i><span class="font-30">{{bookingData.activeBookingCount}}</span>
+                    <i class="far fa-calendar-check float-start"></i><span class="font-30">{{bookingData.ActiveDoctorsCount}}</span>
                   </h2>
                   <p class="m-b-0">37% Higher Then Last Month</p>
                 </div>
@@ -62,11 +62,10 @@
                           <th>{{props.BOOKING.LAST_VISIT}}</th>
                           <th>{{props.BOOKED_APPOINTMENT_DETAILS.TIME}}</th>
                           <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
-                          <th>{{props.BOOKING.DETAILS}}</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="bookingData && bookingData.recentAppointments">
-                        <ng-container *ngFor="let appointment of bookingData.recentAppointments; index as i">
+                      <tbody *ngIf="bookingData && bookingData.upcomingAppointments">
+                        <ng-container *ngFor="let appointment of bookingData.upcomingAppointments; index as i">
                           <tr>
                             <td>{{appointment.firstName}} {{appointment.lastName}}</td>
                             <td>{{appointment.doctor.first_name}} {{appointment.doctor.last_name}}</td>
