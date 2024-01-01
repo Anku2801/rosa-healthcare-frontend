@@ -46,8 +46,7 @@
               "node_modules/datatables.net-buttons/js/buttons.flash.js",
               "node_modules/datatables.net-buttons/js/buttons.html5.js",
               "node_modules/datatables.net-buttons/js/buttons.print.js"
-            ],
-            "baseHref": "/rosahealthcare/"
+            ]
           },
           "configurations": {
             "production": {
@@ -65,7 +64,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "baseHref": "/rosahealthcare/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -87,8 +85,7 @@
                 },
                 "fonts": true
               },
-              "outputHashing": "all",
-              "baseHref": "/rosahealthcare/"
+              "outputHashing": "all"
             }
           }
         },
