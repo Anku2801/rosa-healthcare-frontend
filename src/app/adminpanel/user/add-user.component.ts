@@ -42,7 +42,7 @@ export class AddUserComponent implements OnInit {
       this.router.navigate(['/home']);
     }
 
-    this.getActiveDoctors();
+    this.getActiveDoctorLists();
 
     this.addPatientForm = this.formBuilder.group({
       userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
@@ -92,7 +92,7 @@ export class AddUserComponent implements OnInit {
   // For easy access to form fields
   get f() { return this.addPatientForm.controls; }
 
-  getActiveDoctors() {
+  getActiveDoctorLists() {
     this.spinner.show();
     var data = {
       GetDoctorOperation: {
@@ -101,10 +101,9 @@ export class AddUserComponent implements OnInit {
       }
     };
 
-    this.commonService.getActiveDoctors(data).subscribe((response: any) => {
+    this.commonService.getActiveDoctorLists(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.doctorsList = getResponseObj.responseData;
       } else {

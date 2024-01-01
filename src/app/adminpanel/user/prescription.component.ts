@@ -22,9 +22,11 @@ export class PrescriptionComponent implements OnInit {
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
-  patientsList: any[]; 
+  precreiptionsList: any[]; 
   currentUser: any;
   patientId : any;
+  patientName: any;
+  editPatientData: any;
 
   constructor(private userService: UserService,
     private spinner: NgxSpinnerService,
@@ -38,12 +40,16 @@ export class PrescriptionComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
-
-    console.log("innnnnn");
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
-      let editPatientData = res;
-      this.patientId = editPatientData.id;
+      this.editPatientData = res;
+      if (this.editPatientData && this.editPatientData.id) {
+        this.patientId   = this.editPatientData.id;
+        this.patientName = this.editPatientData.user.first_name + ' ' + this.editPatientData.user.last_name;
+      } else {
+        this.router.navigate(['/admin/patients']);
+      }
     })
+    
     setTimeout(() => {
       this.getPrescriptionsList(this.resetFilter);
     }, 800)
@@ -74,13 +80,13 @@ export class PrescriptionComponent implements OnInit {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
       console.log(getResponseObj);
-      // if (getResponseObj != null && getResponseObj.responseData != null) {
-      //   this.patientsList = getResponseObj.responseData;
-      //   this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
-      // } else {
-      //   this.patientsList = null;
-      //   this.notifyService.showError(getResponseObj.responseMessage);
-      // }
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.precreiptionsList = getResponseObj.responseData;
+        this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      } else {
+        this.precreiptionsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
     });
   }
 }

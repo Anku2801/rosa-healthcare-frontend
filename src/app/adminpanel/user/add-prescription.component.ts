@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -8,6 +8,7 @@ import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg
 import { CommonService } from 'app/commonconfig/service/common.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { UserService } from './user.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-prescription',
@@ -25,6 +26,7 @@ export class AddPrescriptionComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private notifyService: NotificationmsgService,
               private commonService: CommonService,
@@ -37,6 +39,20 @@ export class AddPrescriptionComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
+
+    this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
+      let editPatientData = res;
+      console.log(editPatientData);
+      console.log(editPatientData.id);
+      console.log(editPatientData.id);
+      if (editPatientData && editPatientData.id) {
+        // this.patientId   = editPatientData.id;
+         console.log();
+        // this.patientName = editPatientData.user.first_name + ' ' + editPatientData.user.last_name;
+      } else {
+        this.router.navigate(['/admin/patients']);
+      }
+    })
 
     this.addPrescriptionsForm = this.formBuilder.group({
       doctorId: ['', ''],

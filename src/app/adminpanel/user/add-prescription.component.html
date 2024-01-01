@@ -7,41 +7,82 @@
                   <h4 class="title">Add Prescription</h4>
                 </div>
                 <div class="content">
-                    <form id="add-user" [formGroup]="addPrescriptionsForm" autocomplete="off">
-                      <div class="row justify-content-center">
-                        <div class="row">
-                          <div class="form-group row">
-                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                              <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
-                                <option value="" disabled>Choose a Doctor</option>
-                                <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.first_name}} {{doctor.last_name}}</option>
-                              </select>
-                            </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="card py-3 py-md-3">
+                        <div class="d-flex justify-content-between px-3 px-md-4">
+                          <img src="assets/images/user/usrbig1.jpg" height="45px" width="45px" alt="" class="rounded-circle">
+                          <div>
+                            <p class="col-green font-14 font-b-500">Lindsey Johnson</p>
+                            <p class="font-12">Patient Id : 1234</p>
                           </div>
-                          <div class="form-group row">
-                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.PRESCRIPTION_TITLE}} <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" placeholder="{{props.USER_DETAILS.PRESCRIPTION_TITLE}}" formControlName="precritionTitle" maxlength="200" [ngClass]="{ 'is-invalid': submitted && f.precritionTitle.errors}">
-                            </div>
+                          <div>
+                            <h6>10:00 - 10:30 AM</h6>
+                            <p class="font-12">Friday, June 26</p>
                           </div>
-                          <div class="form-group row">
-                            <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.DOSAGE_INSTRUCTION}} <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                              <textarea rows="10" style="height: 150px;" class="form-control" formControlName="dosageInstruction" placeholder="{{props.USER_DETAILS.DOSAGE_INSTRUCTION}}" maxlength="4000" [ngClass]="{ 'is-invalid': submitted && f.dosageInstruction.errors}"></textarea>
+                        </div>
+                        <hr class="light-hr">
+                        <div class="d-flex flex-column justify-content-start w-100 px-3 px-md-4">
+                          <div>
+                            <i class="fas fa-map-marker-alt pt-3 psr-3"></i> Shanti Nagar Bldg No B 4, Sector No 6, Mira Road
+                          </div>
+                          <div><i class="fas fa-phone pt-3 psr-3"></i>+123 87654565</div>
+                        </div>
+                        <hr class="light-hr">
+                        <div class="d-flex justify-content-between px-3 px-md-4">
+                          <div>
+                            <div class="d-flex">
+                              <p class="psr-2">Blood Group:</p>
+                              <div class="font-weight-bold"> O+ </div>
+                            </div>
+                            <div class="d-flex">
+                              <p class="psr-2">Reports:</p>
+                              <div class="font-weight-bold">
+                                <i class="far fa-file-pdf col-red"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        
-                        <div class="row justify-content-end">
-                          <div class="form-group">
-                            <button type="button" class="btn btn-default pull-right" routerLink="/admin/patients" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
-                            <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.addPrescriptionsForm.valid" (click)="addPrescriptions()">{{props.USER_DETAILS.USER_PRESCRIPTION}}</button>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
                       </div>
-                    </form>
+                    </div>
+                    <div class="col-md-8">
+                      <form id="add-user" [formGroup]="addPrescriptionsForm" autocomplete="off">
+                        <div class="row justify-content-center">
+                          <div class="row">
+                            <div class="form-group row">
+                              <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.CONSULTING_DOC}} <span class="text-danger">*</span></label>
+                              <div class="col-sm-10">
+                                <select class="form-control form-select" formControlName="doctorId" [ngClass]="{ 'is-invalid': submitted && f.doctorId.errors}">
+                                  <option value="" disabled>Choose a Doctor</option>
+                                  <option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{doctor.first_name}} {{doctor.last_name}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.PRESCRIPTION_TITLE}} <span class="text-danger">*</span></label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="{{props.USER_DETAILS.PRESCRIPTION_TITLE}}" formControlName="precritionTitle" maxlength="200" [ngClass]="{ 'is-invalid': submitted && f.precritionTitle.errors}">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-sm-2 col-form-label fw-bold">{{props.USER_DETAILS.DOSAGE_INSTRUCTION}} <span class="text-danger">*</span></label>
+                              <div class="col-sm-10">
+                                <textarea rows="10" style="height: 150px;" class="form-control" formControlName="dosageInstruction" placeholder="{{props.USER_DETAILS.DOSAGE_INSTRUCTION}}" maxlength="4000" [ngClass]="{ 'is-invalid': submitted && f.dosageInstruction.errors}"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="row justify-content-end">
+                            <div class="form-group">
+                              <button type="button" class="btn btn-default pull-right" routerLink="/admin/patients" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
+                              <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.addPrescriptionsForm.valid" (click)="addPrescriptions()">{{props.USER_DETAILS.USER_PRESCRIPTION}}</button>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
