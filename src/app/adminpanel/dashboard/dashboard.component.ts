@@ -25,14 +25,6 @@ export class DashboardComponent implements OnInit {
   chartData: any;
   diseases_badge_colors = ["col-red", "col-green", "col-cyan", "col-orange", "col-purple"];
 
-  appointmentList = [
-    {id: 1, name: "John Doe", doctor: "Dr.Jacob Ryan", date: "12/05/2016", time: "2.00 PM", diseases: "Fever"},
-    {id: 2, name: "Sarah Smith", doctor: "Dr.Rajesh", date: "12/05/2016", time: "2.00 PM", diseases: "Jaundice"},
-    {id: 3, name: "Airi Satou", doctor: "Dr.Sarah Smith", date: "12/05/2016", time: "2.00 PM", diseases: "Cholera"},
-    {id: 4, name: "Angelica Ramos", doctor: "Dr.Jay Soni", date: "12/05/2016", time: "2.00 PM", diseases: "Maleria"},
-    {id: 5, name: "Ashton Cox", doctor: "Dr.Megha Trivedi", date: "12/05/2016", time: "2.00 PM", diseases: "Typhod"},
-    {id: 6, name: "Cara Stevens", doctor: "Dr.Amit Trivedi", date: "12/05/2016", time: "2.00 PM", diseases: "Infection"}
-  ];
 
   constructor(public spinner: NgxSpinnerService, 
     public notifyService: NotificationmsgService, 

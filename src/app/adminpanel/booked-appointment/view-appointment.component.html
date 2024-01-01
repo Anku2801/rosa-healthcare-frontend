@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="content table-responsive table-full-width">
-                        <button type="button" class="btn btn-success btn-fill btn-sm pull-right" tooltip="Add" routerLink="/admin/book-appointment"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                        <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-success btn-fill btn-sm pull-right" tooltip="Add" routerLink="/admin/book-appointment"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                         <table id="doctor-list-tbl" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-no-bordered table-hover">
                             <thead>
                                 <tr>
@@ -16,7 +16,7 @@
                                     <th>Doctor</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}</th>
                                     <th>{{props.BOOKED_APPOINTMENT_DETAILS.STATUS}}</th>
-                                    <th>{{props.BTN_SEARCH.ACTION}}</th>
+                                    <th *ngIf="currentRole == 'Admin'">{{props.BTN_SEARCH.ACTION}}</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="bookedAppointmentsLists">
@@ -37,7 +37,7 @@
                                             <span class="badge badge-solid-blue" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.VISITED">{{bookedappointment.appointmentStatus}}</span>
                                             <span class="badge badge-solid-red" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.appointmentStatus}}</span>
                                         </td>
-                                        <th width="5%">
+                                        <th width="5%" *ngIf="currentRole == 'Admin'">
                                           <span>
                                             <button type="button" class="btn btn-warning btn-fill btn-sm pull-right"  tooltip="Update" [state]="bookedappointment" routerLink="/admin/book-appointment"><i class="fa fa-pencil-square-o"></i></button>
                                           </span>

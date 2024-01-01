@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -20,14 +21,23 @@ export class UserComponent implements OnInit {
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
-  patientsList: any[]; 
+  patientsList: any[];
+  currentUser: any;
+  currentRole: any; 
 
   constructor(private userService: UserService,
     private spinner: NgxSpinnerService,
+    private router: Router,
     private dataTableService: DataTableService,
     private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+
+    this.currentRole = this.currentUser.role_name;
     setTimeout(() => {
       this.getPatientsList(this.resetFilter);
     }, 800)
@@ -52,6 +62,7 @@ export class UserComponent implements OnInit {
     var data = {
       GetPatientOperation: {
         rs_add_recin: {
+          rs_user_id: this.currentUser.id
         }
       }
     };

@@ -4,33 +4,20 @@
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card info-box7 l-bg-card1 order-info-box7">
                 <div class="info-box7-block">
-                  <h3 class="m-b-15">Todays Patients</h3>
-                  <h2 class="text-end">
-                    <i class="fa-solid fa-user-injured float-start"></i><span class="font-30">231</span>
+                  <h3 class="m-b-15">Patients</h3>
+                  <h2 class="text-end" *ngIf="bookingData">
+                    <i class="fa-solid fa-user-injured float-start"></i><span class="font-30">{{bookingData.activePatientCount}}</span>
                   </h2>
                   <p class="m-b-0">18% Higher Then Last Month</p>
                 </div>
               </div>
-              <!-- <div class="card home-subcard">
-                  <img src="/assets/images/dashboardimg1.PNG" class="animated animatedFadeInUp fadeInUp">
-                  <a routerLink="/admin/patients">
-                    <div class="top-right">
-                      <div>
-                        <h5 class="float-end">New Patients</h5>
-                      </div>
-                      <div class="m-r-10 m-l-10">
-                        <h3 class="font-weight-bold float-end mb-0"> 129</h3>
-                      </div>
-                    </div>
-                  </a>
-              </div> -->
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card info-box7 l-bg-card2 order-info-box7">
                 <div class="info-box7-block">
                   <h3 class="m-b-15">Appointments</h3>
-                  <h2 class="text-end">
-                    <i class="far fa-calendar-check float-start"></i><span class="font-30">122</span>
+                  <h2 class="text-end" *ngIf="bookingData">
+                    <i class="far fa-calendar-check float-start"></i><span class="font-30">{{bookingData.activeBookingCount}}</span>
                   </h2>
                   <p class="m-b-0">21% Higher Then Last Month</p>
                 </div>
@@ -40,8 +27,8 @@
               <div class="card info-box7 l-bg-card3 order-info-box7">
                 <div class="info-box7-block">
                   <h3 class="m-b-15">Todays Operations</h3>
-                  <h2 class="text-end">
-                    <i class="far fa-calendar-check float-start"></i><span class="font-30">28</span>
+                  <h2 class="text-end" *ngIf="bookingData">
+                    <i class="far fa-calendar-check float-start"></i><span class="font-30">{{bookingData.activeBookingCount}}</span>
                   </h2>
                   <p class="m-b-0">37% Higher Then Last Month</p>
                 </div>
@@ -78,15 +65,14 @@
                           <th>{{props.BOOKING.DETAILS}}</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="appointmentList">
-                        <ng-container *ngFor="let appointment of appointmentList; index as i">
+                      <tbody *ngIf="bookingData && bookingData.recentAppointments">
+                        <ng-container *ngFor="let appointment of bookingData.recentAppointments; index as i">
                           <tr>
-                            <td>{{appointment.name}}</td>
-                            <td>{{appointment.gender}}</td>
-                            <td>{{appointment.date}}</td>
-                            <td>{{appointment.time}}</td>
-                            <td><div [className]="'badge ' + diseases_badge_colors[i % diseases_badge_colors.length]">{{appointment.diseases}}</div></td>
-                            <td><a href="" class="details-btn">Details</a></td>
+                            <td>{{appointment.firstName}} {{appointment.lastName}}</td>
+                            <td>{{appointment.doctor.first_name}} {{appointment.doctor.last_name}}</td>
+                            <td>{{appointment.appointmentDate}}</td>
+                            <td>{{appointment.appointmentTime}}</td>
+                            <td><div [className]="'badge ' + diseases_badge_colors[i % diseases_badge_colors.length]">{{appointment.injury}}</div></td>
                           </tr>
                         </ng-container>
                       </tbody>

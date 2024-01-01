@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+// import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { NgxSpinnerService } from "ngx-spinner";
 import { constantsProps } from '../../commonconfig/props/constants.props';
+import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
+import { SettingService } from '../../adminpanel/dashboard/setting.service';
 
 Chart.register(...registerables);
 
@@ -17,27 +21,56 @@ export class DashboardComponent implements OnInit {
   currentUserEmail: String ;
   chartdata: any;
   public chart: any;
+  bookingData: any;
+  malechartData: any;
+  femalechartData: any;
+  currentUser: any;
   diseases_badge_colors = ["col-red", "col-green", "col-cyan", "col-orange", "col-purple"];
 
-  appointmentList = [
-    {id: 1, name: "John Doe", gender: "Male", date: "12/05/2016", time: "2.00 PM", diseases: "Fever"},
-    {id: 2, name: "Sarah Smith", gender: "Female", date: "12/05/2016", time: "2.00 PM", diseases: "Jaundice"},
-    {id: 3, name: "Airi Satou", gender: "Male", date: "12/05/2016", time: "2.00 PM", diseases: "Cholera"},
-    {id: 4, name: "Angelica Ramos", gender: "Female", date: "12/05/2016", time: "2.00 PM", diseases: "Maleria"},
-    {id: 5, name: "Ashton Cox", gender: "Male", date: "12/05/2016", time: "2.00 PM", diseases: "Typhod"},
-    {id: 6, name: "Cara Stevens", gender: "Female", date: "12/05/2016", time: "2.00 PM", diseases: "Infection"}
-  ];
-
-  constructor() { }
+  constructor(public spinner: NgxSpinnerService, 
+    public notifyService: NotificationmsgService, 
+    private router: Router,
+    private settingService: SettingService) { }
 
   ngOnInit(): void {
-    this.createChart();
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    } else {
+      this.getDashboardData();
+    }
+  }
+
+  getDashboardData() {
+    this.spinner.show();
+    var data = {
+      GetDoctorDashBoard: {
+        rs_add_recin: {
+          rs_doctor_id: "2"
+        }
+      }
+    };
+    this.settingService.getDoctorDashboardData(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+         this.bookingData = getResponseObj.responseData;
+         let malechartData    = this.bookingData.MaleAppointments;
+         let femalechartData  = this.bookingData.femaleAppointments;
+         this.malechartData   = [malechartData['Monday'], malechartData['Tuesday'], malechartData['Wednesday'], malechartData['Thursday'], malechartData['Friday'], malechartData['Saturday'], malechartData['Sunday']];
+         this.femalechartData = [femalechartData['Monday'], femalechartData['Tuesday'], femalechartData['Wednesday'], femalechartData['Thursday'], femalechartData['Friday'], femalechartData['Saturday'], femalechartData['Sunday']];
+         this.createChart();
+      } else {
+         this.bookingData = null;
+         this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 
   createChart() {
     const xValues = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const maleValues = [55, 49, 44, 24, 65, 40, 35];
-    const femaleValues = [65, 19, 54, 114, 15, 80, 15];
+    const maleValues = this.malechartData;
+    const femaleValues = this.femalechartData;
     const barColors = ['pink', 'darkorange', 'aqua', 'lightgreen', 'brown', 'gold', 'lightblue'];
     this.chart = new Chart('bookingChart', {
       type: 'bar',

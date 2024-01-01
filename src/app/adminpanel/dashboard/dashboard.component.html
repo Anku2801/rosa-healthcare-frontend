@@ -9,7 +9,7 @@
                       <div>
                         <h5 class="float-end">New Patients</h5>
                       </div>
-                      <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.activePatientCount">
+                      <div class="m-r-10 m-l-10" *ngIf="bookingData">
                         <h3 class="font-weight-bold float-end mb-0"> {{bookingData.activePatientCount}}</h3>
                       </div>
                     </div>
@@ -24,7 +24,7 @@
                     <div>
                       <h5 class="float-end">Appointments</h5>
                     </div>
-                    <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.next6monthsAppointments">
+                    <div class="m-r-10 m-l-10" *ngIf="bookingData">
                       <h3 class="font-weight-bold float-end mb-0"> {{bookingData.next6monthsAppointments}}</h3>
                     </div>
                   </div>
@@ -38,7 +38,7 @@
                       <div>
                         <h5 class="float-end">Doctors</h5>
                       </div>
-                      <div class="m-r-10 m-l-10" *ngIf="bookingData && bookingData.activeDoctorCount">
+                      <div class="m-r-10 m-l-10" *ngIf="bookingData">
                         <h3 class="font-weight-bold float-end mb-0"> {{bookingData.activeDoctorCount}}</h3>
                       </div>
                     </div>

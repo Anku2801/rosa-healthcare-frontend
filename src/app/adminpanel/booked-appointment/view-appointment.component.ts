@@ -23,6 +23,7 @@ export class ViewAppointmentComponent implements OnInit {
   resetFilter: any;
   bookedAppointmentsLists: any[];
   currentUser: any;
+  currentRole: any;
 
   constructor(private bookedAppointmentService: BookedAppointmentService,
     private spinner: NgxSpinnerService,
@@ -35,7 +36,8 @@ export class ViewAppointmentComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
-  
+    
+    this.currentRole = this.currentUser.role_name;
     setTimeout(() => {
       this.getBookedAppoinmentsList(this.resetFilter);
     }, 800)
@@ -60,6 +62,7 @@ export class ViewAppointmentComponent implements OnInit {
     var data = {
       GetBookingOperation: {
         rs_add_recin: {
+          rs_user_id: this.currentUser.id
         }
       }
     };

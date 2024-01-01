@@ -22,4 +22,8 @@ export class SettingService {
   getBookings() {
     return this.apiService.postData('RSgetDashBoardData', '');
   }
+
+  getDoctorDashboardData(data) {
+    return this.apiService.postData('RSgetDoctorDashBoardData', data);
+  }
 }
