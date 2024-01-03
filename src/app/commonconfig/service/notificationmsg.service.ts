@@ -23,7 +23,7 @@ export class NotificationmsgService {
         message: msg
     },{
         type: 'success',
-        timer: 2000,
+        timer: 1000,
         placement: {
             from: from,
             align: align
@@ -44,7 +44,7 @@ export class NotificationmsgService {
         message: msg
     },{
         type: 'danger',
-        timer: 9000,
+        timer: 1000,
         placement: {
             from: from,
             align: align

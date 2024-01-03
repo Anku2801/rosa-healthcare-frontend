@@ -78,4 +78,30 @@ export class ViewAppointmentComponent implements OnInit {
       }
     });
   }
+
+  changeStatus(e: MouseEvent, id) {
+    this.spinner.show();
+    e.stopImmediatePropagation();
+    console.log(id);
+    var data = {
+      BookingStatusOperation: {
+        rs_add_recin: {
+          rs_booking_id: id
+        }
+      }
+    };
+    this.bookedAppointmentService.changeBookingStatus(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000)
+      } else {
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
 }

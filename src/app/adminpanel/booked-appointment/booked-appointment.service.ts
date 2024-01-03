@@ -18,4 +18,8 @@ export class BookedAppointmentService {
   addBooking(data) {
     return this.apiService.postData('RSBooking', data);
   }
+
+  changeBookingStatus(data) {
+    return this.apiService.postData('RSUpdateStatus', data);
+  }
 }

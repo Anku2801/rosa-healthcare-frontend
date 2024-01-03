@@ -67,6 +67,43 @@
               </div>
             </div>
           </div>
+          <div class="card">
+            <div class="header">
+              <h4 class="title">Account Settings</h4>
+            </div>
+            <div class="content">
+              <div class="row justify-content-center">
+                <div class="row">                      
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABILITITY_STATUS}} <span class="text-danger">*</span></label>
+                        <select class="form-control form-select" formControlName="userAvailablitityStatus" [ngClass]="{ 'is-invalid': submitted && f.userAvailablitityStatus.errors}">
+                          <option value="" disabled>Choose an Availability</option>
+                          <option value="{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABLE}}</option>
+                          <option value="{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}">{{props.DOCTOR_DETAILS.DOCTOR_ABSEND}}</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_AVAILABILITITY_TIME}} <span class="text-danger">*</span></label>
+                        <div class="time-pickers" style="display: inline-flex">
+                          <timepicker [showMeridian]="false" required formControlName="userAvailableStartTime"></timepicker>
+                          <span style="margin: auto; margin-left: 8px; margin-right: 8px;"> --and-- </span>
+                          <timepicker [showMeridian]="false" required formControlName="userAvailableEndTime"></timepicker>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row justify-content-end" style="margin-top: 10px;">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-fill pull-right" [disabled]="!this.settingsForm.valid" (click)="updateAccount('available')">{{props.BTN_SEARCH.SAVE_CHANGES}}</button>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>

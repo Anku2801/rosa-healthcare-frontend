@@ -21,7 +21,7 @@ export class AutoLogoutService implements OnInit {
   }
 
   public getLastAction() {
-    // return parseInt(localStorage.getItem(STORE_KEY));
+    return parseInt(localStorage.getItem(STORE_KEY));
   }
 
   public setLastAction(value: any) {

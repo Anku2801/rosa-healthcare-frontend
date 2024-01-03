@@ -51,21 +51,37 @@ export class BookAppointmentComponent implements OnInit {
     }
 
     this.getActiveDoctorLists();
-
-    this.addBookingAppoinmentForm = this.formBuilder.group({
-      userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userGender: ['', Validators.required],
-      userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-      userAddress: ['', Validators.required],
-      userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
-      userBirthDate: ['', Validators.required],
-      doctorId: ['', Validators.required],
-      userAppointmentDate: ['', Validators.required],
-      userAppointmentTime: ['', Validators.required],
-      userInjury: ['', Validators.required]
-    });
-  
+    console.log(this.currentUser);
+    if (this.currentUser.role_name == 'Patient') {
+      this.addBookingAppoinmentForm = this.formBuilder.group({
+        userFirstname: [{value: this.currentUser.first_name, disabled: true}, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userLastname: [{value: this.currentUser.last_name, disabled: true}, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userGender: ['', Validators.required],
+        userMobile: [{value: this.currentUser.mobile_no, disabled: true}, [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
+        userAddress: [{value: this.currentUser.Address, disabled: true}, Validators.required],
+        userEmail: [{value: this.currentUser.email, disabled: true}, [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
+        userBirthDate: ['', Validators.required],
+        doctorId: ['', Validators.required],
+        userAppointmentDate: ['', Validators.required],
+        userAppointmentTime: ['', Validators.required],
+        userInjury: ['', Validators.required]
+      });
+    } else {
+      this.addBookingAppoinmentForm = this.formBuilder.group({
+        userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userGender: ['', Validators.required],
+        userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
+        userAddress: ['', Validators.required],
+        userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
+        userBirthDate: ['', Validators.required],
+        doctorId: ['', Validators.required],
+        userAppointmentDate: ['', Validators.required],
+        userAppointmentTime: ['', Validators.required],
+        userInjury: ['', Validators.required]
+      });
+    }
+   
     // Get details
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
       let editBookingData = res;

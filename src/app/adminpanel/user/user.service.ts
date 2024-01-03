@@ -29,6 +29,11 @@ export class UserService {
     return this.apiService.postData('RSGetPatientById', data);
   }
 
+  // Get Patient Details
+  getUserDetails(data) {
+    return this.apiService.postData('RSGetUserById', data);
+  }
+
   // Add precription data
   addPrescriptions(data) {
     return this.apiService.postData('RSAddPrescription', data);

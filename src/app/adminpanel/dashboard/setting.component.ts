@@ -5,6 +5,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { SettingService } from './setting.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-setting',
@@ -21,6 +22,7 @@ export class SettingComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private notifyService: NotificationmsgService,
+    private patientService: UserService,
     private settingService: SettingService) { }
 
   ngOnInit(): void {
@@ -28,18 +30,46 @@ export class SettingComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
+    
+    this.getUserDetails();
+    
     this.settingsForm = this.formBuilder.group({
       userFirstName: [this.currentUser.first_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userLastName: [this.currentUser.last_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
       userAddress: [this.currentUser.Address, Validators.required],
       userPassword: ['', ''],
-      userConfirmPassword: ['', '']
+      userConfirmPassword: ['', ''],
+      userAvailablitityStatus: ['', ''],
+      userAvailableStartTime: ['', ''],
+      userAvailableEndTime: ['', ''],
     });
   }
 
   // For easy access to form fields
   get f() { return this.settingsForm.controls; }
 
+  getUserDetails() {
+    this.spinner.show();
+    var data = {
+      RSDOCGETOP: {
+        rs_add_recin: {
+          rs_user_id: this.currentUser.id
+        }
+      }
+    };
+    this.patientService.getUserDetails(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log('patientdara');
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+        this.notifyService.showSuccess(getResponseObj.responseMessage);
+      } else {
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
+  
   updateAccount(type) {
     this.spinner.show();
     this.submitted = true;

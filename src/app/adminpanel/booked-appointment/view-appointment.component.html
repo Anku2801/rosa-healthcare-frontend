@@ -34,9 +34,10 @@
                                         <td><a href="">Dr.{{bookedappointment.doctor.user.first_name}} {{bookedappointment.doctor.user.last_name}}</a></td>
                                         <td width="7%">{{bookedappointment.injury}}</td>
                                         <td width="7%">
-                                            <span class="badge badge-solid-purple" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING">{{bookedappointment.appointmentStatus}}</span>
+                                            <span class="badge badge-solid-purple" *ngIf="currentRole == 'Patient' && bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING">{{bookedappointment.appointmentStatus}}</span>
                                             <span class="badge badge-solid-blue" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.VISITED">{{bookedappointment.appointmentStatus}}</span>
                                             <span class="badge badge-solid-red" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.appointmentStatus}}</span>
+                                            <button class=" btn btn-sm btn-square" tooltip="Mark as Visited" *ngIf="currentRole != 'Patient' && bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING" (click)="changeStatus($event, bookedappointment.id)">{{bookedappointment.appointmentStatus}}</button>
                                         </td>
                                         <th width="5%" *ngIf="currentRole == 'Admin'">
                                           <span>
