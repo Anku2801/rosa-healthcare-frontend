@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { Chart, registerables } from 'chart.js';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
-
-Chart.register(...registerables);
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
+import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
+import { SettingService } from '../../adminpanel/dashboard/setting.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,53 +13,45 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
 
   props = constantsProps;
-  currentUserName: String ;
-  currentUserEmail: String ; 
-  datePipe = new DatePipe("en-US");
-  todayDate = this.datePipe.transform(new Date(), 'MMMM, YYYY');
-  chartdata: any;
-  public chart: any;
+  currentUserName: String;
+  currentUserEmail: String;
+  currentUser: any;
+  patientData: any;
 
-  constructor() { }
+  constructor(public spinner: NgxSpinnerService, 
+    public notifyService: NotificationmsgService, 
+    private router: Router,
+    private settingService: SettingService) { }
 
   ngOnInit(): void {
-    // this.createChart();
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    } else {
+      this.getPatientDashboardData();
+    }
   }
 
-  // createChart() {
-  //   const xValues = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  //   const yValues = [55, 49, 44, 24, 15, 40, 35];
-  //   const barColors = ['pink', 'darkorange', 'aqua', 'lightgreen', 'brown', 'gold', 'lightblue'];
-  //   this.chart = new Chart('bookingChart', {
-  //     type: 'bar',
-  //     data: {
-  //       labels: xValues,
-  //       datasets: [
-  //         {
-  //           label: '# of appointments',
-  //           data: yValues,
-  //           backgroundColor: barColors,
-  //           borderColor: ['fuchsia', 'brown', 'blue', 'green', 'red', 'black', 'navy'],
-  //           borderWidth: 2,
-  //           barThickness: 24,
-  //         },
-  //       ],
-  //     },
-  //     options: {
-  //       responsive: true,
-  //       scales: {
-  //         y: {
-  //           ticks: {
-  //             stepSize: 30,
-  //             // callback: function(value, index) {
-  //             //   return '$' + value;
-  //             // }
-  //           },
-  //           min: 0,
-  //           max: 120
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
+  getPatientDashboardData() {
+    this.spinner.show();
+    var data = {
+      GetPatientDashBoard: {
+        rs_add_recin: {
+          rs_user_id: this.currentUser.id
+        }
+      }
+    };
+    this.settingService.getPatientDashboardData(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log('patient data===');
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+         this.patientData = getResponseObj.responseData;
+      } else {
+         this.patientData = null;
+         this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
+  }
 }

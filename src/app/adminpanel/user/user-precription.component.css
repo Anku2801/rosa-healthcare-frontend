@@ -1,0 +1,35 @@
+.user-card {
+  position: relative;
+  margin: 20px 0px 22px 22px;
+  font-size: 13px !important;
+  background: #fff;
+  border-radius: 10px;
+  background: linear-gradient(#F8F9F9 10%, #85C1E9 90%);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(15px);
+  box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+}
+.font-12 {
+  font-size: 12px;
+}
+.font-14 {
+  font-size: 14px;
+}
+.font-b-500 {
+  font-weight: 600!important;
+}
+.mat-typography p {
+  margin: 0 0 10px;
+  font-weight: 550;
+  font-size: 13px !important;
+}
+.psr-2 {
+  padding-right: 0.5rem!important;
+}
+#add-prescription {
+  margin-left: 38px;
+}
+.div-btn {
+  margin-top: 5px;
+}
+  

@@ -12,7 +12,8 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-prescription',
-  templateUrl: './add-prescription.component.html'
+  templateUrl: './add-prescription.component.html',
+  styleUrls: ['./user-precription.component.css']
 })
 export class AddPrescriptionComponent implements OnInit {
   props = constantsProps;
@@ -23,6 +24,8 @@ export class AddPrescriptionComponent implements OnInit {
   currentUser: any;
   doctorsList: any;
   patientData: any;
+  patientId: any;
+  patientName: any;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -42,13 +45,9 @@ export class AddPrescriptionComponent implements OnInit {
 
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
       let editPatientData = res;
-      console.log(editPatientData);
-      console.log(editPatientData.id);
       console.log(editPatientData.id);
       if (editPatientData && editPatientData.id) {
-        // this.patientId   = editPatientData.id;
-         console.log();
-        // this.patientName = editPatientData.user.first_name + ' ' + editPatientData.user.last_name;
+         this.patientId   = editPatientData.id;
       } else {
         this.router.navigate(['/admin/patients']);
       }
@@ -94,13 +93,14 @@ export class AddPrescriptionComponent implements OnInit {
     var data = {
       GetPatientByIdOperation: {
         rs_add_recin: {
-          rs_user_id: 1
+          rs_user_id: this.patientId
         }
       }
     };
     this.patientService.getPatientDetails(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log('patientdara');
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.patientData = getResponseObj.responseData;
@@ -122,8 +122,8 @@ export class AddPrescriptionComponent implements OnInit {
           rs_prescription_title: this.f.precritionTitle.value,
           rs_user_dosage_instruction: this.f.dosageInstruction.value,
           rs_user_prescription_date: this.datePipe.transform(new Date(), 'YYYY-MM-dd'),
-          rs_doctor_id: 1,
-          rs_patient_id: this.currentUser.id
+          rs_doctor_id: this.f.doctorId.value,
+          rs_patient_id: this.patientId
         }
       }
     };

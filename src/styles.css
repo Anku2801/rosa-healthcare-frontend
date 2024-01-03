@@ -565,7 +565,9 @@ div#navbar-primary {
 .navbar-nav a.nav-link {
   line-height: 1.2;
 }
-
+.navbar .navbar-nav > li > a  {
+  cursor: pointer;
+}
 .navbar-nav a.nav-link:hover,
 .navbar-nav a.nav-link.active {
   color: var(--primary-color) !important;
@@ -1688,4 +1690,6 @@ table tr td .badge {
 img, svg {
   vertical-align: middle;
 }
-
+.column-green {
+  color: #4caf50!important;
+}

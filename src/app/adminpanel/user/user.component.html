@@ -42,12 +42,18 @@
                                         </td>
                                         <td width="8%">
                                             <span style="display: inline-flex;">
-                                                <button type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [state]="patients" routerLink="/admin/prescriptions"><i class="fa fa-pencil-square-o"></i></button>
+                                                <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [routerLink]="['/admin/prescriptions', patients.id]"><i class="fa fa-pencil-square-o"></i></button>
                                                 <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="patients" routerLink="/admin/add-patient"><i class="fa fa-pencil-square-o"></i></button>
+                                                <button *ngIf="currentRole == 'Doctor'" type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [routerLink]="['/doctor/prescriptions', patients.id]"><i class="fa fa-pencil-square-o"></i></button>
                                             </span>
                                         </td>
                                     </tr>
                                 </ng-container>
+                            </tbody>
+                            <tbody *ngIf="!patientsList">
+                                <tr>
+                                  <td colspan="9">No Record Found</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

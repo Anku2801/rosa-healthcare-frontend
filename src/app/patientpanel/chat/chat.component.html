@@ -7,127 +7,250 @@
                 <h4 class="title">Chat</h4>
               </div>
               <div class="content">
-                  <!-- <form id="add-user" [formGroup]="addUserForm" autocomplete="off">
-                    <div class="row justify-content-center">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_FIRST_NAME}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_FIRST_NAME}}" formControlName="userFirstname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userFirstname.errors}">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <div class="card">
+                      <div class="body">
+                        <div id="plist" class="people-list">
+                          <div class="form-line m-b-15">
+                            <input type="text" placeholder="Search..." class="form-control">
                           </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_LAST_NAME}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_LAST_NAME}}" formControlName="userLastname" maxlength="150" [ngClass]="{ 'is-invalid': submitted && f.userLastname.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="form-label fw-bold">{{props.USER_DETAILS.GENDER}} <span class="text-danger">*</span></label>
-                            <select class="form-control form-select" formControlName="userGender" [ngClass]="{ 'is-invalid': submitted && f.userGender.errors}">
-                              <option value="" disabled>Choose a Gender</option>
-                              <option value="{{props.USER_DETAILS.GENDER_MALE}}">{{props.USER_DETAILS.GENDER_MALE}}</option>
-                              <option value="{{props.USER_DETAILS.GENDER_FEMALE}}">{{props.USER_DETAILS.GENDER_FEMALE}}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_MOBILE}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_MOBILE}}" formControlName="userMobile" maxlength="10" [ngClass]="{ 'is-invalid': submitted && f.userMobile.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BIRTH}} <span class="text-danger">*</span></label>
-                              <div id="datepicker">
-                                  <input type="text"
-                                      class="form-control form-control-sm"
-                                      placeholder="DD-MM-YYYY"
-                                      bsDatepicker
-                                      [bsConfig]="dateConfig"
-                                      formControlName="userBirthDate"
-                                      placement="top"
-                                      [ngClass]="{ 'is-invalid': submitted && f.userBirthDate.errors}">
+                          <div class="tab-content">
+                            <!-- <ng-scrollbar visibility="hover" style="height: 590px;" class="ng-scrollbar"> -->
+                              <div class="ng-scrollbar-wrapper" position="native" track="vertical" appearance="compact" visibility="hover" deactivated="false" dir="ltr" pointereventsmethod="viewport" verticalused="true" horizontalused="false" isverticallyscrollable="true" ishorizontallyscrollable="false" verticalhovered="false" scrollbarclicked="false">
+                                <div class="ng-scroll-viewport-wrapper">
+                                  <div scrollviewport="" hidenativescrollbar="" class=" ng-native-scrollbar-hider ng-scroll-viewport " style="--native-scrollbar-size: -0px;">
+                                    <div class="ng-scroll-content">
+                                      <div id="chat_user">
+                                        <ul class="chat-list list-unstyled m-b-0">
+                                          <li class="clearfix active">
+                                            <img src="assets/images/user/user1.jpg" alt="avatar">
+                                            <div class="about">
+                                              <div class="name">William Smith</div>
+                                              <div class="status">
+                                                <i class="material-icons offline">fiber_manual_record</i> left 7 mins ago 
+                                              </div>
+                                            </div>
+                                          </li>
+                                          <li class="clearfix">
+                                            <img src="assets/images/user/user2.jpg" alt="avatar">
+                                            <div class="about">
+                                              <div class="name">Martha Williams</div>
+                                              <div class="status">
+                                                <i class="material-icons offline">fiber_manual_record</i> online
+                                              </div>
+                                            </div>
+                                          </li>
+                                          <li class="clearfix">
+                                            <img src="assets/images/user/user3.jpg" alt="avatar">
+                                            <div class="about">
+                                              <div class="name">Joseph Clark</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user4.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Nancy Taylor</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user5.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Margaret Wilson</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user6.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Joseph Jones</div>
+                                                <div class="status">
+                                                  <i class="material-icons offline">fiber_manual_record</i> left 30 mins ago
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user7.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Jane Brown</div>
+                                                <div class="status">
+                                                  <i class="material-icons offline">fiber_manual_record</i> left 10 hours ago
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user8.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Eliza Johnson</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user3.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Mike Clark</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user4.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Ann Henry</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user5.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">Nancy Smith</div>
+                                                <div class="status">
+                                                  <i class="material-icons online">fiber_manual_record</i> online
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li class="clearfix">
+                                              <img src="assets/images/user/user9.jpg" alt="avatar">
+                                              <div class="about">
+                                                <div class="name">David Wilson</div>
+                                                <div class="status">
+                                                  <i class="material-icons offline">fiber_manual_record</i> offline since Oct 28
+                                                </div>
+                                              </div>
+                                            </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- <scrollbar-y scrollable="true" fit="false" class="scrollbar-control ng-star-inserted">
+                                    <div scrollbartracky="" class="ng-scrollbar-track">
+                                      <div scrollbarthumby="" class="ng-scrollbar-thumb" style="height: 431px; transform: translate3d(0px, 0px, 0px);"></div>
+                                    </div>
+                                  </scrollbar-y> -->
+                                </div>
                               </div>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_AGE}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_AGE}}" formControlName="userAge" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userAge.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-label fw-bold">{{props.USER_DETAILS.USER_EMAIL}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_EMAIL}}" formControlName="userEmail" maxlength="100" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors}">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_MARITAL_STATUS}} <span class="text-danger">*</span></label>
-                              <select class="form-control form-select" formControlName="userMaritalStatus" [ngClass]="{ 'is-invalid': submitted && f.userMaritalStatus.errors}">
-                                <option value="" disabled>Choose a Gender</option>
-                                <option value="{{props.USER_DETAILS.USER_MARITAL_SINGLE}}">{{props.USER_DETAILS.USER_MARITAL_SINGLE}}</option>
-                                <option value="{{props.USER_DETAILS.USER_MARITAL_MARRIED}}">{{props.USER_DETAILS.USER_MARITAL_MARRIED}}</option>
-                              </select>
-                          </div>
-                        </div>
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_ADDRESS}} <span class="text-danger">*</span></label>
-                              <textarea rows="6" style="height: 90px;" class="form-control" formControlName="userAddress" placeholder="{{props.USER_DETAILS.USER_ADDRESS}}" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors}"></textarea>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BLOOD_GROUP}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_BLOOD_GROUP}}" formControlName="userBloodGroup" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userBloodGroup.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_BLOOD_PRESURE}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_BLOOD_PRESURE}}" formControlName="userBloodPresure" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userBloodPresure.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.USER_DETAILS.USER_SUGGER}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.USER_DETAILS.USER_SUGGER}}" formControlName="userSugger" maxlength="3" [ngClass]="{ 'is-invalid': submitted && f.userSugger.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                              <label class="form-label fw-bold">{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}} <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control form-control-sm" placeholder="{{props.BOOKED_APPOINTMENT_DETAILS.DISEASES}}" formControlName="userInjury" maxlength="500" [ngClass]="{ 'is-invalid': submitted && f.userInjury.errors}">
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="form-label fw-bold">{{props.USER_DETAILS.USER_STATUS}} <span class="text-danger">*</span></label>
-                            <div>
-                                <input type="radio" class="form-check-input" formControlName="userStatus" value="Active" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors}">
-                                <label class="form-label fw-bold">  {{props.USER_DETAILS.USER_ACTIVE}}</label>
-                                
-                                <input type="radio" class="form-check-input" formControlName="userStatus" value="Inactive" style="margin-right: 5px;" [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors}">
-                                <label class="form-label fw-bold">  {{props.USER_DETAILS.USER_INACTIVE}}</label>                                    
-                            </div>
+                            <!-- </ng-scrollbar> -->
                           </div>
                         </div>
                       </div>
-                      
-                      <div class="row justify-content-end">
-                        <div class="form-group">
-                          <button type="button" class="btn btn-default pull-right btn-lg" routerLink="/admin/patients" style="margin-left: 15px;">{{props.BTN_SEARCH.CANCEL}}</button>
-                          <button type="submit" class="btn btn-primary btn-fill pull-right btn-lg" [disabled]="!this.addUserForm.valid" (click)="addUser()">{{props.USER_DETAILS.USER_ADD_BTN}}</button>
-                        </div>
-                      </div>
-                      <div class="clearfix"></div>
                     </div>
-                  </form> -->
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                      <div class="card">
+                        <div class="chat">
+                          <div class="chat-header clearfix">
+                            <img src="assets/images/user/user2.jpg" alt="avatar">
+                            <div class="chat-about">
+                              <div class="chat-with">Maria Smith</div>
+                              <div class="chat-num-messages">2 new messages</div>
+                            </div>
+                          </div>
+                          <!-- <ng-scrollbar visibility="hover" style="height: 450px;" class="ng-scrollbar"> -->
+                            <div class="ng-scrollbar-wrapper" position="native" track="vertical" appearance="compact" visibility="hover" deactivated="false" dir="ltr" pointereventsmethod="viewport" verticalused="true" horizontalused="false" isverticallyscrollable="true" ishorizontallyscrollable="false" verticalhovered="false">
+                              <div class="ng-scroll-viewport-wrapper">
+                                <div scrollviewport="" hidenativescrollbar="" class=" ng-native-scrollbar-hider ng-scroll-viewport " style="--native-scrollbar-size: -0px;">
+                                  <div class="ng-scroll-content">
+                                    <div id="chat-conversation" class="chat-history">
+                                      <ul>
+                                        <li class="clearfix">
+                                          <div class="message-data text-end">
+                                            <span class="message-data-time">10:10 AM, Today </span> &nbsp; &nbsp;
+                                            <span class="message-data-name">Maria</span>
+                                          </div>
+                                          <div class="message other-message float-end"> Hi Robert , how are you? How is your work going on? </div>
+                                        </li>
+                                        <li><div class="message-data">
+                                          <span class="message-data-name">Robert </span>
+                                          <span class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">
+                                          <p>Its good. We completed almost all task assign by our manager.</p>
+                                          <div class="row"></div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="message-data">
+                                          <span class="message-data-name">Robert </span>
+                                          <span class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">
+                                          <p>How are you feel today? What's about vacation?.</p>
+                                          <div class="row"></div>
+                                        </div>
+                                      </li>
+                                      <li class="clearfix">
+                                        <div class="message-data text-end">
+                                          <span class="message-data-time">10:10 AM, Today </span> &nbsp; &nbsp;
+                                          <span class="message-data-name">Maria</span>
+                                        </div>
+                                        <div class="message other-message float-end"> I am good, We think for next weekend. </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <scrollbar-y scrollable="true" fit="false" class="scrollbar-control ng-star-inserted">
+                              <div scrollbartracky="" class="ng-scrollbar-track">
+                                <div scrollbarthumby="" class="ng-scrollbar-thumb" style="height: 352px; transform: translate3d(0px, 0px, 0px);"></div>
+                              </div>
+                            </scrollbar-y> -->
+                            </div>
+                          <!-- </ng-scrollbar> -->
+                        </div>
+                        <div class="chat-message clearfix">
+                          <div class="form-group">
+                            <div class="form-line">
+                              <!-- <mat-form-field appearance="outline" class="mat-mdc-form-field example-full-width ng-tns-c1798928316-43 mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary ng-star-inserted">
+                                <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1798928316-43 mdc-text-field--outlined mdc-text-field--no-label">
+                                  <div class="mat-mdc-form-field-flex ng-tns-c1798928316-43">
+                                    <div matformfieldnotchedoutline="" class="mdc-notched-outline ng-tns-c1798928316-43 mdc-notched-outline--no-label ng-star-inserted"><div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch"></div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                  </div>
+                                  <div class="mat-mdc-form-field-infix ng-tns-c1798928316-43">
+                                    <input matinput="" placeholder="Enter text here.." required="" class="mat-mdc-input-element ng-tns-c1798928316-43 mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored" id="mat-input-16" aria-required="true"></div>
+                                  </div>
+                                  <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align ng-tns-c1798928316-43">
+                                    <div class="mat-mdc-form-field-hint-wrapper ng-tns-c1798928316-43 ng-trigger ng-trigger-transitionMessages ng-star-inserted" style="opacity: 1; transform: translateY(0%);">
+                                      <div class="mat-mdc-form-field-hint-spacer ng-tns-c1798928316-43"></div>
+                                    </div>
+                                  </div>
+                              </mat-form-field> -->
+                            </div>
+                            <!-- <divclass="chat-upload">
+                              <button mat-mini-fab="" class="bg-deep-orange msr-2 mdc-fab mdc-fab--mini mat-mdc-mini-fab mat-accent mat-mdc-button-base" mat-ripple-loader-uninitialized="" mat-ripple-loader-class-name="mat-mdc-button-ripple">
+                                <span class="mat-mdc-button-persistent-ripple mdc-fab__ripple"></span>
+                                <i class="material-icons">attach_file</i>
+                                <span class="mdc-button__label"></span>
+                                <span class="mat-mdc-focus-indicator"></span>
+                                <span class="mat-mdc-button-touch-target"></span>
+                              </button>
+                              <button mat-mini-fab="" class="bg-deep-orange mdc-fab mdc-fab--mini mat-mdc-mini-fab mat-accent mat-mdc-button-base" mat-ripple-loader-uninitialized="" mat-ripple-loader-class-name="mat-mdc-button-ripple">
+                                <span class="mat-mdc-button-persistent-ripple mdc-fab__ripple"></span>
+                                <i class="material-icons">insert_emoticon</i>
+                                <span class="mdc-button__label"></span>
+                                <span class="mat-mdc-focus-indicator"></span>
+                                <span class="mat-mdc-button-touch-target"></span>
+                              </button>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>

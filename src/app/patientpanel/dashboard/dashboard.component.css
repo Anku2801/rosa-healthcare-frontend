@@ -1,3 +1,51 @@
+.card .body {
+    font-size: 14px;
+    color: #555;
+    padding: 15px;
+}
+.card.card-statistic-2 .card-icon-only {
+    font-size: 35px;
+    margin: 20px;
+}
+.card.card-statistic-2 {
+    display: inline-block;
+    width: 100%;
+}
+.card.card-statistic-2 .card-icon-only {
+    font-size: 35px;
+    margin: 20px;
+}
+.float-start {
+    float: left !important;
+}
+.card.card-statistic-2 .card-right {
+    float: right;
+    margin: 15px 15px 15px 0;
+}
+.mat-typography h3 {
+    font: 400 16px/28px Roboto,sans-serif;
+    letter-spacing: .009375em;
+    margin: 0 0 16px;
+}
+.mat-typography p {
+    margin: 0 0 12px;
+}
+.font-12 {
+  font-size: 12px;
+}
+.card-content p {
+  margin-left: 20px;
+}
+.colour-blue {
+    color: #2196f3!important;
+}
+.font-25 {
+    font-size: 25px;
+}
+.pt-1 {
+    padding-top: 0.50rem!important;
+}
+
 .home-subcard {
     border: none !important;
     position: relative;

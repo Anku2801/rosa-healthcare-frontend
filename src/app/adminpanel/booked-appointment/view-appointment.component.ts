@@ -21,7 +21,7 @@ export class ViewAppointmentComponent implements OnInit {
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   resetFilter: any;
-  bookedAppointmentsLists: any[];
+  bookedAppointmentsLists: any;
   currentUser: any;
   currentRole: any;
 
@@ -69,7 +69,6 @@ export class ViewAppointmentComponent implements OnInit {
     this.bookedAppointmentService.getBookingDetails(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.bookedAppointmentsLists = getResponseObj.responseData;
         this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);

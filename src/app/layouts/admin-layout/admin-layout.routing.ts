@@ -21,7 +21,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-patient',          component: AddUserComponent,        canActivate: [AuthGuard]},
     { path: 'doctors',              component: DoctorComponent,         canActivate: [AuthGuard]},
     { path: 'add-doctor',           component: AddDoctorComponent,      canActivate: [AuthGuard]},
-    { path: 'prescriptions',        component: PrescriptionComponent,   canActivate: [AuthGuard]},
+    { path: 'prescriptions/:id',    component: PrescriptionComponent,   canActivate: [AuthGuard]},
     { path: 'add-prescription',     component: AddPrescriptionComponent,canActivate: [AuthGuard]},
     { path: 'view-appointments',    component: ViewAppointmentComponent,canActivate: [AuthGuard]},
     { path: 'book-appointment',     component: BookAppointmentComponent,canActivate: [AuthGuard]},

@@ -26,4 +26,8 @@ export class SettingService {
   getDoctorDashboardData(data) {
     return this.apiService.postData('RSgetDoctorDashBoardData', data);
   }
+
+  getPatientDashboardData(data) {
+    return this.apiService.postData('getPatientDashboardData', data);
+  }
 }

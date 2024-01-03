@@ -5,6 +5,7 @@
                 <div class="card">
                     <div class="content table-responsive table-full-width">
                         <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-success btn-fill btn-sm pull-right" tooltip="Add" routerLink="/admin/book-appointment"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                        <button *ngIf="currentRole == 'Patient'" type="button" class="btn btn-success btn-fill btn-sm pull-right" tooltip="Add" routerLink="/patient/book-appointment"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                         <table id="doctor-list-tbl" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-no-bordered table-hover">
                             <thead>
                                 <tr>
@@ -44,6 +45,11 @@
                                         </th>
                                     </tr>
                                 </ng-container>
+                            </tbody>
+                            <tbody *ngIf="!bookedAppointmentsLists">
+                              <tr>
+                                <td colspan="9">No Record Found</td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>

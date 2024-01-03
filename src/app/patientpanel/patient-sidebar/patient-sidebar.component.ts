@@ -13,8 +13,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/patient/view-appointments', title: constantsProps.BOOKED_APPOINTMENT_DETAILS.VIEW_APPOINTMENTS_PAGE_NAME,  icon:'fa fa-address-book-o', class: '' },
     { path: '/patient/prescriptions', title: constantsProps.USER_DETAILS.USER_PRESCRIPTIONS,  icon:'fa fa-sticky-note', class: '' },
     { path: '/patient/chat', title: constantsProps.USER_DETAILS.USER_CHAT,  icon:'fa fa-commenting-o', class: '' },
-    { path: '/patient/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-cog', class: '' },
-    { path: '/patient/logout', title: constantsProps.MENUS.LOGOUT,  icon:'fa fa-power-off', class: '' }
+    { path: '/patient/settings', title: constantsProps.DOCTOR_DETAILS.DOCTOR_SETTINGS,  icon:'fa fa-cog', class: '' }
 ];
 
 @Component({
