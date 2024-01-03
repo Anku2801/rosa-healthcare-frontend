@@ -43,6 +43,11 @@
                                     </tr>
                                 </ng-container>
                             </tbody>
+                            <tbody *ngIf="!doctorsList">
+                              <tr>
+                                <td colspan="10">No Record Found</td>
+                              </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -42,6 +42,11 @@
                                     </tr>
                                 </ng-container>
                             </tbody>
+                            <tbody *ngIf="!staffList">
+                              <tr>
+                                <td colspan="8">No Record Found</td>
+                              </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -156,6 +156,13 @@ export class BookAppointmentComponent implements OnInit {
       data.RSBOOKAPPADDOP.rs_ad_recin['rs_appointment_id'] = '';
     }
 
+    let currentUserRole = this.currentUser.role_name;
+    if (currentUserRole && currentUserRole == 'Patient') {
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_patient_id'] = this.currentUser.id;
+    } else {
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_patient_id'] = '';
+    }
+
     this.bookingService.addBooking(data).subscribe((response:any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
