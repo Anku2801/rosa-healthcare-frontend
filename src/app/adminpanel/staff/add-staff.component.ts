@@ -89,7 +89,7 @@ export class AddStaffComponent implements OnInit {
         this.addStaffForm.controls.userGender.setValue(editStaffData.gender);
         this.addStaffForm.controls.userMobile.setValue(editStaffData.userDO.phone_no);
         this.addStaffForm.controls.userDesignation.setValue(editStaffData.designation);
-        this.addStaffForm.controls.userDepartment.setValue(editStaffData.department);
+        this.addStaffForm.controls.userDepartment.setValue(editStaffData.department.id);
         this.addStaffForm.controls.userAvailablitityStatus.setValue(editStaffData.available_status);
         this.addStaffForm.controls.userAvailableStartTime.setValue(starttime);
         this.addStaffForm.controls.userAvailableEndTime.setValue(endtime);

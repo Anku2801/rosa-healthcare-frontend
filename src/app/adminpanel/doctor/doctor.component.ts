@@ -25,6 +25,7 @@ export class DoctorComponent implements OnInit {
   resetFilter: any;
   doctorsList: any[]; 
   currentUser: any;
+  currentRole: any; 
 
   constructor(private doctorService: DoctorService,
     private spinner: NgxSpinnerService,
@@ -37,6 +38,7 @@ export class DoctorComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     } 
+    this.currentRole = this.currentUser.role_name;
 
     setTimeout(() => {
       this.getDoctorsList(this.resetFilter);
