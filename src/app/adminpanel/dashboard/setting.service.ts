@@ -28,6 +28,6 @@ export class SettingService {
   }
 
   getPatientDashboardData(data) {
-    return this.apiService.postData('getPatientDashboardData', data);
+    return this.apiService.postData('RSPatientDashBoard', data);
   }
 }

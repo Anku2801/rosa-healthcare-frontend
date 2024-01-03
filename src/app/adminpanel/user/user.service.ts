@@ -38,4 +38,9 @@ export class UserService {
   addPrescriptions(data) {
     return this.apiService.postData('RSAddPrescription', data);
   }
+
+  // Get all patient Predictions
+  getUserPrescriptionsList(data) {
+    return this.apiService.postData('RSGetPrescription', data);
+  }
 }

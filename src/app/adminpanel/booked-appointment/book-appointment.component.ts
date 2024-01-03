@@ -56,7 +56,7 @@ export class BookAppointmentComponent implements OnInit {
       this.addBookingAppoinmentForm = this.formBuilder.group({
         userFirstname: [{value: this.currentUser.first_name, disabled: true}, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
         userLastname: [{value: this.currentUser.last_name, disabled: true}, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-        userGender: ['', Validators.required],
+        userGender: [{value: this.currentUser.Gender, disabled: true}, Validators.required],
         userMobile: [{value: this.currentUser.mobile_no, disabled: true}, [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
         userAddress: [{value: this.currentUser.Address, disabled: true}, Validators.required],
         userEmail: [{value: this.currentUser.email, disabled: true}, [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],

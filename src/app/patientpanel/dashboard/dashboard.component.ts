@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   getPatientDashboardData() {
     this.spinner.show();
     var data = {
-      GetPatientDashBoard: {
+      GetPatientOperation: {
         rs_add_recin: {
           rs_user_id: this.currentUser.id
         }

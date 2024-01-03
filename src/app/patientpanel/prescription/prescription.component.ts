@@ -1,100 +1,87 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { DataTableOptions } from 'app/commonconfig/service/datatable.model';
+import { DataTableService } from 'app/commonconfig/service/datatable.service';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
 import { constantsProps } from 'app/commonconfig/props/constants.props';
-import { PrescriptionService } from './prescription.service';
+import { UserService } from '../../adminpanel/user/user.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.component.html'
 })
 export class PrescriptionComponent implements OnInit {
-  props = constantsProps;
-  addChatForm: FormGroup;
-  dateConfig: Partial<BsDatepickerConfig>;
-  submitted: boolean = false;
-  datePipe = new DatePipe("en-US");
 
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private spinner: NgxSpinnerService,
-              private notifyService: NotificationmsgService,
-              private prescriptionService: PrescriptionService) {}
+  props = constantsProps;
+  @ViewChild(DataTableDirective, {static: false})
+  dataTableElement: DataTableDirective | null = null;
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject();
+  resetFilter: any;
+  precreiptionsList: any[]; 
+  currentUser: any;
+  currentRole: any;
+  patientId : any;
+  patientName: any;
+  editPatientData: any;
+  patientData: any;
+
+  constructor(private userService: UserService,
+    private spinner: NgxSpinnerService,
+    private router: Router,
+    private patientService: UserService,
+    private dataTableService: DataTableService,
+    private notifyService: NotificationmsgService) { }
 
   ngOnInit() {
-    // this.addUserForm = this.formBuilder.group({
-    //   userFirstname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-    //   userLastname: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-    //   userGender: ['', Validators.required],
-    //   userMobile: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-    //   userBirthDate: ['', Validators.required],
-    //   userAge: ['', [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
-    //   userEmail: ['', [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
-    //   userMaritalStatus: ['', Validators.required],
-    //   userAddress: ['', Validators.required],
-    //   userBloodGroup: ['', Validators.required],
-    //   userBloodPresure: ['', Validators.required],
-    //   userSugger: ['', Validators.required],
-    //   userInjury: ['', Validators.required],
-    //   userStatus: ['', Validators.required]
-    // });
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+    this.patientName = this.currentUser.first_name + ' ' + this.currentUser.last_name
+    this.currentRole = this.currentUser.role_name;
+    
+    setTimeout(() => {
+      this.getPrescriptionsList(this.resetFilter);
+    }, 800)
+    this.setDataTableOptionsForSearch();
   }
 
-  // For easy access to form fields
-  get f() { return this.addChatForm.controls; }
-
-  // For adding a chat user
-  addChatData() {
-    this.spinner.show();
-    this.submitted = true;
-    // Stop here if form is invalid
-    if (this.addChatForm.invalid) {
-        return;
-    }
-    // let userfirstname = this.f.userFirstname.value.charAt(0).toUpperCase() + this.f.userFirstname.value.slice(1).toLowerCase();
-    // let userlastname = this.f.userLastname.value.charAt(0).toUpperCase() + this.f.userLastname.value.slice(1).toLowerCase();
-    // var data = {
-    //     RSUSERADDOP: {
-    //         rs_ad_recin: {
-    //             rs_user_first_name: userfirstname,
-    //             rs_user_last_name: userlastname,
-    //             rs_user_gender: this.f.userGender.value,
-    //             rs_user_mobile: this.f.userMobile.value,
-    //             rs_user_birth_date: this.datePipe.transform(this.f.userBirthDate.value, 'YYYY-MM-dd'),
-    //             rs_user_age: this.f.userAge.value,
-    //             rs_user_email: this.f.userEmail.value,
-    //             rs_user_password: 'patient123',
-    //             rs_user_marital_status: this.f.userMaritalStatus.value,
-    //             rs_user_address: this.f.userAddress.value,
-    //             rs_user_blood_group: this.f.userBloodGroup.value,
-    //             rs_user_blood_presure: this.f.userBloodPresure.value,
-    //             rs_user_sugger: this.f.userSugger.value,
-    //             rs_user_injury: this.f.userInjury.value,
-    //             rs_user_status: this.f.userStatus.value
-    //         }
-    //     }
-    // };
+  ngAfterViewInit(): void {
+    this.setDataTableOptionsForSearch();
+  }
   
-    // console.log('===data====');
-    // console.log(data);
-    // this.prescriptionService.addEmployee(data).subscribe((response:any) => {
-    //   this.spinner.hide();
-    //   if (response && response.PMM2016OperationResponse && response.PMM2016OperationResponse.ws_ad_recout) {
-    //     let msg = response.PMM2016OperationResponse.ws_ad_recout.ws_message;
-    //     if (msg.includes('successfully')) {
-    //       this.notifyService.showSuccess(msg);
-    //       setTimeout(() => {
-    //         this.router.navigate(['/admin/search-employee']);
-    //       }, 1500)
-    //     } else {
-    //       this.notifyService.showError(msg);
-    //       this.submitted = false;
-    //     }
-    //   }
-    // })
+  setDataTableOptionsForSearch() {
+    let dtOptionsObj = new DataTableOptions();
+    dtOptionsObj.dataTableElement = this.dataTableElement;
+    this.dtOptions = this.dataTableService.getDataTableOptionsWithFilter(dtOptionsObj);
+  }
+
+  getPrescriptionsList(resetFilter) {
+    this.spinner.show();
+    var data = {
+      RSPRESGETOP: {
+        rs_add_recin: {
+          rs_user_id: this.currentUser.id
+        }
+      }
+    };
+
+    this.userService.getUserPrescriptionsList(data).subscribe((response: any) => {
+      this.spinner.hide();
+      let getResponseObj = JSON.parse(JSON.stringify(response));
+      console.log(getResponseObj);
+      if (getResponseObj != null && getResponseObj.responseData != null) {
+        this.precreiptionsList = getResponseObj.responseData;
+        this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
+      } else {
+        this.precreiptionsList = null;
+        this.notifyService.showError(getResponseObj.responseMessage);
+      }
+    });
   }
 }

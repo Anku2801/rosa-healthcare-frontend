@@ -9,7 +9,7 @@
                     <img src="assets/images/welcome.png" alt="" class="w-100">
                   </div>
                   <div class="col-md-8">
-                    <h4 class="font-20 weight-500 mb-2"> Welcome back <div class="weight-600 font-25 colour-blue pt-1">Sarah Smith!</div></h4>
+                    <h4 class="font-20 weight-500 mb-2"> Welcome back <div class="weight-600 font-25 colour-blue pt-1">{{currentUser.first_name}} {{currentUser.last_name}}!</div></h4>
                     <p class="font-16 max-width-600"> We would like to take this opportunity to welcome you to our practice and to thank you for choosing our physicians to participate in your healthcare. We look forward to providing you with personalized, comprehensive health care focusing on wellness and prevention.</p>
                   </div>
                 </div>
@@ -29,7 +29,7 @@
                       <h3 class="float-end">Blood Pressure</h3>
                     </div>
                     <div class="column-green">
-                      <h3 class="font-bold float-end mb-0">650</h3>
+                      <h3 class="font-bold float-end mb-0">{{patientData.BloodPressure}}</h3>
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                       <h3 class="float-end">Blood Group</h3>
                     </div>
                     <div class="column-green">
-                      <h3 class="font-bold float-end mb-0">O+</h3>
+                      <h3 class="font-bold float-end mb-0">{{patientData.BloodGroup}}</h3>
                     </div>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
                       <h3 class="float-end">Glucose Level</h3>
                     </div>
                     <div class="column-green">
-                      <h3 class="font-bold float-end mb-0">88-75</h3>
+                      <h3 class="font-bold float-end mb-0">{{patientData.Sugger}}</h3>
                     </div>
                   </div>
                 </div>
