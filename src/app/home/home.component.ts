@@ -168,7 +168,9 @@ export class HomeComponent implements OnInit {
                 rs_doctor_id: this.f.doctorId.value,
                 rs_appointment_date: this.datePipe.transform(this.f.userAppointmentDate.value, 'YYYY-MM-dd'),
                 rs_appointment_time: this.f.userAppointmentTime.value,
-                rs_user_injury: this.f.userInjury.value
+                rs_user_injury: this.f.userInjury.value,
+                rs_user_id: '',
+                rs_appointment_id: ''
             }
         }
     };

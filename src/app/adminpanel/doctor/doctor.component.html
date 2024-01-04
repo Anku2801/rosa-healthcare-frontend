@@ -24,7 +24,7 @@
                                 <ng-container *ngFor="let doctors of doctorsList; index as i">
                                     <tr *ngIf="doctors.user.email">
                                         <td width="5%"><div class="table-img"><img src="{{doctors.image}}"/></div></td>
-                                        <td>{{doctors.user.first_name}} {{doctors.user.last_name}}</td>
+                                        <td>{{doctors.first_name}} {{doctors.last_name}}</td>
                                         <td>{{doctors.department.name}}</td>
                                         <td width="5%" class="text-break">{{doctors.available_status}}</td>
                                         <td width="14%" class="text-break">{{doctors.available_start_time}} to {{doctors.available_end_time}}</td>

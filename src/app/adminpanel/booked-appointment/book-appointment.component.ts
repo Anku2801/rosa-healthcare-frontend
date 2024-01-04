@@ -60,7 +60,7 @@ export class BookAppointmentComponent implements OnInit {
         userMobile: [{value: this.currentUser.mobile_no, disabled: true}, [Validators.required, Validators.pattern(this.props.numberFormatRegex)]],
         userAddress: [{value: this.currentUser.Address, disabled: true}, Validators.required],
         userEmail: [{value: this.currentUser.email, disabled: true}, [Validators.required, Validators.pattern(this.props.emailFormatRegex)]],
-        userBirthDate: ['', Validators.required],
+        userBirthDate: [{value: new Date(this.currentUser.DateOfBirth), disabled: true}, Validators.required],
         doctorId: ['', Validators.required],
         userAppointmentDate: ['', Validators.required],
         userAppointmentTime: ['', Validators.required],
@@ -174,9 +174,9 @@ export class BookAppointmentComponent implements OnInit {
 
     let currentUserRole = this.currentUser.role_name;
     if (currentUserRole && currentUserRole == 'Patient') {
-      data.RSBOOKAPPADDOP.rs_ad_recin['rs_patient_id'] = this.currentUser.id;
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_user_id'] = this.currentUser.id;
     } else {
-      data.RSBOOKAPPADDOP.rs_ad_recin['rs_patient_id'] = '';
+      data.RSBOOKAPPADDOP.rs_ad_recin['rs_user_id'] = '';
     }
 
     this.bookingService.addBooking(data).subscribe((response:any) => {
@@ -185,7 +185,12 @@ export class BookAppointmentComponent implements OnInit {
       if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
         this.notifyService.showSuccess(getResponseObj.responseMessage);
         this.addBookingAppoinmentForm.reset();
-        this.router.navigate(['/admin/view-appointments']);
+        if (this.currentUser.role_name == 'Admin') {
+          this.router.navigate(['/admin/view-appointments']);
+        }
+        if (this.currentUser.role_name == 'Patient') {
+          this.router.navigate(['/patient/view-appointments']);
+        }
       } else {
           this.notifyService.showError(getResponseObj.responseMessage);
       }

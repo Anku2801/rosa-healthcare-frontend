@@ -36,40 +36,32 @@ export class SettingComponent implements OnInit {
     }
     
     this.getCurrentRole = this.currentUser.role_name;
+    if (this.getCurrentRole == 'Patient') {
+      this.settingsForm = this.formBuilder.group({
+        userFirstName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userLastName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userAddress: ['', Validators.required],
+        userPassword: ['', ''],
+        userConfirmPassword: ['', '']
+      });
+    } else {
+      this.settingsForm = this.formBuilder.group({
+        userFirstName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userLastName: ['', [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userAddress: ['', Validators.required],
+        userPassword: ['', ''],
+        userConfirmPassword: ['', ''],
+        userAvailablitityStatus: ['', ''],
+        userAvailableStartTime: ['', ''],
+        userAvailableEndTime: ['', ''],
+      });
+    }
+    
     this.getUserDetails();
-    setTimeout(() => {
-      this.iniFrm();
-    }, 800)
   }
 
   // For easy access to form fields
   get f() { return this.settingsForm.controls; }
-
-  iniFrm (){
-    if (this.currentUserData) {
-      let startTime = this.currentUserData.AvailableStartTime;
-      const startTimeArray = startTime.split(":").map((time) => +time);
-      const getStarttime = new Date();
-      getStarttime.setHours(startTimeArray[0]);
-      getStarttime.setMinutes(startTimeArray[1]);
-      let endTime = this.currentUserData.AvailableEndTime;
-      const endTimesArray = endTime.split(":").map((time) => +time);
-      const getEndtime = new Date();
-      getEndtime.setHours(endTimesArray[0]);
-      getEndtime.setMinutes(endTimesArray[1]);
-
-      this.settingsForm = this.formBuilder.group({
-        userFirstName: [this.currentUserData.firstName, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-        userLastName: [this.currentUserData.lastName, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-        userAddress: [this.currentUserData.addres, Validators.required],
-        userPassword: ['', ''],
-        userConfirmPassword: ['', ''],
-        userAvailablitityStatus: [this.currentUserData.Status, ''],
-        userAvailableStartTime: [getStarttime, ''],
-        userAvailableEndTime: [getEndtime, ''],
-      });
-    }
-  }
 
   getUserDetails() {
     this.spinner.show();
@@ -87,6 +79,24 @@ export class SettingComponent implements OnInit {
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
         this.currentUserData = getResponseObj.responseData;
+        this.settingsForm.controls.userFirstName.setValue(this.currentUserData.firstName);
+        this.settingsForm.controls.userLastName.setValue(this.currentUserData.lastName);
+        this.settingsForm.controls.userAddress.setValue(this.currentUserData.addres);
+        if (this.getCurrentRole != 'Patient') {
+            let startTime = this.currentUserData.AvailableStartTime;
+            const startTimeArray = startTime.split(":").map((time) => +time);
+            const getStarttime = new Date();
+            getStarttime.setHours(startTimeArray[0]);
+            getStarttime.setMinutes(startTimeArray[1]);
+            let endTime = this.currentUserData.AvailableEndTime;
+            const endTimesArray = endTime.split(":").map((time) => +time);
+            const getEndtime = new Date();
+            getEndtime.setHours(endTimesArray[0]);
+            getEndtime.setMinutes(endTimesArray[1]);
+            this.settingsForm.controls.userAvailablitityStatus.setValue(this.currentUserData.Status);
+            this.settingsForm.controls.userAvailableStartTime.setValue(getStarttime);
+            this.settingsForm.controls.userAvailableEndTime.setValue(getEndtime);
+        }     
       } else {
         this.currentUserData = null;
         this.notifyService.showError(getResponseObj.responseMessage);
@@ -104,20 +114,20 @@ export class SettingComponent implements OnInit {
     console.log("nnnnnnnnnnnnnnnnnnn");
     if (type == 'password') {
       console.log("iiiiiiiiiiiii");
-      let pass = this.f.userPassword.value;
-      let confirmPass = this.f.userConfirmPassword.value; 
-      console.log(pass);
-      console.log(confirmPass);
-      // if (((this.f.userPassword.value == '') || (this.f.userConfirmPassword.value == '')) || (this.f.userPassword.value != this.f.userConfirmPassword.value)) {
-      //   this.spinner.hide();
-      //   this.notifyService.showError('Passwords do not match.');
-      //   return;
-      // }
-      if (((pass == '') || (confirmPass == '')) || (pass != confirmPass)) {
+      // let pass = this.f.userPassword.value;
+      // let confirmPass = this.f.userConfirmPassword.value; 
+      // console.log(pass);
+      // console.log(confirmPass);
+      if (((this.f.userPassword.value == '') || (this.f.userConfirmPassword.value == '')) || (this.f.userPassword.value != this.f.userConfirmPassword.value)) {
         this.spinner.hide();
         this.notifyService.showError('Passwords do not match.');
         return;
       }
+      // if (((pass == '') || (confirmPass == '')) || (pass != confirmPass)) {
+      //   this.spinner.hide();
+      //   this.notifyService.showError('Passwords do not match.');
+      //   return;
+      // }
 
       var data = {
         RSDOCADDOP: {
