@@ -42,7 +42,7 @@ export class DoctorComponent implements OnInit {
 
     setTimeout(() => {
       this.getDoctorsList(this.resetFilter);
-    }, 800)
+    }, 1000)
     this.setDataTableOptionsForSearch();
   }
 

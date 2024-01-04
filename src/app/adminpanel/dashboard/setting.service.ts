@@ -32,6 +32,6 @@ export class SettingService {
   }
 
   updateAvailableStatus(data) {
-    return this.apiService.postData('RSUpdateAvailableStatus', data);
+    return this.apiService.postData('RSUpdateTime', data);
   }
 }

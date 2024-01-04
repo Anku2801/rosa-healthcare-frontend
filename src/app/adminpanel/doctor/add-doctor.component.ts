@@ -77,12 +77,14 @@ export class AddDoctorComponent implements OnInit {
       console.log('editDoctorDatabnnnnnnnnnn====');
       console.log(editDoctorData);
       if(editDoctorData && (editDoctorData != null) && (editDoctorData.gender)) {
+        console.log('innnnnnnnnnnnnnn====');
+
         this.editDoctorId = editDoctorData.id;
         let startTime = editDoctorData.available_start_time;
         const startTimeArray = startTime.split(":").map((time) => +time);
-        // const starttime = new Date();
-        startTime.setHours(startTimeArray[0]);
-        startTime.setMinutes(startTimeArray[1]);
+        const starttime = new Date();
+        starttime.setHours(startTimeArray[0]);
+        starttime.setMinutes(startTimeArray[1]);
         let endTime = editDoctorData.available_end_time;
         const endTimesArray = endTime.split(":").map((time) => +time);
         const endtime = new Date();
@@ -96,7 +98,7 @@ export class AddDoctorComponent implements OnInit {
         this.addDoctorForm.controls.doctorDesignation.setValue(editDoctorData.designation);
         this.addDoctorForm.controls.doctorDepartment.setValue(editDoctorData.department.id);
         this.addDoctorForm.controls.doctorAvailablitityStatus.setValue(editDoctorData.available_status);
-        this.addDoctorForm.controls.doctorAvailableStartTime.setValue(startTime);
+        this.addDoctorForm.controls.doctorAvailableStartTime.setValue(starttime);
         this.addDoctorForm.controls.doctorAvailableEndTime.setValue(endtime);
         this.addDoctorForm.controls.doctorAddress.setValue(editDoctorData.address);
         this.addDoctorForm.controls.doctorProfileDescription.setValue(editDoctorData.description);
@@ -190,8 +192,8 @@ export class AddDoctorComponent implements OnInit {
                 rs_doctor_address: this.f.doctorAddress.value,
                 rs_doctor_email: this.f.doctorEmail.value,
                 rs_doctor_available_status: this.f.doctorAvailablitityStatus.value,
-                rs_doctor_available_start_time: this.datePipe.transform(this.f.doctorAvailableStartTime.value, 'HH::mm:ss'),
-                rs_doctor_available_end_time: this.datePipe.transform(this.f.doctorAvailableEndTime.value, 'HH:mm:ss'),
+                rs_doctor_available_start_time: this.datePipe.transform(this.f.doctorAvailableStartTime.value, 'HH::mm'),
+                rs_doctor_available_end_time: this.datePipe.transform(this.f.doctorAvailableEndTime.value, 'HH:mm'),
                 rs_doctor_birth_date: this.datePipe.transform(this.f.doctorBirthDate.value, 'YYYY-MM-dd'),
                 rs_doctor_education: this.f.doctorEducation.value,
                 rs_doctor_exp_years: this.f.doctorExpYears.value,
@@ -246,7 +248,9 @@ export class AddDoctorComponent implements OnInit {
         if (getResponseObj != null && getResponseObj.responseData != null && getResponseObj.responseStatus == "Success") {
           this.notifyService.showSuccess(getResponseObj.responseMessage);
           this.addDoctorForm.reset();
-          this.router.navigate(['/admin/doctors']);
+          setTimeout(() => {
+            this.router.navigate(['/admin/doctors']);
+          }, 900)
         } else {
             this.notifyService.showError(getResponseObj.responseMessage);
         }

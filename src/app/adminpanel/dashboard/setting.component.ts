@@ -47,7 +47,6 @@ export class SettingComponent implements OnInit {
 
   iniFrm (){
     if (this.currentUserData) {
-
       let startTime = this.currentUserData.AvailableStartTime;
       const startTimeArray = startTime.split(":").map((time) => +time);
       const getStarttime = new Date();
@@ -88,7 +87,6 @@ export class SettingComponent implements OnInit {
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
         this.currentUserData = getResponseObj.responseData;
-        // this.notifyService.showSuccess(getResponseObj.responseMessage);
       } else {
         this.currentUserData = null;
         this.notifyService.showError(getResponseObj.responseMessage);
@@ -103,9 +101,20 @@ export class SettingComponent implements OnInit {
     if (this.settingsForm.invalid) {
         return;
     }
-
+    console.log("nnnnnnnnnnnnnnnnnnn");
     if (type == 'password') {
-      if ((this.f.userPassword.value == '') || (this.f.userConfirmPassword.value == '') || (this.f.userPassword.value !== this.f.userConfirmPassword.value)) {
+      console.log("iiiiiiiiiiiii");
+      let pass = this.f.userPassword.value;
+      let confirmPass = this.f.userConfirmPassword.value; 
+      console.log(pass);
+      console.log(confirmPass);
+      // if (((this.f.userPassword.value == '') || (this.f.userConfirmPassword.value == '')) || (this.f.userPassword.value != this.f.userConfirmPassword.value)) {
+      //   this.spinner.hide();
+      //   this.notifyService.showError('Passwords do not match.');
+      //   return;
+      // }
+      if (((pass == '') || (confirmPass == '')) || (pass != confirmPass)) {
+        this.spinner.hide();
         this.notifyService.showError('Passwords do not match.');
         return;
       }
@@ -159,11 +168,11 @@ export class SettingComponent implements OnInit {
 
     if (type == 'available') {
       var userTimedata = {
-        RSDOCADDOP: {
+        RSUPDATEOP: {
           rs_ad_recin: {
               rs_user_available_status: this.f.userAvailablitityStatus.value,
-              rs_user_available_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm:ss'),
-              rs_user_available_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH::mm:ss'),
+              rs_user_available_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm'),
+              rs_user_available_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH::mm'),
               rs_user_id: this.currentUser.id
           }
         }

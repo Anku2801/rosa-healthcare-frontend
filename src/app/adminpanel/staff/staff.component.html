@@ -21,14 +21,14 @@
                             <tbody *ngIf="staffList">
                                 <ng-container *ngFor="let staff of staffList; index as i">
                                     <tr *ngIf="staff.userDO.email">
-                                        <td width="14%">{{staff.firstName}} {{staff.lastName}}</td>
+                                        <td width="15%">{{staff.firstName}} {{staff.lastName}}</td>
                                         <td width="3%">
                                             <span class="badge badge-solid-green" *ngIf="staff.gender == props.USER_DETAILS.GENDER_MALE">{{staff.gender}}</span>
                                             <span class="badge badge-solid-purple" *ngIf="staff.gender == props.USER_DETAILS.GENDER_FEMALE">{{staff.gender}}</span>
                                         </td>
-                                        <td width="15%">{{staff.userDO.email}}</td>
-                                        <td width="18%">{{staff.address}}</td>
-                                        <td width="8%">{{staff.userDO.phone_no}}</td>
+                                        <td width="18%" class="text-break">{{staff.userDO.email}}</td>
+                                        <td width="18%" class="text-break">{{staff.address}}</td>
+                                        <td>{{staff.userDO.phone_no}}</td>
                                         <td>{{staff.birthDate | date: 'dd/MM/yyyy'}}</td>
                                         <td width="4%">
                                             <span class="badge badge-solid-active" *ngIf="staff.userDO.status == props.USER_DETAILS.USER_ACTIVE">{{staff.userDO.status}}</span>

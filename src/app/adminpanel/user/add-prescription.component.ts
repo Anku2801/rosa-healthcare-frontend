@@ -133,10 +133,10 @@ export class AddPrescriptionComponent implements OnInit {
         this.notifyService.showSuccess(getResponseObj.responseMessage);
         this.addPrescriptionsForm.reset();
         if (this.currentUserRole == 'Admin') {
-          this.router.navigate(['/admin/doctors']);
+          this.router.navigate(['/admin/patients']);
         }
         if (this.currentUserRole == 'Doctor') {
-          this.router.navigate(['/doctor/doctors']);
+          this.router.navigate(['/doctor/patients']);
         }
         if (this.currentUserRole == 'Patient') {
           this.router.navigate(['/patient/prescriptions']);
