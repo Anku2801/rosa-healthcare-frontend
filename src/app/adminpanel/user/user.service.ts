@@ -21,7 +21,7 @@ export class UserService {
 
   // Get all patient Predictions
   getAllPrescriptionsList(data) {
-    return this.apiService.postData('RSGetPrescription', data);
+    return this.apiService.postData('RSGetPrescriptionById', data);
   }
 
   // Get Patient Details

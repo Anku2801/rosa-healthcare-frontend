@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { constantsProps } from 'app/commonconfig/props/constants.props';
 import { NotificationmsgService } from 'app/commonconfig/service/notificationmsg.service';
@@ -17,6 +18,9 @@ export class SettingComponent implements OnInit {
   settingsForm: FormGroup;
   submitted: boolean = false;
   currentUser: any;
+  currentUserData: any;
+  datePipe = new DatePipe("en-US");
+  getCurrentRole : any;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -31,22 +35,42 @@ export class SettingComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     
+    this.getCurrentRole = this.currentUser.role_name;
     this.getUserDetails();
-    
-    this.settingsForm = this.formBuilder.group({
-      userFirstName: [this.currentUser.first_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userLastName: [this.currentUser.last_name, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
-      userAddress: [this.currentUser.Address, Validators.required],
-      userPassword: ['', ''],
-      userConfirmPassword: ['', ''],
-      userAvailablitityStatus: ['', ''],
-      userAvailableStartTime: ['', ''],
-      userAvailableEndTime: ['', ''],
-    });
+    setTimeout(() => {
+      this.iniFrm();
+    }, 800)
   }
 
   // For easy access to form fields
   get f() { return this.settingsForm.controls; }
+
+  iniFrm (){
+    if (this.currentUserData) {
+
+      let startTime = this.currentUserData.AvailableStartTime;
+      const startTimeArray = startTime.split(":").map((time) => +time);
+      const getStarttime = new Date();
+      getStarttime.setHours(startTimeArray[0]);
+      getStarttime.setMinutes(startTimeArray[1]);
+      let endTime = this.currentUserData.AvailableEndTime;
+      const endTimesArray = endTime.split(":").map((time) => +time);
+      const getEndtime = new Date();
+      getEndtime.setHours(endTimesArray[0]);
+      getEndtime.setMinutes(endTimesArray[1]);
+
+      this.settingsForm = this.formBuilder.group({
+        userFirstName: [this.currentUserData.firstName, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userLastName: [this.currentUserData.lastName, [Validators.required, Validators.pattern(this.props.characterFormatRegex)]],
+        userAddress: [this.currentUserData.addres, Validators.required],
+        userPassword: ['', ''],
+        userConfirmPassword: ['', ''],
+        userAvailablitityStatus: [this.currentUserData.Status, ''],
+        userAvailableStartTime: [getStarttime, ''],
+        userAvailableEndTime: [getEndtime, ''],
+      });
+    }
+  }
 
   getUserDetails() {
     this.spinner.show();
@@ -63,8 +87,10 @@ export class SettingComponent implements OnInit {
       console.log('patientdara');
       console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
-        this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.currentUserData = getResponseObj.responseData;
+        // this.notifyService.showSuccess(getResponseObj.responseMessage);
       } else {
+        this.currentUserData = null;
         this.notifyService.showError(getResponseObj.responseMessage);
       }
     });
@@ -121,6 +147,29 @@ export class SettingComponent implements OnInit {
       };
 
       this.settingService.changeUserData(userData).subscribe((response: any) => {
+        this.spinner.hide();
+        let getResponseObj = JSON.parse(JSON.stringify(response));
+        if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
+          this.notifyService.showSuccess(getResponseObj.responseMessage);
+        } else {
+          this.notifyService.showError(getResponseObj.responseMessage);
+        }
+      });
+    }
+
+    if (type == 'available') {
+      var userTimedata = {
+        RSDOCADDOP: {
+          rs_ad_recin: {
+              rs_user_available_status: this.f.userAvailablitityStatus.value,
+              rs_user_available_start_time: this.datePipe.transform(this.f.userAvailableStartTime.value, 'HH::mm:ss'),
+              rs_user_available_end_time: this.datePipe.transform(this.f.userAvailableEndTime.value, 'HH::mm:ss'),
+              rs_user_id: this.currentUser.id
+          }
+        }
+      };
+
+      this.settingService.updateAvailableStatus(userTimedata).subscribe((response: any) => {
         this.spinner.hide();
         let getResponseObj = JSON.parse(JSON.stringify(response));
         if (getResponseObj != null && getResponseObj.responseStatus == "Success") {

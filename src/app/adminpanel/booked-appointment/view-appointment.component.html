@@ -34,22 +34,25 @@
                                         <td><a href="">Dr.{{bookedappointment.doctor.user.first_name}} {{bookedappointment.doctor.user.last_name}}</a></td>
                                         <td width="7%">{{bookedappointment.injury}}</td>
                                         <td width="7%">
-                                            <span class="badge badge-solid-purple" *ngIf="currentRole == 'Patient' && bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING">{{bookedappointment.appointmentStatus}}</span>
+                                            <span class="badge badge-solid-purple" *ngIf="currentRole != 'Patient' && bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING">{{bookedappointment.appointmentStatus}}</span>
                                             <span class="badge badge-solid-blue" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.VISITED">{{bookedappointment.appointmentStatus}}</span>
                                             <span class="badge badge-solid-red" *ngIf="bookedappointment.appointmentStatus == props.USER_DETAILS.NOT_VISITED">{{bookedappointment.appointmentStatus}}</span>
                                             <button class=" btn btn-sm btn-square" tooltip="Mark as Visited" *ngIf="currentRole != 'Patient' && bookedappointment.appointmentStatus == props.USER_DETAILS.PENDING" (click)="changeStatus($event, bookedappointment.id)">{{bookedappointment.appointmentStatus}}</button>
                                         </td>
-                                        <th width="5%" *ngIf="currentRole == 'Admin'">
-                                          <span>
-                                            <button type="button" class="btn btn-warning btn-fill btn-sm pull-right"  tooltip="Update" [state]="bookedappointment" routerLink="/admin/book-appointment"><i class="fa fa-pencil-square-o"></i></button>
-                                          </span>
-                                        </th>
+                                        <td width="12%" *ngIf="currentRole == 'Admin'">
+                                            <span>
+                                                <button type="button" class="btn btn-warning btn-fill btn-sm pull-right"  tooltip="Update" [state]="bookedappointment" routerLink="/admin/book-appointment"><i class="fa fa-pencil-square-o"></i></button>
+                                            </span>
+                                        </td>
                                     </tr>
                                 </ng-container>
                             </tbody>
                             <tbody *ngIf="!bookedAppointmentsLists">
-                              <tr>
+                              <tr *ngIf="currentRole == 'Admin'">
                                 <td colspan="9">No Record Found</td>
+                              </tr>
+                              <tr *ngIf="currentRole != 'Admin'">
+                                <td colspan="8">No Record Found</td>
                               </tr>
                             </tbody>
                         </table>

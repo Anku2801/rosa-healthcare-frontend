@@ -27,13 +27,11 @@ export class PrescriptionComponent implements OnInit {
   currentRole: any;
   patientId : any;
   patientName: any;
-  editPatientData: any;
   patientData: any;
 
   constructor(private userService: UserService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private patientService: UserService,
     private dataTableService: DataTableService,
     private notifyService: NotificationmsgService) { }
 

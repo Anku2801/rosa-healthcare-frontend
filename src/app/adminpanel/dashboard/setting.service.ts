@@ -30,4 +30,8 @@ export class SettingService {
   getPatientDashboardData(data) {
     return this.apiService.postData('RSPatientDashBoard', data);
   }
+
+  updateAvailableStatus(data) {
+    return this.apiService.postData('RSUpdateAvailableStatus', data);
+  }
 }

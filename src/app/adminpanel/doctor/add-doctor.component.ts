@@ -80,9 +80,9 @@ export class AddDoctorComponent implements OnInit {
         this.editDoctorId = editDoctorData.id;
         let startTime = editDoctorData.available_start_time;
         const startTimeArray = startTime.split(":").map((time) => +time);
-        const starttime = new Date();
-        starttime.setHours(startTimeArray[0]);
-        starttime.setMinutes(startTimeArray[1]);
+        // const starttime = new Date();
+        startTime.setHours(startTimeArray[0]);
+        startTime.setMinutes(startTimeArray[1]);
         let endTime = editDoctorData.available_end_time;
         const endTimesArray = endTime.split(":").map((time) => +time);
         const endtime = new Date();
@@ -96,7 +96,7 @@ export class AddDoctorComponent implements OnInit {
         this.addDoctorForm.controls.doctorDesignation.setValue(editDoctorData.designation);
         this.addDoctorForm.controls.doctorDepartment.setValue(editDoctorData.department.id);
         this.addDoctorForm.controls.doctorAvailablitityStatus.setValue(editDoctorData.available_status);
-        this.addDoctorForm.controls.doctorAvailableStartTime.setValue(starttime);
+        this.addDoctorForm.controls.doctorAvailableStartTime.setValue(startTime);
         this.addDoctorForm.controls.doctorAvailableEndTime.setValue(endtime);
         this.addDoctorForm.controls.doctorAddress.setValue(editDoctorData.address);
         this.addDoctorForm.controls.doctorProfileDescription.setValue(editDoctorData.description);

@@ -42,8 +42,8 @@
                                         </td>
                                         <td width="8%">
                                             <span style="display: inline-flex;">
-                                                <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [routerLink]="['/admin/prescriptions', patients.id]"><i class="fa fa-pencil-square-o"></i></button>
-                                                <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="patients" routerLink="/admin/add-patient"><i class="fa fa-pencil-square-o"></i></button>
+                                                <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [routerLink]="['/admin/prescriptions', patients.id]"><i class="fa fa-eye"></i></button>
+                                                <button *ngIf="currentRole == 'Admin'" type="button" class="btn btn-warning btn-fill btn-sm pull-right" tooltip="Update" [state]="patients" routerLink="/admin/add-patient"><i class="fa fa-eye"></i></button>
                                                 <button *ngIf="currentRole == 'Doctor'" type="button" class="btn btn-primary btn-fill btn-sm pull-right" tooltip="Prescriptions" [routerLink]="['/doctor/prescriptions', patients.id]"><i class="fa fa-pencil-square-o"></i></button>
                                             </span>
                                         </td>

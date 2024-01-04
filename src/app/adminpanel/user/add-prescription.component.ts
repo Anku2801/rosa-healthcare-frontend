@@ -26,6 +26,7 @@ export class AddPrescriptionComponent implements OnInit {
   patientData: any;
   patientId: any;
   patientName: any;
+  currentUserRole: any;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -42,10 +43,9 @@ export class AddPrescriptionComponent implements OnInit {
     if (this.currentUser == null) {
       this.router.navigate(['/home']);
     }
-
+    this.currentUserRole = this.currentUser.role_name;
     this.activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe(res=>{
       let editPatientData = res;
-      console.log(editPatientData.id);
       if (editPatientData && editPatientData.id) {
          this.patientId   = editPatientData.id;
       } else {
@@ -100,8 +100,6 @@ export class AddPrescriptionComponent implements OnInit {
     this.patientService.getPatientDetails(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log('patientdara');
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.patientData = getResponseObj.responseData;
         this.f.doctorId.setValue(this.patientData.doctor.id);
@@ -131,9 +129,18 @@ export class AddPrescriptionComponent implements OnInit {
     this.patientService.addPrescriptions(userData).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
         this.notifyService.showSuccess(getResponseObj.responseMessage);
+        this.addPrescriptionsForm.reset();
+        if (this.currentUserRole == 'Admin') {
+          this.router.navigate(['/admin/doctors']);
+        }
+        if (this.currentUserRole == 'Doctor') {
+          this.router.navigate(['/doctor/doctors']);
+        }
+        if (this.currentUserRole == 'Patient') {
+          this.router.navigate(['/patient/prescriptions']);
+        }
       } else {
         this.notifyService.showError(getResponseObj.responseMessage);
       }

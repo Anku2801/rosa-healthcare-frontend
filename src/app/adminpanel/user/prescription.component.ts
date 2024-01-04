@@ -27,7 +27,6 @@ export class PrescriptionComponent implements OnInit {
   currentRole: any;
   patientId : any;
   patientName: any;
-  editPatientData: any;
   patientData: any;
 
   constructor(private userService: UserService,
@@ -76,8 +75,6 @@ export class PrescriptionComponent implements OnInit {
     this.patientService.getPatientDetails(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log('patientdara');
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.patientData = getResponseObj.responseData;
         this.patientName = this.patientData.user.first_name + ' ' + this.patientData.user.last_name;
@@ -101,7 +98,6 @@ export class PrescriptionComponent implements OnInit {
     this.userService.getAllPrescriptionsList(data).subscribe((response: any) => {
       this.spinner.hide();
       let getResponseObj = JSON.parse(JSON.stringify(response));
-      console.log(getResponseObj);
       if (getResponseObj != null && getResponseObj.responseData != null) {
         this.precreiptionsList = getResponseObj.responseData;
         this.dataTableService.initializeDatatable(this.dataTableElement, this.dtTrigger, resetFilter);
