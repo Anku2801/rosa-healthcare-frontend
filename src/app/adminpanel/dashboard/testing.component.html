@@ -1,0 +1,39 @@
+<div class="main-content" >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Doctor Profile</h4>
+              </div>
+              <div class="content">
+                  <form id="add-user" [formGroup]="addImgForm" autocomplete="off" enctype="multipart/form-data">
+                    <div class="row justify-content-center">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                              <label class="form-label fw-bold">{{props.DOCTOR_DETAILS.DOCTOR_UP_PHOTO}} <span class="text-danger">*</span></label>
+                              <input #imageInput type="file" accept="image/jpg, image/jpeg, image/x-png" class="form-control form-control-sm" accept="image/*" (change)="handleImages($event)" formControlName="doctorPhoto">
+                              <!-- <div class="preview-section" *ngIf="isImageSelected">
+                                <img [src]="imagePreviewSrc" alt="preview-img" class="preview-img" />
+                              </div>
+                              <div style="background-color: #8080803b;" class="preview-section" *ngIf="!isImageSelected">
+                              </div> -->
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row justify-content-end">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary btn-fill pull-right">{{props.DOCTOR_DETAILS.DOCTOR_ADD_BTN}}</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>

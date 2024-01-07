@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/'
-  // apiUrl: 'https://finalrosaapitesting-finalrosaapitesting.apps.openhack.pvcz.p1.openshiftapps.com/'
+  // apiUrl: 'http://localhost:8080/',
+  apiUrl: 'https://rosahealthapplication-rosahealthcare.apps.openhack.pvcz.p1.openshiftapps.com/'
+  // apiUrl: 'https://rosahealthimg-rosahealthcare.apps.openhack.pvcz.p1.openshiftapps.com/'
 };

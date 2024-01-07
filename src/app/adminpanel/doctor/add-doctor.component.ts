@@ -214,7 +214,7 @@ export class AddDoctorComponent implements OnInit {
     if (this.editDoctorId) {
       if (this.imgFile) {
         const uploadImageData = new FormData();
-        uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
+        uploadImageData.append('imageFile', this.imgFile);
         this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
           let getResponseObj = JSON.parse(JSON.stringify(response));
           if (getResponseObj != null && getResponseObj.responseStatus == "Success") {
@@ -228,7 +228,7 @@ export class AddDoctorComponent implements OnInit {
       }
     } else {
         const uploadImageData = new FormData();
-        uploadImageData.append('imageFile', this.imgFile, this.imgFile.name);
+        uploadImageData.append('imageFile', this.imgFile);
         this.doctorService.addDoctorsImage(uploadImageData).subscribe((response: any) => {
           let getResponseObj = JSON.parse(JSON.stringify(response));
           if (getResponseObj != null && getResponseObj.responseStatus == "Success") {

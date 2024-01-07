@@ -14,6 +14,7 @@ import { AddStaffComponent } from '../../adminpanel/staff/add-staff.component';
 import { StaffComponent } from '../../adminpanel/staff/staff.component';
 import { SettingComponent } from '../../adminpanel/dashboard/setting.component';
 import { LogoutComponent } from '../../login/logout.component';
+import { TestComponent } from '../../adminpanel/dashboard/testing.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',            component: DashboardComponent},
@@ -28,5 +29,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-staff',            component: AddStaffComponent,       canActivate: [AuthGuard]},
     { path: 'all-staff',            component: StaffComponent,          canActivate: [AuthGuard]},
     { path: 'settings',             component: SettingComponent,        canActivate: [AuthGuard]},
+    { path: 'testing',              component: TestComponent,           canActivate: [AuthGuard]},
     { path: 'logout',               component: LogoutComponent,         canActivate: [AuthGuard]}
 ];

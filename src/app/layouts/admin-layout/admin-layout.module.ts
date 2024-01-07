@@ -25,6 +25,7 @@ import { BookAppointmentComponent } from '../../adminpanel/booked-appointment/bo
 import { AddStaffComponent } from '../../adminpanel/staff/add-staff.component';
 import { StaffComponent } from '../../adminpanel/staff/staff.component';
 import { SettingComponent } from '../../adminpanel/dashboard/setting.component';
+import { TestComponent } from '../../adminpanel/dashboard/testing.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { SettingComponent } from '../../adminpanel/dashboard/setting.component';
     BookAppointmentComponent,
     AddStaffComponent,
     StaffComponent,
-    SettingComponent
+    SettingComponent,
+    TestComponent
   ]
 })
 

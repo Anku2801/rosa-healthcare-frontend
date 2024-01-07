@@ -16,16 +16,20 @@ export class DoctorService {
   
   //Add Doctor Image
   addDoctorsImage(Imagedata) {
-    return this.apiService.postImageData('RDIimageUpload', Imagedata);
+    return this.apiService.postImageData('Upload', Imagedata);
   }
-  
+
   // Add a New Doctor
   addDoctors(data) {
     return this.apiService.postData('RSDoctorAdd', data);
   }
 
   // Update a existing Employee
-  updateEmployee(data) {
-    return this.apiService.postData('pmm2019', data);
+  // uploadImage(Imagedata) {
+  //   return this.apiService.sendimage('upload', Imagedata);
+  // }
+  
+  addUploadImage(Imagedata) {
+    return this.apiService.addImageData('Upload', Imagedata);
   }
 }

@@ -48,19 +48,19 @@ export class AutoLogoutService implements OnInit {
   }
 
   check() {
-    // const now = Date.now();
-    // const timeleft = this.getLastAction() + MINUTES_UNTIL_AUTO_LOGOUT * 60 * 1000;
-    // const diff = timeleft - now;
-    // const isTimeout = diff < 0;
-    // if(isTimeout && null != localStorage.getItem("currentUser")) {
-    //   this.router.navigate(['logout']);
-    //   setTimeout(() => {
-    //     localStorage.setItem('currentUser', null);
-    //     localStorage.removeItem('currentUser');
-    //     clearInterval(this.intervalObj);
-    //     localStorage.clear();
-    //   }, 150)
-    // }
+    const now = Date.now();
+    const timeleft = this.getLastAction() + MINUTES_UNTIL_AUTO_LOGOUT * 60 * 1000;
+    const diff = timeleft - now;
+    const isTimeout = diff < 0;
+    if(isTimeout && null != localStorage.getItem("currentUser")) {
+      this.router.navigate(['logout']);
+      setTimeout(() => {
+        localStorage.setItem('currentUser', null);
+        localStorage.removeItem('currentUser');
+        clearInterval(this.intervalObj);
+        localStorage.clear();
+      }, 150)
+    }
   }
   
   ngOnDestroy() {
